@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻页笔工具 - 在线演示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toolbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .toolbar h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .control-group select,
+        .control-group input[type="range"],
+        .control-group input[type="color"] {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .control-group select:focus,
+        .control-group input[type="range"]:focus,
+        .control-group input[type="color"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .control-group input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-group input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .control-group span {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .buttons button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons button:active {
+            transform: translateY(0);
+        }
+
+        #canvas {
+            flex: 1;
+            min-height: 600px;
+            background: #f8f9fa;
+            cursor: crosshair;
+        }
+
+        #canvas.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+        }
+
+        /* 数字光点样式 */
+        .dot-number {
+            font-size: 16px;
+            font-weight: bold;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* 工具提示 */
+        .tooltip {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        /* 状态指示器 */
+        .status-indicator {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 100;
+        }
+        
+        /* 使用说明 */
+        .instructions {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 5px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="toolbar">
+            <h1>翻页笔工具 - 在线演示</h1>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="tool-select">工具选择：</label>
+                    <select id="tool-select">
+                        <option value="none">无</option>
+                        <option value="magnifier">放大镜</option>
+                        <option value="spotlight">聚光灯</option>
+                        <option value="dot">数字光点</option>
+                        <option value="draw">画线</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="size-slider">大小：</label>
+                    <input type="range" id="size-slider" min="10" max="200" value="50">
+                    <span id="size-value">50</span>
+                </div>
+                
+                <div class="control-group">
+                    <label for="opacity-slider">透明度：</label>
+                    <input type="range" id="opacity-slider" min="10" max="100" value="80">
+                    <span id="opacity-value">80%</span>
+                </div>
+                
+                <div class="control-group">
+                    <label for="color-picker">颜色：</label>
+                    <input type="color" id="color-picker" value="#ff0000">
+                </div>
+                
+                <div class="buttons">
+                    <button id="clear-btn">清除画布</button>
+                    <button id="toggle-fullscreen">全屏</button>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>使用说明：</h3>
+                <ul>
+                    <li><strong>放大镜</strong>: 选择放大镜工具，移动鼠标查看放大效果</li>
+                    <li><strong>聚光灯</strong>: 点击并拖动调整聚光灯位置和大小</li>
+                    <li><strong>数字光点</strong>: 点击画布添加带数字的光点</li>
+                    <li><strong>画线</strong>: 点击并拖动绘制线条</li>
+                    <li>使用滑块调整工具大小、透明度和颜色</li>
+                </ul>
+            </div>
+        </div>
+        
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        class PresentationTool {
+            constructor() {
+                this.canvas = document.getElementById('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.toolSelect = document.getElementById('tool-select');
+                this.sizeSlider = document.getElementById('size-slider');
+                this.sizeValue = document.getElementById('size-value');
+                this.opacitySlider = document.getElementById('opacity-slider');
+                this.opacityValue = document.getElementById('opacity-value');
+                this.colorPicker = document.getElementById('color-picker');
+                this.clearBtn = document.getElementById('clear-btn');
+                this.fullscreenBtn = document.getElementById('toggle-fullscreen');
+                
+                this.currentTool = 'none';
+                this.isDrawing = false;
+                this.dots = [];
+                this.lines = [];
+                this.dotCounter = 1;
+                this.lastX = 0;
+                this.lastY = 0;
+                this.spotlightX = 0;
+                this.spotlightY = 0;
+                this.spotlightRadius = 100;
+                
+                this.init();
+            }
+            
+            init() {
+                // 设置Canvas大小
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // 绑定事件
+                this.bindEvents();
+                
+                // 设置初始值
+                this.updateSizeValue();
+                this.updateOpacityValue();
+                
+                // 绘制初始画布
+                this.drawBackground();
+                
+                // 状态指示器
+                this.createStatusIndicator();
+                
+                // 初始聚光灯位置
+                this.spotlightX = this.canvas.width / 2;
+                this.spotlightY = this.canvas.height / 2;
+            }
+            
+            resizeCanvas() {
+                const container = this.canvas.parentElement;
+                this.canvas.width = container.clientWidth;
+                this.canvas.height = container.clientHeight - 100;
+                
+                // 重新绘制所有元素
+                this.redrawAll();
+            }
+            
+            drawBackground() {
+                // 绘制网格背景
+                this.ctx.fillStyle = '#f8f9fa';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // 绘制网格线
+                this.ctx.strokeStyle = '#e9ecef';
+                this.ctx.lineWidth = 1;
+                
+                const gridSize = 20;
+                
+                // 垂直线
+                for (let x = 0; x <= this.canvas.width; x += gridSize) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, 0);
+                    this.ctx.lineTo(x, this.canvas.height);
+                    this.ctx.stroke();
+                }
+                
+                // 水平线
+                for (let y = 0; y <= this.canvas.height; y += gridSize) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y);
+                    this.ctx.lineTo(this.canvas.width, y);
+                    this.ctx.stroke();
+                }
+                
+                // 绘制中心参考点
+                this.ctx.beginPath();
+                this.ctx.arc(this.canvas.width / 2, this.canvas.height / 2, 5, 0, Math.PI * 2);
+                this.ctx.fillStyle = '#ff6b6b';
+                this.ctx.fill();
+                
+                // 添加演示文本
+                this.ctx.font = '24px Arial';
+                this.ctx.fillStyle = '#333';
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText('翻页笔工具演示', this.canvas.width / 2, 50);
+                
+                this.ctx.font = '16px Arial';
+                this.ctx.fillStyle = '#666';
+                this.ctx.fillText('选择上方工具开始使用', this.canvas.width / 2, 80);
+            }
+            
+            bindEvents() {
+                // 工具选择
+                this.toolSelect.addEventListener('change', (e) => {
+                    this.currentTool = e.target.value;
+                    this.updateStatus();
+                    
+                    // 重置画布状态
+                    this.redrawAll();
+                });
+                
+                // 大小滑块
+                this.sizeSlider.addEventListener('input', (e) => {
+                    this.updateSizeValue();
+                    this.redrawAll();
+                });
+                
+                // 透明度滑块
+                this.opacitySlider.addEventListener('input', (e) => {
+                    this.updateOpacityValue();
+                    this.redrawAll();
+                });
+                
+                // 颜色选择器
+                this.colorPicker.addEventListener('input', (e) => {
+                    this.redrawAll();
+                });
+                
+                // 清除按钮
+                this.clearBtn.addEventListener('click', () => {
+                    this.clearCanvas();
+                });
+                
+                // 全屏按钮
+                this.fullscreenBtn.addEventListener('click', () => {
+                    this.toggleFullscreen();
+                });
+                
+                // Canvas事件
+                this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+                this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+                this.canvas.addEventListener('mouseup', () => this.handleMouseUp());
+                this.canvas.addEventListener('mouseleave', () => this.handleMouseUp());
+                
+                // 触摸事件支持
+                this.canvas.addEventListener('touchstart', (e) => this.handleTouchStart(e));
+                this.canvas.addEventListener('touchmove', (e) => this.handleTouchMove(e));
+                this.canvas.addEventListener('touchend', () => this.handleTouchEnd());
+                
+                // 阻止右键菜单
+                this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+            }
+            
+            updateSizeValue() {
+                this.sizeValue.textContent = this.sizeSlider.value;
+            }
+            
+            updateOpacityValue() {
+                this.opacityValue.textContent = `${this.opacitySlider.value}%`;
+            }
+            
+            handleMouseDown(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.lastX = x;
+                this.lastY = y;
+                
+                switch(this.currentTool) {
+                    case 'dot':
+                        this.addDot(x, y);
+                        break;
+                    case 'draw':
+                        this.startLine(x, y);
+                        break;
+                    case 'spotlight':
+                        this.spotlightX = x;
+                        this.spotlightY = y;
+                        this.redrawAll();
+                        break;
+                }
+                
+                this.isDrawing = true;
+            }
+            
+            handleMouseMove(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                switch(this.currentTool) {
+                    case 'magnifier':
+                        this.drawMagnifier(x, y);
+                        break;
+                    case 'draw':
+                        if (this.isDrawing) {
+                            this.updateLine(x, y);
+                        }
+                        break;
+                    case 'spotlight':
+                        if (this.isDrawing) {
+                            const dx = x - this.spotlightX;
+                            const dy = y - this.spotlightY;
+                            this.spotlightRadius = Math.sqrt(dx * dx + dy * dy);
+                            this.redrawAll();
+                        }
+                        break;
+                }
+                
+                // 显示坐标提示
+                this.showTooltip(x, y);
+            }
+            
+            handleMouseUp() {
+                if (this.isDrawing && this.currentTool === 'draw') {
+                    this.finishLine();
+                }
+                this.isDrawing = false;
+            }
+            
+            handleTouchStart(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = this.canvas.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                
+                this.lastX = x;
+                this.lastY = y;
+                
+                switch(this.currentTool) {
+                    case 'dot':
+                        this.addDot(x, y);
+                        break;
+                    case 'draw':
+                        this.startLine(x, y);
+                        break;
+                    case 'spotlight':
+                        this.spotlightX = x;
+                        this.spotlightY = y;
+                        this.redrawAll();
+                        break;
+                }
+                
+                this.isDrawing = true;
+            }
+            
+            handleTouchMove(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = this.canvas.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                
+                switch(this.currentTool) {
+                    case 'magnifier':
+                        this.drawMagnifier(x, y);
+                        break;
+                    case 'draw':
+                        if (this.isDrawing) {
+                            this.updateLine(x, y);
+                        }
+                        break;
+                    case 'spotlight':
+                        if (this.isDrawing) {
+                            const dx = x - this.spotlightX;
+                            const dy = y - this.spotlightY;
+                            this.spotlightRadius = Math.sqrt(dx * dx + dy * dy);
+                            this.redrawAll();
+                        }
+                        break;
+                }
+            }
+            
+            handleTouchEnd() {
+                if (this.isDrawing && this.currentTool === 'draw') {
+                    this.finishLine();
+                }
+                this.isDrawing = false;
+            }
+            
+            addDot(x, y) {
+                const size = parseInt(this.sizeSlider.value);
+                const opacity = parseInt(this.opacitySlider.value) / 100;
+                const color = this.colorPicker.value;
+                
+                this.dots.push({
+                    x, y, size, opacity, color, number: this.dotCounter++
+                });
+                
+                this.redrawAll();
+            }
+            
+            startLine(x, y) {
+                const opacity = parseInt(this.opacitySlider.value) / 100;
+                const color = this.colorPicker.value;
+                
+                this.lines.push({
+                    points: [{x, y}],
+                    opacity,
+                    color,
+                    width: parseInt(this.sizeSlider.value) / 10
+                });
+            }
+            
+            updateLine(x, y) {
+                if (this.lines.length === 0) return;
+                
+                const currentLine = this.lines[this.lines.length - 1];
+                currentLine.points.push({x, y});
+                
+                this.redrawAll();
+            }
+            
+            finishLine() {
+                // 可以在这里添加额外的完成逻辑
+            }
+            
+            drawMagnifier(x, y) {
+                this.redrawAll();
+                
+                const size = parseInt(this.sizeSlider.value) * 2;
+                const opacity = parseInt(this.opacitySlider.value) / 100;
+                
+                // 保存当前上下文
+                this.ctx.save();
+                
+                // 创建放大镜圆形裁剪区域
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, size, 0, Math.PI * 2);
+                this.ctx.clip();
+                
+                // 放大内容（放大2倍）
+                this.ctx.scale(2, 2);
+                this.ctx.translate(-x/2, -y/2);
+                
+                // 重绘背景（放大区域）
+                this.drawBackground();
+                
+                // 绘制之前的内容
+                this.redrawDots();
+                this.redrawLines();
+                
+                // 恢复上下文
+                this.ctx.restore();
+                
+                // 绘制放大镜边框
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, size, 0, Math.PI * 2);
+                this.ctx.strokeStyle = this.colorPicker.value;
+                this.ctx.lineWidth = 3;
+                this.ctx.globalAlpha = opacity;
+                this.ctx.stroke();
+                
+                // 绘制十字线
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y - size);
+                this.ctx.lineTo(x, y + size);
+                this.ctx.moveTo(x - size, y);
+                this.ctx.lineTo(x + size, y);
+                this.ctx.strokeStyle = this.colorPicker.value;
+                this.ctx.lineWidth = 1;
+                this.ctx.globalAlpha = opacity * 0.5;
+                this.ctx.stroke();
+                
+                // 重置透明度
+                this.ctx.globalAlpha = 1;
+            }
+            
+            drawSpotlight(x, y, radius) {
+                this.redrawAll();
+                
+                const opacity = parseInt(this.opacitySlider.value) / 100;
+                
+                // 绘制暗色覆盖层
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // 创建聚光灯区域（使用复合操作）
+                this.ctx.globalCompositeOperation = 'destination-out';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // 恢复复合操作
+                this.ctx.globalCompositeOperation = 'source-over';
+                
+                // 绘制聚光灯边框
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+                this.ctx.strokeStyle = this.colorPicker.value;
+                this.ctx.lineWidth = 3;
+                this.ctx.globalAlpha = opacity;
+                this.ctx.stroke();
+                
+                // 绘制中心点
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, 5, 0, Math.PI * 2);
+                this.ctx.fillStyle = this.colorPicker.value;
+                this.ctx.globalAlpha = opacity;
+                this.ctx.fill();
+                
+                // 重置透明度
+                this.ctx.globalAlpha = 1;
+                
+                // 绘制之前的内容
+                this.redrawDots();
+                this.redrawLines();
+            }
+            
+            redrawAll() {
+                // 清除画布
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // 绘制背景
+                this.drawBackground();
+                
+                // 如果不是聚光灯模式，绘制所有内容
+                if (this.currentTool !== 'spotlight') {
+                    this.redrawDots();
+                    this.redrawLines();
+                }
+                
+                // 如果当前是聚光灯模式，绘制聚光灯
+                if (this.currentTool === 'spotlight') {
+                    this.drawSpotlight(this.spotlightX, this.spotlightY, this.spotlightRadius);
+                }
+            }
+            
+            redrawDots() {
+                this.dots.forEach(dot => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = dot.color;
+                    this.ctx.globalAlpha = dot.opacity;
+                    this.ctx.fill();
+                    
+                    // 绘制边框
+                    this.ctx.strokeStyle = '#ffffff';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.stroke();
+                    
+                    // 绘制数字
+                    this.ctx.fillStyle = '#ffffff';
+                    this.ctx.font = 'bold 16px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(dot.number.toString(), dot.x, dot.y);
+                    
+                    // 重置透明度
+                    this.ctx.globalAlpha = 1;
+                });
+            }
+            
+            redrawLines() {
+                this.lines.forEach(line => {
+                    if (line.points.length < 2) return;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(line.points[0].x, line.points[0].y);
+                    
+                    for (let i = 1; i < line.points.length; i++) {
+                        this.ctx.lineTo(line.points[i].x, line.points[i].y);
+                    }
+                    
+                    this.ctx.strokeStyle = line.color;
+                    this.ctx.lineWidth = line.width;
+                    this.ctx.lineCap = 'round';
+                    this.ctx.lineJoin = 'round';
+                    this.ctx.globalAlpha = line.opacity;
+                    this.ctx.stroke();
+                    
+                    // 重置透明度
+                    this.ctx.globalAlpha = 1;
+                });
+            }
+            
+            clearCanvas() {
+                this.dots = [];
+                this.lines = [];
+                this.dotCounter = 1;
+                this.redrawAll();
+            }
+            
+            toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    this.canvas.classList.add('fullscreen');
+                    if (this.canvas.requestFullscreen) {
+                        this.canvas.requestFullscreen();
+                    } else if (this.canvas.webkitRequestFullscreen) {
+                        this.canvas.webkitRequestFullscreen();
+                    } else if (this.canvas.msRequestFullscreen) {
+                        this.canvas.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                    this.canvas.classList.remove('fullscreen');
+                }
+            }
+            
+            showTooltip(x, y) {
+                let tooltip = document.querySelector('.tooltip');
+                if (!tooltip) {
+                    tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    document.body.appendChild(tooltip);
+                }
+                
+                const toolNames = {
+                    'none': '选择模式',
+                    'magnifier': '放大镜',
+                    'spotlight': '聚光灯',
+                    'dot': '数字光点',
+                    'draw': '画线'
+                };
+                
+                tooltip.textContent = `${toolNames[this.currentTool]} (${Math.round(x)}, ${Math.round(y)})`;
+                tooltip.style.left = `${x + 20}px`;
+                tooltip.style.top = `${y - 30}px`;
+                tooltip.classList.add('show');
+                
+                clearTimeout(this.tooltipTimeout);
+                this.tooltipTimeout = setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 1000);
+            }
+            
+            createStatusIndicator() {
+                const indicator = document.createElement('div');
+                indicator.className = 'status-indicator';
+                indicator.textContent = '选择工具开始使用';
+                this.canvas.parentElement.appendChild(indicator);
+                this.statusIndicator = indicator;
+            }
+            
+            updateStatus() {
+                const toolNames = {
+                    'none': '选择模式',
+                    'magnifier': '放大镜模式',
+                    'spotlight': '聚光灯模式',
+                    'dot': '数字光点模式',
+                    'draw': '画线模式'
+                };
+                
+                const instructions = {
+                    'none': '从上方选择工具开始使用',
+                    'magnifier': '移动鼠标查看放大效果',
+                    'spotlight': '点击并拖动调整聚光灯',
+                    'dot': '点击添加数字光点',
+                    'draw': '点击并拖动绘制线条'
+                };
+                
+                if (this.statusIndicator) {
+                    this.statusIndicator.textContent = 
+                        `${toolNames[this.currentTool]} - ${instructions[this.currentTool]}`;
+                }
+            }
+        }
+
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new PresentationTool();
+            window.presentationTool = app; // 为了方便调试
+        });
+
+        // 处理全屏变化事件
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+        function handleFullscreenChange() {
+            const canvas = document.getElementById('canvas');
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.msFullscreenElement) {
+                canvas.classList.remove('fullscreen');
+            }
+        }
+    </script>
+</body>
+</html>

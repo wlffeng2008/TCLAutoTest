@@ -1,0 +1,1390 @@
+{\rtf1\ansi\ansicpg54936\deff0\nouicompat\deflang1033\deflangfe2052{\fonttbl{\f0\fnil\fcharset134 \'cb\'ce\'cc\'e5;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang2052 <!DOCTYPE html>\par
+<html lang="zh-CN">\par
+<head>\par
+    <meta charset="UTF-8">\par
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">\par
+    <title>\'b7\'ad\'d2\'b3\'b1\'ca\'b7\'c5\'b4\'f3\'be\'b5\'d0\'a7\'b9\'fb\'c4\'a3\'c4\'e2</title>\par
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\par
+    <style>\par
+        * \{\par
+            margin: 0;\par
+            padding: 0;\par
+            box-sizing: border-box;\par
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;\par
+        \}\par
+        \par
+        body \{\par
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);\par
+            color: #f0f0f0;\par
+            overflow: hidden;\par
+            height: 100vh;\par
+            display: flex;\par
+            flex-direction: column;\par
+        \}\par
+        \par
+        .header \{\par
+            background: rgba(15, 23, 42, 0.9);\par
+            padding: 1.2rem 2rem;\par
+            display: flex;\par
+            justify-content: space-between;\par
+            align-items: center;\par
+            border-bottom: 1px solid #2d4059;\par
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);\par
+            z-index: 100;\par
+            position: relative;\par
+            backdrop-filter: blur(10px);\par
+        \}\par
+        \par
+        .logo \{\par
+            display: flex;\par
+            align-items: center;\par
+            gap: 12px;\par
+        \}\par
+        \par
+        .logo-icon \{\par
+            color: #e94560;\par
+            font-size: 2rem;\par
+        \}\par
+        \par
+        h1 \{\par
+            font-size: 1.8rem;\par
+            background: linear-gradient(90deg, #e94560, #00b8a9);\par
+            -webkit-background-clip: text;\par
+            background-clip: text;\par
+            color: transparent;\par
+            letter-spacing: 1px;\par
+            font-weight: 700;\par
+        \}\par
+        \par
+        .subtitle \{\par
+            font-size: 0.9rem;\par
+            color: #8f9bb3;\par
+            margin-top: 4px;\par
+        \}\par
+        \par
+        .container \{\par
+            display: flex;\par
+            flex: 1;\par
+            height: calc(100vh - 80px);\par
+        \}\par
+        \par
+        .control-panel \{\par
+            width: 320px;\par
+            background: rgba(25, 25, 45, 0.9);\par
+            padding: 1.5rem;\par
+            border-right: 1px solid #2d4059;\par
+            display: flex;\par
+            flex-direction: column;\par
+            gap: 1.5rem;\par
+            backdrop-filter: blur(10px);\par
+            overflow-y: auto;\par
+            transition: all 0.3s ease;\par
+        \}\par
+        \par
+        .panel-title \{\par
+            font-size: 1.2rem;\par
+            color: #00b8a9;\par
+            padding-bottom: 8px;\par
+            border-bottom: 1px solid #2d4059;\par
+            display: flex;\par
+            align-items: center;\par
+            gap: 10px;\par
+            margin-bottom: 1rem;\par
+        \}\par
+        \par
+        .panel-title i \{\par
+            font-size: 1rem;\par
+        \}\par
+        \par
+        .control-group \{\par
+            background: rgba(15, 23, 42, 0.7);\par
+            padding: 1.2rem;\par
+            border-radius: 12px;\par
+            border: 1px solid #2d4059;\par
+            margin-bottom: 0.5rem;\par
+        \}\par
+        \par
+        .slider-container \{\par
+            margin: 1.2rem 0;\par
+        \}\par
+        \par
+        .slider-label \{\par
+            display: flex;\par
+            justify-content: space-between;\par
+            margin-bottom: 10px;\par
+            font-size: 0.95rem;\par
+        \}\par
+        \par
+        .slider-label span:first-child \{\par
+            color: #b8c1ec;\par
+            display: flex;\par
+            align-items: center;\par
+            gap: 6px;\par
+        \}\par
+        \par
+        .slider-label span:last-child \{\par
+            color: #00b8a9;\par
+            font-weight: bold;\par
+            background: rgba(0, 184, 169, 0.1);\par
+            padding: 2px 8px;\par
+            border-radius: 4px;\par
+        \}\par
+        \par
+        .slider \{\par
+            width: 100%;\par
+            height: 8px;\par
+            -webkit-appearance: none;\par
+            appearance: none;\par
+            background: linear-gradient(90deg, #16213e, #2d4059);\par
+            border-radius: 4px;\par
+            outline: none;\par
+            cursor: pointer;\par
+        \}\par
+        \par
+        .slider::-webkit-slider-thumb \{\par
+            -webkit-appearance: none;\par
+            width: 22px;\par
+            height: 22px;\par
+            border-radius: 50%;\par
+            background: #e94560;\par
+            cursor: pointer;\par
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.8);\par
+            transition: all 0.2s ease;\par
+        \}\par
+        \par
+        .slider::-webkit-slider-thumb:hover \{\par
+            transform: scale(1.1);\par
+            box-shadow: 0 0 15px rgba(233, 69, 96, 1);\par
+        \}\par
+        \par
+        .buttons \{\par
+            display: grid;\par
+            grid-template-columns: 1fr 1fr;\par
+            gap: 12px;\par
+            margin-top: 1.5rem;\par
+        \}\par
+        \par
+        .btn \{\par
+            padding: 12px 16px;\par
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);\par
+            border: 1px solid #2d4059;\par
+            color: #f0f0f0;\par
+            border-radius: 10px;\par
+            cursor: pointer;\par
+            display: flex;\par
+            align-items: center;\par
+            justify-content: center;\par
+            gap: 8px;\par
+            font-weight: 500;\par
+            transition: all 0.3s ease;\par
+            font-size: 0.95rem;\par
+        \}\par
+        \par
+        .btn:hover \{\par
+            background: linear-gradient(135deg, #1a3a72 0%, #1c2a4e 100%);\par
+            transform: translateY(-3px);\par
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);\par
+        \}\par
+        \par
+        .btn:active \{\par
+            transform: translateY(0);\par
+        \}\par
+        \par
+        .btn-primary \{\par
+            background: linear-gradient(135deg, #e94560 0%, #c2334d 100%);\par
+            border-color: #e94560;\par
+        \}\par
+        \par
+        .btn-primary:hover \{\par
+            background: linear-gradient(135deg, #ff5773 0%, #d63a55 100%);\par
+            box-shadow: 0 6px 15px rgba(233, 69, 96, 0.3);\par
+        \}\par
+        \par
+        .btn-secondary \{\par
+            background: linear-gradient(135deg, #00b8a9 0%, #009688 100%);\par
+            border-color: #00b8a9;\par
+        \}\par
+        \par
+        .btn-secondary:hover \{\par
+            background: linear-gradient(135deg, #00d4c3 0%, #00b8a9 100%);\par
+            box-shadow: 0 6px 15px rgba(0, 184, 169, 0.3);\par
+        \}\par
+        \par
+        .presentation-area \{\par
+            flex: 1;\par
+            position: relative;\par
+            overflow: hidden;\par
+            background: #0d1117;\par
+            cursor: none;\par
+        \}\par
+        \par
+        .slide-container \{\par
+            position: absolute;\par
+            top: 50%;\par
+            left: 50%;\par
+            transform: translate(-50%, -50%);\par
+            width: 85%;\par
+            height: 85%;\par
+            transition: transform 0.4s ease, opacity 0.4s ease;\par
+        \}\par
+        \par
+        .slide \{\par
+            position: absolute;\par
+            width: 100%;\par
+            height: 100%;\par
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);\par
+            border-radius: 15px;\par
+            padding: 2.5rem;\par
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);\par
+            display: none;\par
+            flex-direction: column;\par
+            border: 1px solid #2d4059;\par
+            overflow: auto;\par
+        \}\par
+        \par
+        .slide.active \{\par
+            display: flex;\par
+        \}\par
+        \par
+        .slide-title \{\par
+            font-size: 2.5rem;\par
+            color: #e94560;\par
+            margin-bottom: 1.5rem;\par
+            padding-bottom: 1rem;\par
+            border-bottom: 2px solid #2d4059;\par
+        \}\par
+        \par
+        .slide-content \{\par
+            flex: 1;\par
+            display: flex;\par
+            flex-direction: column;\par
+            gap: 1.8rem;\par
+            padding-right: 1rem;\par
+        \}\par
+        \par
+        .slide-content h3 \{\par
+            color: #00b8a9;\par
+            font-size: 1.8rem;\par
+            margin-bottom: 0.8rem;\par
+        \}\par
+        \par
+        .slide-content ul \{\par
+            margin-left: 1.5rem;\par
+            display: flex;\par
+            flex-direction: column;\par
+            gap: 0.8rem;\par
+        \}\par
+        \par
+        .slide-content li \{\par
+            font-size: 1.25rem;\par
+            color: #b8c1ec;\par
+            line-height: 1.6;\par
+            padding-left: 0.5rem;\par
+        \}\par
+        \par
+        .slide-number \{\par
+            position: absolute;\par
+            bottom: 1.5rem;\par
+            right: 1.5rem;\par
+            color: #8f9bb3;\par
+            font-size: 1rem;\par
+            background: rgba(15, 23, 42, 0.7);\par
+            padding: 6px 12px;\par
+            border-radius: 20px;\par
+            border: 1px solid #2d4059;\par
+        \}\par
+        \par
+        /* \'b7\'c5\'b4\'f3\'be\'b5\'d0\'a7\'b9\'fb */\par
+        .magnifier \{\par
+            position: absolute;\par
+            width: 180px;\par
+            height: 180px;\par
+            border-radius: 50%;\par
+            pointer-events: none;\par
+            border: 3px solid #e94560;\par
+            box-shadow: \par
+                0 0 0 2px rgba(255, 255, 255, 0.2),\par
+                0 0 25px rgba(233, 69, 96, 0.7),\par
+                inset 0 0 15px rgba(233, 69, 96, 0.3);\par
+            transform: translate(-50%, -50%);\par
+            z-index: 50;\par
+            overflow: hidden;\par
+            display: none;\par
+            background: rgba(0, 0, 0, 0.2);\par
+            backdrop-filter: blur(2px);\par
+        \}\par
+        \par
+        .magnifier-glass \{\par
+            position: absolute;\par
+            width: 100%;\par
+            height: 100%;\par
+            border-radius: 50%;\par
+            transform: scale(1.8);\par
+            transform-origin: 0 0;\par
+            pointer-events: none;\par
+            background-repeat: no-repeat;\par
+            filter: brightness(1.1) contrast(1.1);\par
+        \}\par
+        \par
+        .magnifier-handle \{\par
+            position: absolute;\par
+            width: 8px;\par
+            height: 100px;\par
+            background: #e94560;\par
+            bottom: -100px;\par
+            left: 50%;\par
+            transform: translateX(-50%);\par
+            border-radius: 0 0 4px 4px;\par
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);\par
+        \}\par
+        \par
+        /* \'be\'db\'b9\'e2\'b5\'c6\'d0\'a7\'b9\'fb */\par
+        .spotlight \{\par
+            position: absolute;\par
+            width: 300px;\par
+            height: 300px;\par
+            border-radius: 50%;\par
+            pointer-events: none;\par
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%);\par
+            mix-blend-mode: screen;\par
+            transform: translate(-50%, -50%);\par
+            transition: width 0.3s, height 0.3s, opacity 0.3s;\par
+            z-index: 5;\par
+        \}\par
+        \par
+        /* \'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'d0\'a7\'b9\'fb */\par
+        .laser-pointer \{\par
+            position: absolute;\par
+            width: 12px;\par
+            height: 12px;\par
+            border-radius: 50%;\par
+            background: #ff0000;\par
+            box-shadow: 0 0 15px 8px rgba(255, 0, 0, 0.8);\par
+            pointer-events: none;\par
+            transform: translate(-50%, -50%);\par
+            z-index: 60;\par
+            opacity: 0;\par
+            transition: opacity 0.2s;\par
+        \}\par
+        \par
+        .laser-line \{\par
+            position: absolute;\par
+            background: linear-gradient(90deg, rgba(255, 0, 0, 0.8), rgba(255, 100, 100, 0.4));\par
+            height: 3px;\par
+            pointer-events: none;\par
+            transform-origin: 0 0;\par
+            z-index: 60;\par
+            opacity: 0;\par
+            border-radius: 2px;\par
+        \}\par
+        \par
+        .instructions \{\par
+            position: absolute;\par
+            bottom: 25px;\par
+            left: 50%;\par
+            transform: translateX(-50%);\par
+            background: rgba(15, 23, 42, 0.85);\par
+            padding: 14px 24px;\par
+            border-radius: 12px;\par
+            border: 1px solid #2d4059;\par
+            font-size: 0.9rem;\par
+            color: #b8c1ec;\par
+            text-align: center;\par
+            backdrop-filter: blur(10px);\par
+            z-index: 100;\par
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);\par
+            max-width: 90%;\par
+        \}\par
+        \par
+        .instructions kbd \{\par
+            background: #0f3460;\par
+            padding: 4px 10px;\par
+            border-radius: 6px;\par
+            border: 1px solid #2d4059;\par
+            font-family: monospace;\par
+            margin: 0 5px;\par
+            font-weight: bold;\par
+            color: #e94560;\par
+        \}\par
+        \par
+        .status-bar \{\par
+            display: flex;\par
+            gap: 25px;\par
+        \}\par
+        \par
+        .status-item \{\par
+            display: flex;\par
+            align-items: center;\par
+            gap: 8px;\par
+        \}\par
+        \par
+        .status-item i \{\par
+            color: #00b8a9;\par
+            font-size: 1.1rem;\par
+        \}\par
+        \par
+        .status-label \{\par
+            font-size: 0.9rem;\par
+            color: #8f9bb3;\par
+        \}\par
+        \par
+        .status-value \{\par
+            color: #f0f0f0;\par
+            font-weight: 600;\par
+            background: rgba(0, 184, 169, 0.1);\par
+            padding: 4px 10px;\par
+            border-radius: 6px;\par
+            min-width: 50px;\par
+            text-align: center;\par
+            border: 1px solid rgba(0, 184, 169, 0.3);\par
+        \}\par
+        \par
+        .power-btn \{\par
+            position: absolute;\par
+            top: 25px;\par
+            left: 25px;\par
+            width: 55px;\par
+            height: 55px;\par
+            border-radius: 50%;\par
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);\par
+            border: 2px solid #2d4059;\par
+            color: #f0f0f0;\par
+            cursor: pointer;\par
+            display: flex;\par
+            align-items: center;\par
+            justify-content: center;\par
+            font-size: 1.3rem;\par
+            z-index: 100;\par
+            transition: all 0.3s ease;\par
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);\par
+        \}\par
+        \par
+        .power-btn:hover \{\par
+            transform: scale(1.1);\par
+            box-shadow: 0 0 20px rgba(0, 184, 169, 0.6);\par
+        \}\par
+        \par
+        .power-btn.on \{\par
+            background: linear-gradient(135deg, #00b8a9 0%, #009688 100%);\par
+            color: #fff;\par
+            box-shadow: 0 0 25px rgba(0, 184, 169, 0.8);\par
+        \}\par
+        \par
+        .magnifier-preview \{\par
+            position: absolute;\par
+            top: 25px;\par
+            right: 25px;\par
+            width: 120px;\par
+            height: 120px;\par
+            border-radius: 10px;\par
+            border: 2px solid #e94560;\par
+            overflow: hidden;\par
+            background: #0d1117;\par
+            z-index: 100;\par
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);\par
+            display: flex;\par
+            align-items: center;\par
+            justify-content: center;\par
+        \}\par
+        \par
+        .magnifier-preview-label \{\par
+            position: absolute;\par
+            bottom: -25px;\par
+            left: 0;\par
+            width: 100%;\par
+            text-align: center;\par
+            font-size: 0.8rem;\par
+            color: #8f9bb3;\par
+        \}\par
+        \par
+        .magnifier-preview-content \{\par
+            width: 100%;\par
+            height: 100%;\par
+            transform: scale(1.8);\par
+            transform-origin: 0 0;\par
+            pointer-events: none;\par
+        \}\par
+        \par
+        .toggle-panel \{\par
+            position: absolute;\par
+            top: 20px;\par
+            right: 20px;\par
+            width: 45px;\par
+            height: 45px;\par
+            border-radius: 10px;\par
+            background: rgba(15, 23, 42, 0.8);\par
+            border: 1px solid #2d4059;\par
+            color: #b8c1ec;\par
+            cursor: pointer;\par
+            display: flex;\par
+            align-items: center;\par
+            justify-content: center;\par
+            font-size: 1.2rem;\par
+            z-index: 101;\par
+            backdrop-filter: blur(5px);\par
+            transition: all 0.3s ease;\par
+            display: none;\par
+        \}\par
+        \par
+        .toggle-panel:hover \{\par
+            background: rgba(26, 34, 52, 0.9);\par
+            color: #00b8a9;\par
+        \}\par
+        \par
+        @media (max-width: 1200px) \{\par
+            .container \{\par
+                flex-direction: column;\par
+            \}\par
+            \par
+            .control-panel \{\par
+                width: 100%;\par
+                height: auto;\par
+                max-height: 40vh;\par
+                padding: 1rem;\par
+                flex-direction: row;\par
+                flex-wrap: wrap;\par
+                gap: 1rem;\par
+            \}\par
+            \par
+            .control-group \{\par
+                flex: 1;\par
+                min-width: 250px;\par
+            \}\par
+            \par
+            .presentation-area \{\par
+                height: calc(100vh - 80px - 40vh);\par
+            \}\par
+            \par
+            .toggle-panel \{\par
+                display: flex;\par
+            \}\par
+            \par
+            .control-panel.hidden \{\par
+                display: none;\par
+            \}\par
+        \}\par
+        \par
+        @media (max-width: 768px) \{\par
+            .header \{\par
+                flex-direction: column;\par
+                gap: 10px;\par
+                padding: 1rem;\par
+            \}\par
+            \par
+            .status-bar \{\par
+                width: 100%;\par
+                justify-content: center;\par
+            \}\par
+            \par
+            .control-group \{\par
+                min-width: 100%;\par
+            \}\par
+            \par
+            .instructions \{\par
+                font-size: 0.8rem;\par
+                padding: 10px 15px;\par
+            \}\par
+            \par
+            .magnifier-preview \{\par
+                width: 80px;\par
+                height: 80px;\par
+                top: 15px;\par
+                right: 15px;\par
+            \}\par
+        \}\par
+    </style>\par
+</head>\par
+<body>\par
+    <div class="header">\par
+        <div class="logo">\par
+            <i class="fas fa-search-plus logo-icon"></i>\par
+            <div>\par
+                <h1>\'b7\'ad\'d2\'b3\'b1\'ca\'b7\'c5\'b4\'f3\'be\'b5\'c4\'a3\'c4\'e2\'c6\'f7</h1>\par
+                <div class="subtitle">\'c4\'a3\'c4\'e2\'b7\'ad\'d2\'b3\'b1\'ca\'b5\'c4\'b7\'c5\'b4\'f3\'be\'b5\'a1\'a2\'be\'db\'b9\'e2\'b5\'c6\'a1\'a2\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'ba\'cd\'b7\'ad\'d2\'b3\'b9\'a6\'c4\'dc</div>\par
+            </div>\par
+        </div>\par
+        <div class="status-bar">\par
+            <div class="status-item">\par
+                <i class="fas fa-search-plus"></i>\par
+                <div>\par
+                    <div class="status-label">\'b7\'c5\'b4\'f3\'be\'b5</div>\par
+                    <div class="status-value" id="magnifier-status">\'b9\'d8\'b1\'d5</div>\par
+                </div>\par
+            </div>\par
+            <div class="status-item">\par
+                <i class="fas fa-lightbulb"></i>\par
+                <div>\par
+                    <div class="status-label">\'be\'db\'b9\'e2\'b5\'c6</div>\par
+                    <div class="status-value" id="spotlight-status">\'bf\'aa\'c6\'f4</div>\par
+                </div>\par
+            </div>\par
+            <div class="status-item">\par
+                <i class="fas fa-mouse-pointer"></i>\par
+                <div>\par
+                    <div class="status-label">\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb</div>\par
+                    <div class="status-value" id="laser-status">\'b9\'d8\'b1\'d5</div>\par
+                </div>\par
+            </div>\par
+            <div class="status-item">\par
+                <i class="fas fa-file-alt"></i>\par
+                <div>\par
+                    <div class="status-label">\'bb\'c3\'b5\'c6\'c6\'ac</div>\par
+                    <div class="status-value"><span id="slide-number">1</span>/<span id="total-slides">5</span></div>\par
+                </div>\par
+            </div>\par
+        </div>\par
+    </div>\par
+    \par
+    <div class="container">\par
+        <div class="control-panel" id="control-panel">\par
+            <div class="control-group">\par
+                <h3 class="panel-title"><i class="fas fa-search-plus"></i> \'b7\'c5\'b4\'f3\'be\'b5\'c9\'e8\'d6\'c3</h3>\par
+                <div class="slider-container">\par
+                    <div class="slider-label">\par
+                        <span><i class="fas fa-expand-arrows-alt"></i> \'b7\'c5\'b4\'f3\'be\'b5\'b3\'df\'b4\'e7</span>\par
+                        <span id="magnifier-size-value">180px</span>\par
+                    </div>\par
+                    <input type="range" min="100" max="300" value="180" class="slider" id="magnifier-size-slider">\par
+                </div>\par
+                <div class="slider-container">\par
+                    <div class="slider-label">\par
+                        <span><i class="fas fa-search"></i> \'b7\'c5\'b4\'f3\'b1\'b6\'ca\'fd</span>\par
+                        <span id="magnifier-zoom-value">1.8x</span>\par
+                    </div>\par
+                    <input type="range" min="15" max="30" value="18" class="slider" id="magnifier-zoom-slider">\par
+                </div>\par
+            </div>\par
+            \par
+            <div class="control-group">\par
+                <h3 class="panel-title"><i class="fas fa-sun"></i> \'be\'db\'b9\'e2\'b5\'c6\'c9\'e8\'d6\'c3</h3>\par
+                <div class="slider-container">\par
+                    <div class="slider-label">\par
+                        <span><i class="fas fa-expand"></i> \'be\'db\'b9\'e2\'b5\'c6\'b4\'f3\'d0\'a1</span>\par
+                        <span id="spotlight-size-value">300px</span>\par
+                    </div>\par
+                    <input type="range" min="150" max="500" value="300" class="slider" id="spotlight-size-slider">\par
+                </div>\par
+                <div class="slider-container">\par
+                    <div class="slider-label">\par
+                        <span><i class="fas fa-adjust"></i> \'be\'db\'b9\'e2\'b5\'c6\'c1\'c1\'b6\'c8</span>\par
+                        <span id="spotlight-brightness-value">0.15</span>\par
+                    </div>\par
+                    <input type="range" min="5" max="30" value="15" class="slider" id="spotlight-brightness-slider">\par
+                </div>\par
+            </div>\par
+            \par
+            <div class="control-group">\par
+                <h3 class="panel-title"><i class="fas fa-sliders-h"></i> \'bf\'d8\'d6\'c6\'b9\'a6\'c4\'dc</h3>\par
+                <div class="buttons">\par
+                    <button class="btn btn-primary" id="prev-slide">\par
+                        <i class="fas fa-arrow-left"></i> \'c9\'cf\'d2\'bb\'d2\'b3\par
+                    </button>\par
+                    <button class="btn btn-primary" id="next-slide">\par
+                        \'cf\'c2\'d2\'bb\'d2\'b3 <i class="fas fa-arrow-right"></i>\par
+                    </button>\par
+                    <button class="btn btn-secondary" id="toggle-magnifier">\par
+                        <i class="fas fa-search-plus"></i> \'b7\'c5\'b4\'f3\'be\'b5\'bf\'aa\'b9\'d8\par
+                    </button>\par
+                    <button class="btn btn-secondary" id="toggle-spotlight">\par
+                        <i class="fas fa-lightbulb"></i> \'be\'db\'b9\'e2\'b5\'c6\'bf\'aa\'b9\'d8\par
+                    </button>\par
+                    <button class="btn btn-secondary" id="toggle-laser">\par
+                        <i class="fas fa-mouse-pointer"></i> \'bc\'a4\'b9\'e2\'bf\'aa\'b9\'d8\par
+                    </button>\par
+                    <button class="btn" id="reset-all">\par
+                        <i class="fas fa-redo"></i> \'d6\'d8\'d6\'c3\'c9\'e8\'d6\'c3\par
+                    </button>\par
+                </div>\par
+            </div>\par
+            \par
+            <div class="control-group">\par
+                <h3 class="panel-title"><i class="fas fa-info-circle"></i> \'ca\'b9\'d3\'c3\'cb\'b5\'c3\'f7</h3>\par
+                <ul style="color: #b8c1ec; font-size: 0.9rem; line-height: 1.6; padding-left: 1rem;">\par
+                    <li>\'d2\'c6\'b6\'af\'ca\'f3\'b1\'ea\'bf\'d8\'d6\'c6\'b7\'c5\'b4\'f3\'be\'b5\'ba\'cd\'be\'db\'b9\'e2\'b5\'c6\'ce\'bb\'d6\'c3</li>\par
+                    <li>\'b5\'e3\'bb\'f7\'ca\'f3\'b1\'ea\'d7\'f3\'bc\'fc\'cf\'d4\'ca\'be\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb</li>\par
+                    <li>\'ca\'b9\'d3\'c3\'d7\'f3\'d3\'d2\'bc\'fd\'cd\'b7\'bc\'fc\'b7\'ad\'d2\'b3</li>\par
+                    <li>\'b0\'b4M\'bc\'fc\'c7\'d0\'bb\'bb\'b7\'c5\'b4\'f3\'be\'b5\'bf\'aa\'b9\'d8</li>\par
+                    <li>\'b0\'b4\'bf\'d5\'b8\'f1\'bc\'fc\'c7\'d0\'bb\'bb\'be\'db\'b9\'e2\'b5\'c6\'bf\'aa\'b9\'d8</li>\par
+                    <li>\'b0\'b4L\'bc\'fc\'c7\'d0\'bb\'bb\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'bf\'aa\'b9\'d8</li>\par
+                    <li>\'b0\'b4R\'bc\'fc\'d6\'d8\'d6\'c3\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3</li>\par
+                </ul>\par
+            </div>\par
+        </div>\par
+        \par
+        <div class="presentation-area" id="presentation-area">\par
+            <div class="toggle-panel" id="toggle-panel">\par
+                <i class="fas fa-sliders-h"></i>\par
+            </div>\par
+            \par
+            <div class="power-btn" id="power-btn">\par
+                <i class="fas fa-power-off"></i>\par
+            </div>\par
+            \par
+            <div class="magnifier-preview" id="magnifier-preview">\par
+                <div class="magnifier-preview-label">\'b7\'c5\'b4\'f3\'d4\'a4\'c0\'c0</div>\par
+            </div>\par
+            \par
+            <!-- \'b7\'c5\'b4\'f3\'be\'b5 -->\par
+            <div class="magnifier" id="magnifier">\par
+                <div class="magnifier-glass" id="magnifier-glass"></div>\par
+                <div class="magnifier-handle"></div>\par
+            </div>\par
+            \par
+            <!-- \'be\'db\'b9\'e2\'b5\'c6 -->\par
+            <div class="spotlight" id="spotlight"></div>\par
+            \par
+            <!-- \'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb -->\par
+            <div class="laser-pointer" id="laser-pointer"></div>\par
+            \par
+            <!-- \'bb\'c3\'b5\'c6\'c6\'ac\'c8\'dd\'c6\'f7 -->\par
+            <div class="slide-container">\par
+                <!-- \'bb\'c3\'b5\'c6\'c6\'ac1 -->\par
+                <div class="slide active" id="slide-1">\par
+                    <h2 class="slide-title">\'b7\'ad\'d2\'b3\'b1\'ca\'b7\'c5\'b4\'f3\'be\'b5\'c4\'a3\'c4\'e2\'c6\'f7</h2>\par
+                    <div class="slide-content">\par
+                        <h3>\'b9\'a6\'c4\'dc\'bc\'f2\'bd\'e9</h3>\par
+                        <ul>\par
+                            <li>\'c4\'a3\'c4\'e2\'d5\'e6\'ca\'b5\'b7\'ad\'d2\'b3\'b1\'ca\'b5\'c4\'b7\'c5\'b4\'f3\'be\'b5\'d0\'a7\'b9\'fb</li>\par
+                            <li>\'bf\'c9\'b5\'f7\'bd\'da\'b7\'c5\'b4\'f3\'be\'b5\'b3\'df\'b4\'e7\'ba\'cd\'b7\'c5\'b4\'f3\'b1\'b6\'ca\'fd</li>\par
+                            <li>\'be\'db\'b9\'e2\'b5\'c6\'d0\'a7\'b9\'fb\'cd\'bb\'b3\'f6\'cf\'d4\'ca\'be\'d6\'d8\'b5\'e3\'c4\'da\'c8\'dd</li>\par
+                            <li>\'ba\'ec\'c9\'ab\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'b9\'a6\'c4\'dc</li>\par
+                            <li>\'bb\'c3\'b5\'c6\'c6\'ac\'b7\'ad\'d2\'b3\'bf\'d8\'d6\'c6</li>\par
+                            <li>\'bc\'fc\'c5\'cc\'ba\'cd\'ca\'f3\'b1\'ea\'cb\'ab\'d6\'d8\'bf\'d8\'d6\'c6</li>\par
+                        </ul>\par
+                        <h3>\'ca\'b9\'d3\'c3\'b3\'a1\'be\'b0</h3>\par
+                        <ul>\par
+                            <li>\'d4\'da\'cf\'df\'d1\'dd\'ca\'be\'ba\'cd\'bd\'cc\'d1\'a7</li>\par
+                            <li>\'b2\'fa\'c6\'b7\'d5\'b9\'ca\'be\'ba\'cd\'b1\'a8\'b8\'e6</li>\par
+                            <li>\'d4\'b6\'b3\'cc\'bb\'e1\'d2\'e9\'ba\'cd\'d1\'dd\'bd\'b2</li>\par
+                            <li>\'c5\'e0\'d1\'b5\'b2\'c4\'c1\'cf\'bd\'b2\'bd\'e2</li>\par
+                            <li>\'ca\'d3\'c1\'a6\'b8\'a8\'d6\'fa\'d1\'dd\'ca\'be</li>\par
+                        </ul>\par
+                    </div>\par
+                    <div class="slide-number">1 / 5</div>\par
+                </div>\par
+                \par
+                <!-- \'bb\'c3\'b5\'c6\'c6\'ac2 -->\par
+                <div class="slide" id="slide-2">\par
+                    <h2 class="slide-title">\'b7\'c5\'b4\'f3\'be\'b5\'b9\'a6\'c4\'dc</h2>\par
+                    <div class="slide-content">\par
+                        <h3>\'d6\'f7\'d2\'aa\'cc\'d8\'d0\'d4</h3>\par
+                        <ul>\par
+                            <li>\'b7\'c5\'b4\'f3\'be\'b5\'b8\'fa\'cb\'e6\'ca\'f3\'b1\'ea\'d2\'c6\'b6\'af\'a3\'ac\'b7\'c5\'b4\'f3\'cf\'d4\'ca\'be\'cf\'b8\'bd\'da\'c4\'da\'c8\'dd</li>\par
+                            <li>\'bf\'c9\'b5\'f7\'bd\'da\'b7\'c5\'b4\'f3\'be\'b5\'b3\'df\'b4\'e7\'a3\'a8100-300px\'a3\'a9</li>\par
+                            <li>\'bf\'c9\'b5\'f7\'bd\'da\'b7\'c5\'b4\'f3\'b1\'b6\'ca\'fd\'a3\'a81.5x-3.0x\'a3\'a9</li>\par
+                            <li>\'d2\'bb\'bc\'fc\'bf\'aa\'b9\'d8\'b7\'c5\'b4\'f3\'be\'b5\'b9\'a6\'c4\'dc</li>\par
+                            <li>\'b7\'c5\'b4\'f3\'be\'b5\'b1\'df\'bf\'f2\'b8\'df\'c1\'c1\'cf\'d4\'ca\'be\'a3\'ac\'d2\'d7\'d3\'da\'ca\'b6\'b1\'f0</li>\par
+                            <li>\'b6\'c0\'c1\'a2\'b5\'c4\'b7\'c5\'b4\'f3\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da</li>\par
+                        </ul>\par
+                        <h3>\'bc\'bc\'ca\'f5\'ca\'b5\'cf\'d6</h3>\par
+                        <ul>\par
+                            <li>\'ca\'b9\'d3\'c3CSS transform scale\'ca\'b5\'cf\'d6\'b7\'c5\'b4\'f3\'d0\'a7\'b9\'fb</li>\par
+                            <li>Canvas API\'ca\'b5\'ca\'b1\'b2\'b6\'bb\'f1\'c6\'c1\'c4\'bb\'c4\'da\'c8\'dd</li>\par
+                            <li>JavaScript\'ca\'b5\'ca\'b1\'b8\'fc\'d0\'c2\'b7\'c5\'b4\'f3\'be\'b5\'ce\'bb\'d6\'c3</li>\par
+                            <li>\'ca\'c2\'bc\'fe\'bc\'e0\'cc\'fd\'ca\'b5\'cf\'d6\'bc\'fc\'c5\'cc\'ba\'cd\'ca\'f3\'b1\'ea\'bd\'bb\'bb\'a5</li>\par
+                        </ul>\par
+                    </div>\par
+                    <div class="slide-number">2 / 5</div>\par
+                </div>\par
+                \par
+                <!-- \'bb\'c3\'b5\'c6\'c6\'ac3 -->\par
+                <div class="slide" id="slide-3">\par
+                    <h2 class="slide-title">\'be\'db\'b9\'e2\'b5\'c6\'d3\'eb\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb</h2>\par
+                    <div class="slide-content">\par
+                        <h3>\'be\'db\'b9\'e2\'b5\'c6\'b9\'a6\'c4\'dc</h3>\par
+                        <ul>\par
+                            <li>\'b8\'fa\'cb\'e6\'ca\'f3\'b1\'ea\'b5\'c4\'b8\'df\'c1\'c1\'d4\'b2\'d0\'ce\'c7\'f8\'d3\'f2</li>\par
+                            <li>\'bf\'c9\'b5\'f7\'bd\'da\'b4\'f3\'d0\'a1\'a3\'a8150-500px\'a3\'a9\'ba\'cd\'c1\'c1\'b6\'c8\'a3\'a85%-30%\'a3\'a9</li>\par
+                            <li>\'bb\'ec\'ba\'cf\'c4\'a3\'ca\'bd\'cf\'d4\'ca\'be\'a3\'ac\'b2\'bb\'d3\'b0\'cf\'ec\'b5\'d7\'b2\'e3\'c4\'da\'c8\'dd</li>\par
+                            <li>\'d2\'bb\'bc\'fc\'bf\'aa\'b9\'d8\'b9\'a6\'c4\'dc</li>\par
+                        </ul>\par
+                        <h3>\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'b9\'a6\'c4\'dc</h3>\par
+                        <ul>\par
+                            <li>\'b5\'e3\'bb\'f7\'ca\'f3\'b1\'ea\'d7\'f3\'bc\'fc\'cf\'d4\'ca\'be\'ba\'ec\'c9\'ab\'bc\'a4\'b9\'e2\'b5\'e3</li>\par
+                            <li>\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'d3\'d0\'ba\'ec\'c9\'ab\'b9\'e2\'d4\'ce\'d0\'a7\'b9\'fb</li>\par
+                            <li>\'bf\'c9\'cf\'d4\'ca\'be\'bc\'a4\'b9\'e2\'b9\'ec\'bc\'a3\'cf\'df</li>\par
+                            <li>\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'d7\'d4\'b6\'af\'b5\'ad\'b3\'f6\'d0\'a7\'b9\'fb</li>\par
+                            <li>\'d6\'a7\'b3\'d6\'bc\'fc\'c5\'cc\'bf\'ec\'bd\'dd\'bc\'fc\'c7\'d0\'bb\'bb\'bc\'a4\'b9\'e2\'c4\'a3\'ca\'bd</li>\par
+                        </ul>\par
+                        <h3>\'d7\'e9\'ba\'cf\'ca\'b9\'d3\'c3</h3>\par
+                        <ul>\par
+                            <li>\'bf\'c9\'d2\'d4\'cd\'ac\'ca\'b1\'ca\'b9\'d3\'c3\'b7\'c5\'b4\'f3\'be\'b5\'ba\'cd\'be\'db\'b9\'e2\'b5\'c6</li>\par
+                            <li>\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'bf\'c9\'d4\'da\'c8\'ce\'ba\'ce\'c4\'a3\'ca\'bd\'cf\'c2\'ca\'b9\'d3\'c3</li>\par
+                            <li>\'b6\'e0\'d6\'d6\'d0\'a7\'b9\'fb\'d7\'e9\'ba\'cf\'a3\'ac\'d4\'f6\'c7\'bf\'d1\'dd\'ca\'be\'d0\'a7\'b9\'fb</li>\par
+                        </ul>\par
+                    </div>\par
+                    <div class="slide-number">3 / 5</div>\par
+                </div>\par
+                \par
+                <!-- \'bb\'c3\'b5\'c6\'c6\'ac4 -->\par
+                <div class="slide" id="slide-4">\par
+                    <h2 class="slide-title">\'b7\'ad\'d2\'b3\'bf\'d8\'d6\'c6\'d3\'eb\'c9\'e8\'d6\'c3</h2>\par
+                    <div class="slide-content">\par
+                        <h3>\'b7\'ad\'d2\'b3\'bf\'d8\'d6\'c6</h3>\par
+                        <ul>\par
+                            <li>\'ca\'b9\'d3\'c3\'d7\'f3\'d3\'d2\'bc\'fd\'cd\'b7\'bc\'fc\'bd\'f8\'d0\'d0\'b7\'ad\'d2\'b3</li>\par
+                            <li>\'b5\'e3\'bb\'f7\'bf\'d8\'d6\'c6\'c3\'e6\'b0\'e5\'b5\'c4\'c9\'cf\'d2\'bb\'d2\'b3/\'cf\'c2\'d2\'bb\'d2\'b3\'b0\'b4\'c5\'a5</li>\par
+                            <li>\'b7\'ad\'d2\'b3\'ca\'b1\'d3\'d0\'c6\'bd\'bb\'ac\'b9\'fd\'b6\'c9\'b6\'af\'bb\'ad</li>\par
+                            <li>\'cf\'d4\'ca\'be\'b5\'b1\'c7\'b0\'d2\'b3\'c2\'eb\'ba\'cd\'d7\'dc\'d2\'b3\'ca\'fd</li>\par
+                        </ul>\par
+                        <h3>\'d7\'d4\'b6\'a8\'d2\'e5\'c9\'e8\'d6\'c3</h3>\par
+                        <ul>\par
+                            <li>\'ca\'b5\'ca\'b1\'b5\'f7\'bd\'da\'b7\'c5\'b4\'f3\'be\'b5\'b2\'ce\'ca\'fd</li>\par
+                            <li>\'ca\'b5\'ca\'b1\'b5\'f7\'bd\'da\'be\'db\'b9\'e2\'b5\'c6\'b2\'ce\'ca\'fd</li>\par
+                            <li>\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3\'bc\'b4\'ca\'b1\'c9\'fa\'d0\'a7</li>\par
+                            <li>\'d7\'b4\'cc\'ac\'c0\'b8\'cf\'d4\'ca\'be\'b5\'b1\'c7\'b0\'c4\'a3\'ca\'bd</li>\par
+                            <li>\'d2\'bb\'bc\'fc\'d6\'d8\'d6\'c3\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3\'b9\'a6\'c4\'dc</li>\par
+                        </ul>\par
+                        <h3>\'bc\'fc\'c5\'cc\'bf\'ec\'bd\'dd\'bc\'fc</h3>\par
+                        <ul>\par
+                            <li>M\'bc\'fc\'a3\'ba\'c7\'d0\'bb\'bb\'b7\'c5\'b4\'f3\'be\'b5\'bf\'aa\'b9\'d8</li>\par
+                            <li>\'bf\'d5\'b8\'f1\'bc\'fc\'a3\'ba\'c7\'d0\'bb\'bb\'be\'db\'b9\'e2\'b5\'c6\'bf\'aa\'b9\'d8</li>\par
+                            <li>L\'bc\'fc\'a3\'ba\'c7\'d0\'bb\'bb\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'c4\'a3\'ca\'bd</li>\par
+                            <li>\'d7\'f3\'d3\'d2\'bc\'fd\'cd\'b7\'bc\'fc\'a3\'ba\'b7\'ad\'d2\'b3\'bf\'d8\'d6\'c6</li>\par
+                            <li>ESC\'bc\'fc\'a3\'ba\'b9\'d8\'b1\'d5\'cb\'f9\'d3\'d0\'d0\'a7\'b9\'fb</li>\par
+                            <li>R\'bc\'fc\'a3\'ba\'d6\'d8\'d6\'c3\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3</li>\par
+                        </ul>\par
+                    </div>\par
+                    <div class="slide-number">4 / 5</div>\par
+                </div>\par
+                \par
+                <!-- \'bb\'c3\'b5\'c6\'c6\'ac5 -->\par
+                <div class="slide" id="slide-5">\par
+                    <h2 class="slide-title">\'b8\'df\'bc\'b6\'b9\'a6\'c4\'dc\'d3\'eb\'bc\'e6\'c8\'dd\'d0\'d4</h2>\par
+                    <div class="slide-content">\par
+                        <h3>\'b8\'df\'bc\'b6\'b9\'a6\'c4\'dc</h3>\par
+                        <ul>\par
+                            <li>\'cf\'ec\'d3\'a6\'ca\'bd\'c9\'e8\'bc\'c6\'a3\'ac\'ca\'ca\'d3\'a6\'b2\'bb\'cd\'ac\'c6\'c1\'c4\'bb\'b3\'df\'b4\'e7</li>\par
+                            <li>\'b4\'a5\'c3\'fe\'c6\'c1\'c9\'e8\'b1\'b8\'d6\'a7\'b3\'d6</li>\par
+                            <li>\'bf\'d8\'d6\'c6\'c3\'e6\'b0\'e5\'bf\'c9\'d5\'db\'b5\'fe\'a3\'ac\'bd\'da\'ca\'a1\'c6\'c1\'c4\'bb\'bf\'d5\'bc\'e4</li>\par
+                            <li>\'ca\'b5\'ca\'b1\'b7\'c5\'b4\'f3\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da</li>\par
+                            <li>\'c6\'bd\'bb\'ac\'b5\'c4\'b6\'af\'bb\'ad\'b9\'fd\'b6\'c9\'d0\'a7\'b9\'fb</li>\par
+                        </ul>\par
+                        <h3>\'bc\'bc\'ca\'f5\'cf\'b8\'bd\'da</h3>\par
+                        <ul>\par
+                            <li>\'ca\'b9\'d3\'c3\'b4\'bfHTML5\'a1\'a2CSS3\'ba\'cdJavaScript\'ca\'b5\'cf\'d6</li>\par
+                            <li>\'ce\'de\'d0\'e8\'c8\'ce\'ba\'ce\'cd\'e2\'b2\'bf\'bf\'e2\'bb\'f2\'b2\'e5\'bc\'fe</li>\par
+                            <li>\'b8\'df\'d0\'d4\'c4\'dc\'e4\'d6\'c8\'be\'a3\'ac\'b5\'cd\'d7\'ca\'d4\'b4\'d5\'bc\'d3\'c3</li>\par
+                            <li>\'cf\'d6\'b4\'fa\'e4\'af\'c0\'c0\'c6\'f7\'bc\'e6\'c8\'dd\'a3\'a8Chrome, Firefox, Edge, Safari\'a3\'a9</li>\par
+                            <li>\'d6\'a7\'b3\'d6\'ca\'d3\'cd\'f8\'c4\'a4\'b5\'c8\'b8\'df\'b7\'d6\'b1\'e6\'c2\'ca\'c6\'c1\'c4\'bb</li>\par
+                        </ul>\par
+                        <h3>\'ca\'ca\'d3\'c3\'bb\'b7\'be\'b3</h3>\par
+                        <ul>\par
+                            <li>\'d4\'da\'cf\'df\'bd\'cc\'d3\'fd\'c6\'bd\'cc\'a8</li>\par
+                            <li>\'c6\'f3\'d2\'b5\'bb\'e1\'d2\'e9\'cf\'b5\'cd\'b3</li>\par
+                            <li>\'b2\'fa\'c6\'b7\'b7\'a2\'b2\'bc\'bb\'e1</li>\par
+                            <li>\'d1\'a7\'ca\'f5\'b1\'a8\'b8\'e6</li>\par
+                            <li>\'d4\'b6\'b3\'cc\'d0\'ad\'d7\'f7\'b9\'a4\'be\'df</li>\par
+                        </ul>\par
+                    </div>\par
+                    <div class="slide-number">5 / 5</div>\par
+                </div>\par
+            </div>\par
+            \par
+            <div class="instructions">\par
+                \'ca\'b9\'d3\'c3\'cb\'b5\'c3\'f7\'a3\'ba\'d2\'c6\'b6\'af\'ca\'f3\'b1\'ea\'bf\'d8\'d6\'c6\'b7\'c5\'b4\'f3\'be\'b5\'ba\'cd\'be\'db\'b9\'e2\'b5\'c6\'ce\'bb\'d6\'c3 | \'b5\'e3\'bb\'f7\'ca\'f3\'b1\'ea\'cf\'d4\'ca\'be\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb | \par
+                \'ca\'b9\'d3\'c3 <kbd>\'a1\'fb</kbd> <kbd>\'a1\'fa</kbd> \'b7\'ad\'d2\'b3 | \'b0\'b4 <kbd>M</kbd> \'c7\'d0\'bb\'bb\'b7\'c5\'b4\'f3\'be\'b5 | \'b0\'b4 <kbd>\'bf\'d5\'b8\'f1\'bc\'fc</kbd> \'c7\'d0\'bb\'bb\'be\'db\'b9\'e2\'b5\'c6 | \'b0\'b4 <kbd>L</kbd> \'c7\'d0\'bb\'bb\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\par
+            </div>\par
+        </div>\par
+    </div>\par
+\par
+    <script>\par
+        document.addEventListener('DOMContentLoaded', function() \{\par
+            // \'bb\'f1\'c8\'a1DOM\'d4\'aa\'cb\'d8\par
+            const presentationArea = document.getElementById('presentation-area');\par
+            const magnifier = document.getElementById('magnifier');\par
+            const magnifierGlass = document.getElementById('magnifier-glass');\par
+            const magnifierPreview = document.getElementById('magnifier-preview');\par
+            const spotlight = document.getElementById('spotlight');\par
+            const laserPointer = document.getElementById('laser-pointer');\par
+            const magnifierSizeSlider = document.getElementById('magnifier-size-slider');\par
+            const magnifierZoomSlider = document.getElementById('magnifier-zoom-slider');\par
+            const spotlightSizeSlider = document.getElementById('spotlight-size-slider');\par
+            const spotlightBrightnessSlider = document.getElementById('spotlight-brightness-slider');\par
+            const magnifierSizeValue = document.getElementById('magnifier-size-value');\par
+            const magnifierZoomValue = document.getElementById('magnifier-zoom-value');\par
+            const spotlightSizeValue = document.getElementById('spotlight-size-value');\par
+            const spotlightBrightnessValue = document.getElementById('spotlight-brightness-value');\par
+            const prevSlideBtn = document.getElementById('prev-slide');\par
+            const nextSlideBtn = document.getElementById('next-slide');\par
+            const toggleMagnifierBtn = document.getElementById('toggle-magnifier');\par
+            const toggleSpotlightBtn = document.getElementById('toggle-spotlight');\par
+            const toggleLaserBtn = document.getElementById('toggle-laser');\par
+            const resetAllBtn = document.getElementById('reset-all');\par
+            const powerBtn = document.getElementById('power-btn');\par
+            const togglePanelBtn = document.getElementById('toggle-panel');\par
+            const controlPanel = document.getElementById('control-panel');\par
+            const slides = document.querySelectorAll('.slide');\par
+            const slideNumberElement = document.getElementById('slide-number');\par
+            const totalSlidesElement = document.getElementById('total-slides');\par
+            const magnifierStatus = document.getElementById('magnifier-status');\par
+            const spotlightStatus = document.getElementById('spotlight-status');\par
+            const laserStatus = document.getElementById('laser-status');\par
+            \par
+            // \'d7\'b4\'cc\'ac\'b1\'e4\'c1\'bf\par
+            let currentSlide = 0;\par
+            let magnifierEnabled = false;\par
+            let spotlightEnabled = true;\par
+            let laserEnabled = false;\par
+            let laserMode = false;\par
+            let laserTimeout = null;\par
+            let laserLine = null;\par
+            let lastMouseX = 0;\par
+            let lastMouseY = 0;\par
+            let isPowerOn = true;\par
+            let canvas = null;\par
+            let ctx = null;\par
+            \par
+            // \'b3\'f5\'ca\'bc\'bb\'af\par
+            totalSlidesElement.textContent = slides.length;\par
+            updateSlide();\par
+            initCanvas();\par
+            \par
+            // \'b3\'f5\'ca\'bc\'bb\'afCanvas\'d3\'c3\'d3\'da\'b7\'c5\'b4\'f3\'be\'b5\'d0\'a7\'b9\'fb\par
+            function initCanvas() \{\par
+                canvas = document.createElement('canvas');\par
+                ctx = canvas.getContext('2d');\par
+                canvas.width = presentationArea.offsetWidth;\par
+                canvas.height = presentationArea.offsetHeight;\par
+            \}\par
+            \par
+            // \'b4\'b4\'bd\'a8\'bc\'a4\'b9\'e2\'cf\'df\par
+            function createLaserLine() \{\par
+                if (laserLine) \{\par
+                    laserLine.remove();\par
+                \}\par
+                laserLine = document.createElement('div');\par
+                laserLine.className = 'laser-line';\par
+                presentationArea.appendChild(laserLine);\par
+                return laserLine;\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'b7\'c5\'b4\'f3\'be\'b5\'ce\'bb\'d6\'c3\'ba\'cd\'c4\'da\'c8\'dd\par
+            function updateMagnifier(x, y) \{\par
+                if (!magnifierEnabled) return;\par
+                \par
+                // \'b8\'fc\'d0\'c2\'b7\'c5\'b4\'f3\'be\'b5\'ce\'bb\'d6\'c3\par
+                magnifier.style.left = x + 'px';\par
+                magnifier.style.top = y + 'px';\par
+                \par
+                // \'b8\'fc\'d0\'c2\'b7\'c5\'b4\'f3\'be\'b5\'c4\'da\'c8\'dd\par
+                updateMagnifierContent(x, y);\par
+                \par
+                // \'b8\'fc\'d0\'c2\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da\'c4\'da\'c8\'dd\par
+                updatePreviewContent(x, y);\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'b7\'c5\'b4\'f3\'be\'b5\'c4\'da\'c8\'dd\par
+            function updateMagnifierContent(x, y) \{\par
+                // \'bb\'f1\'c8\'a1\'b7\'c5\'b4\'f3\'be\'b5\'b3\'df\'b4\'e7\'ba\'cd\'cb\'f5\'b7\'c5\'b1\'b6\'ca\'fd\par
+                const magnifierSize = parseInt(magnifierSizeSlider.value);\par
+                const zoomLevel = parseInt(magnifierZoomSlider.value) / 10;\par
+                \par
+                // \'bc\'c6\'cb\'e3\'b7\'c5\'b4\'f3\'be\'b5\'b2\'a3\'c1\'a7\'b5\'c4\'c6\'ab\'d2\'c6\'c1\'bf\par
+                const offsetX = (x - magnifierSize / 2) * (1 - 1/zoomLevel);\par
+                const offsetY = (y - magnifierSize / 2) * (1 - 1/zoomLevel);\par
+                \par
+                // \'c9\'e8\'d6\'c3\'b7\'c5\'b4\'f3\'be\'b5\'b2\'a3\'c1\'a7\'b5\'c4\'ce\'bb\'d6\'c3\'ba\'cd\'cb\'f5\'b7\'c5\par
+                magnifierGlass.style.transform = `scale($\{zoomLevel\}) translate($\{offsetX/zoomLevel\}px, $\{offsetY/zoomLevel\}px)`;\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da\'c4\'da\'c8\'dd\par
+            function updatePreviewContent(x, y) \{\par
+                // \'bb\'f1\'c8\'a1\'b7\'c5\'b4\'f3\'be\'b5\'b3\'df\'b4\'e7\'ba\'cd\'cb\'f5\'b7\'c5\'b1\'b6\'ca\'fd\par
+                const magnifierSize = parseInt(magnifierSizeSlider.value);\par
+                const zoomLevel = parseInt(magnifierZoomSlider.value) / 10;\par
+                \par
+                // \'bc\'c6\'cb\'e3\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da\'d6\'d0\'b5\'c4\'c6\'ab\'d2\'c6\'c1\'bf\par
+                const previewSize = 120; // \'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da\'b4\'f3\'d0\'a1\par
+                const offsetX = (x - magnifierSize / 2) * (1 - 1/zoomLevel);\par
+                const offsetY = (y - magnifierSize / 2) * (1 - 1/zoomLevel);\par
+                \par
+                // \'b4\'b4\'bd\'a8\'c1\'d9\'ca\'b1\'d4\'aa\'cb\'d8\'c0\'b4\'cf\'d4\'ca\'be\'b7\'c5\'b4\'f3\'c4\'da\'c8\'dd\par
+                const previewContent = document.createElement('div');\par
+                previewContent.className = 'magnifier-preview-content';\par
+                previewContent.style.transform = `scale($\{zoomLevel\}) translate($\{offsetX/zoomLevel\}px, $\{offsetY/zoomLevel\}px)`;\par
+                previewContent.style.backgroundImage = `url($\{getSlideBackground()\})`;\par
+                previewContent.style.backgroundSize = `$\{presentationArea.offsetWidth\}px $\{presentationArea.offsetHeight\}px`;\par
+                previewContent.style.backgroundPosition = `-$\{x - magnifierSize/2\}px -$\{y - magnifierSize/2\}px`;\par
+                \par
+                // \'c7\'e5\'bf\'d5\'d4\'a4\'c0\'c0\'b4\'b0\'bf\'da\'b2\'a2\'cc\'ed\'bc\'d3\'d0\'c2\'c4\'da\'c8\'dd\par
+                magnifierPreview.innerHTML = '<div class="magnifier-preview-label">\'b7\'c5\'b4\'f3\'d4\'a4\'c0\'c0</div>';\par
+                magnifierPreview.appendChild(previewContent);\par
+            \}\par
+            \par
+            // \'bb\'f1\'c8\'a1\'bb\'c3\'b5\'c6\'c6\'ac\'b1\'b3\'be\'b0\'a3\'a8\'bc\'f2\'bb\'af\'b0\'e6\'b1\'be\'a3\'ac\'ca\'b5\'bc\'ca\'d3\'a6\'d3\'c3\'d6\'d0\'bf\'c9\'c4\'dc\'d0\'e8\'d2\'aa\'b8\'fc\'b8\'b4\'d4\'d3\'b5\'c4\'ca\'b5\'cf\'d6\'a3\'a9\par
+            function getSlideBackground() \{\par
+                // \'d5\'e2\'c0\'ef\'b7\'b5\'bb\'d8\'d2\'bb\'b8\'f6\'d1\'d5\'c9\'ab\'d7\'f7\'ce\'aa\'b1\'b3\'be\'b0\'a3\'ac\'ca\'b5\'bc\'ca\'d3\'a6\'d3\'c3\'d6\'d0\'bf\'c9\'c4\'dc\'d0\'e8\'d2\'aa\'b2\'b6\'bb\'f1\'c6\'c1\'c4\'bb\'c4\'da\'c8\'dd\par
+                return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzBhMTEyMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFlMjYzNSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZykiLz48L3N2Zz4=';\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'be\'db\'b9\'e2\'b5\'c6\'ce\'bb\'d6\'c3\par
+            function updateSpotlightPosition(x, y) \{\par
+                if (!spotlightEnabled) return;\par
+                \par
+                spotlight.style.left = x + 'px';\par
+                spotlight.style.top = y + 'px';\par
+                \par
+                // \'c8\'e7\'b9\'fb\'bc\'a4\'b9\'e2\'c4\'a3\'ca\'bd\'bf\'aa\'c6\'f4\'a3\'ac\'b8\'fc\'d0\'c2\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\'ce\'bb\'d6\'c3\par
+                if (laserMode) \{\par
+                    updateLaserPointer(x, y);\par
+                \}\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\par
+            function updateLaserPointer(x, y) \{\par
+                if (!laserEnabled) return;\par
+                \par
+                laserPointer.style.left = x + 'px';\par
+                laserPointer.style.top = y + 'px';\par
+                laserPointer.style.opacity = '1';\par
+                \par
+                // \'c7\'e5\'b3\'fd\'d6\'ae\'c7\'b0\'b5\'c4\'b5\'ad\'b3\'f6\'b6\'a8\'ca\'b1\'c6\'f7\par
+                if (laserTimeout) \{\par
+                    clearTimeout(laserTimeout);\par
+                \}\par
+                \par
+                // \'c9\'e8\'d6\'c3\'d0\'c2\'b5\'c4\'b5\'ad\'b3\'f6\'b6\'a8\'ca\'b1\'c6\'f7\par
+                laserTimeout = setTimeout(() => \{\par
+                    laserPointer.style.opacity = '0';\par
+                    if (laserLine) \{\par
+                        laserLine.style.opacity = '0';\par
+                    \}\par
+                \}, 500);\par
+                \par
+                // \'b8\'fc\'d0\'c2\'bc\'a4\'b9\'e2\'cf\'df\par
+                if (lastMouseX && lastMouseY) \{\par
+                    const dx = x - lastMouseX;\par
+                    const dy = y - lastMouseY;\par
+                    const distance = Math.sqrt(dx * dx + dy * dy);\par
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;\par
+                    \par
+                    if (distance > 5) \{ // \'b1\'dc\'c3\'e2\'b6\'b6\'b6\'af\par
+                        const line = createLaserLine();\par
+                        line.style.width = distance + 'px';\par
+                        line.style.left = lastMouseX + 'px';\par
+                        line.style.top = lastMouseY + 'px';\par
+                        line.style.transform = `rotate($\{angle\}deg)`;\par
+                        line.style.opacity = '0.6';\par
+                        \par
+                        // \'b5\'ad\'b3\'f6\'bc\'a4\'b9\'e2\'cf\'df\par
+                        setTimeout(() => \{\par
+                            if (line) line.style.opacity = '0';\par
+                        \}, 300);\par
+                    \}\par
+                \}\par
+                \par
+                lastMouseX = x;\par
+                lastMouseY = y;\par
+            \}\par
+            \par
+            // \'ca\'f3\'b1\'ea\'d2\'c6\'b6\'af\'ca\'c2\'bc\'fe\par
+            presentationArea.addEventListener('mousemove', (e) => \{\par
+                updateMagnifier(e.clientX, e.clientY);\par
+                updateSpotlightPosition(e.clientX, e.clientY);\par
+            \});\par
+            \par
+            // \'ca\'f3\'b1\'ea\'b5\'e3\'bb\'f7\'ca\'c2\'bc\'fe - \'cf\'d4\'ca\'be\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\par
+            presentationArea.addEventListener('mousedown', (e) => \{\par
+                if (e.button === 0) \{ // \'d7\'f3\'bc\'fc\'b5\'e3\'bb\'f7\par
+                    updateLaserPointer(e.clientX, e.clientY);\par
+                \}\par
+            \});\par
+            \par
+            // \'bf\'d8\'d6\'c6\'b7\'c5\'b4\'f3\'be\'b5\'b4\'f3\'d0\'a1\par
+            magnifierSizeSlider.addEventListener('input', function() \{\par
+                const size = this.value + 'px';\par
+                magnifier.style.width = size;\par
+                magnifier.style.height = size;\par
+                magnifierSizeValue.textContent = size;\par
+            \});\par
+            \par
+            // \'bf\'d8\'d6\'c6\'b7\'c5\'b4\'f3\'be\'b5\'cb\'f5\'b7\'c5\'b1\'b6\'ca\'fd\par
+            magnifierZoomSlider.addEventListener('input', function() \{\par
+                const zoomLevel = (this.value / 10).toFixed(1);\par
+                magnifierZoomValue.textContent = zoomLevel + 'x';\par
+            \});\par
+            \par
+            // \'bf\'d8\'d6\'c6\'be\'db\'b9\'e2\'b5\'c6\'b4\'f3\'d0\'a1\par
+            spotlightSizeSlider.addEventListener('input', function() \{\par
+                const size = this.value + 'px';\par
+                spotlight.style.width = size;\par
+                spotlight.style.height = size;\par
+                spotlightSizeValue.textContent = size;\par
+            \});\par
+            \par
+            // \'bf\'d8\'d6\'c6\'be\'db\'b9\'e2\'b5\'c6\'c1\'c1\'b6\'c8\par
+            spotlightBrightnessSlider.addEventListener('input', function() \{\par
+                const brightness = this.value / 100;\par
+                spotlight.style.background = `radial-gradient(circle, rgba(255, 255, 255, $\{brightness\}) 0%, rgba(255, 255, 255, 0) 70%)`;\par
+                spotlightBrightnessValue.textContent = brightness.toFixed(2);\par
+            \});\par
+            \par
+            // \'c9\'cf\'d2\'bb\'d2\'b3\par
+            prevSlideBtn.addEventListener('click', () => \{\par
+                if (currentSlide > 0) \{\par
+                    currentSlide--;\par
+                    updateSlide();\par
+                \}\par
+            \});\par
+            \par
+            // \'cf\'c2\'d2\'bb\'d2\'b3\par
+            nextSlideBtn.addEventListener('click', () => \{\par
+                if (currentSlide < slides.length - 1) \{\par
+                    currentSlide++;\par
+                    updateSlide();\par
+                \}\par
+            \});\par
+            \par
+            // \'c7\'d0\'bb\'bb\'b7\'c5\'b4\'f3\'be\'b5\'bf\'aa\'b9\'d8\par
+            toggleMagnifierBtn.addEventListener('click', () => \{\par
+                magnifierEnabled = !magnifierEnabled;\par
+                magnifier.style.display = magnifierEnabled ? 'block' : 'none';\par
+                magnifierStatus.textContent = magnifierEnabled ? '\'bf\'aa\'c6\'f4' : '\'b9\'d8\'b1\'d5';\par
+                magnifierPreview.style.display = magnifierEnabled ? 'flex' : 'none';\par
+                toggleMagnifierBtn.innerHTML = magnifierEnabled ? \par
+                    '<i class="fas fa-search-plus"></i> \'b9\'d8\'b1\'d5\'b7\'c5\'b4\'f3\'be\'b5' : \par
+                    '<i class="fas fa-search-plus"></i> \'bf\'aa\'c6\'f4\'b7\'c5\'b4\'f3\'be\'b5';\par
+                \par
+                // \'b8\'fc\'d0\'c2\'b9\'e2\'b1\'ea\'d1\'f9\'ca\'bd\par
+                presentationArea.style.cursor = magnifierEnabled ? 'none' : 'default';\par
+            \});\par
+            \par
+            // \'c7\'d0\'bb\'bb\'be\'db\'b9\'e2\'b5\'c6\'bf\'aa\'b9\'d8\par
+            toggleSpotlightBtn.addEventListener('click', () => \{\par
+                spotlightEnabled = !spotlightEnabled;\par
+                spotlight.style.opacity = spotlightEnabled ? '1' : '0';\par
+                spotlightStatus.textContent = spotlightEnabled ? '\'bf\'aa\'c6\'f4' : '\'b9\'d8\'b1\'d5';\par
+                toggleSpotlightBtn.innerHTML = spotlightEnabled ? \par
+                    '<i class="fas fa-lightbulb"></i> \'b9\'d8\'b1\'d5\'be\'db\'b9\'e2\'b5\'c6' : \par
+                    '<i class="fas fa-lightbulb"></i> \'bf\'aa\'c6\'f4\'be\'db\'b9\'e2\'b5\'c6';\par
+            \});\par
+            \par
+            // \'c7\'d0\'bb\'bb\'bc\'a4\'b9\'e2\'bf\'aa\'b9\'d8\par
+            toggleLaserBtn.addEventListener('click', () => \{\par
+                laserMode = !laserMode;\par
+                laserEnabled = laserMode;\par
+                laserStatus.textContent = laserMode ? '\'bf\'aa\'c6\'f4' : '\'b9\'d8\'b1\'d5';\par
+                toggleLaserBtn.innerHTML = laserMode ? \par
+                    '<i class="fas fa-mouse-pointer"></i> \'b9\'d8\'b1\'d5\'bc\'a4\'b9\'e2' : \par
+                    '<i class="fas fa-mouse-pointer"></i> \'bf\'aa\'c6\'f4\'bc\'a4\'b9\'e2';\par
+                \par
+                // \'c8\'e7\'b9\'fb\'b9\'d8\'b1\'d5\'bc\'a4\'b9\'e2\'a3\'ac\'d2\'fe\'b2\'d8\'bc\'a4\'b9\'e2\'d6\'b8\'d5\'eb\par
+                if (!laserMode) \{\par
+                    laserPointer.style.opacity = '0';\par
+                    if (laserLine) \{\par
+                        laserLine.style.opacity = '0';\par
+                    \}\par
+                \}\par
+            \});\par
+            \par
+            // \'d6\'d8\'d6\'c3\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3\par
+            resetAllBtn.addEventListener('click', resetAllSettings);\par
+            \par
+            // \'b5\'e7\'d4\'b4\'b0\'b4\'c5\'a5\par
+            powerBtn.addEventListener('click', () => \{\par
+                isPowerOn = !isPowerOn;\par
+                powerBtn.classList.toggle('on', isPowerOn);\par
+                \par
+                if (isPowerOn) \{\par
+                    // \'bf\'aa\'c6\'f4\'cb\'f9\'d3\'d0\'b9\'a6\'c4\'dc\par
+                    resetAllSettings();\par
+                \} else \{\par
+                    // \'b9\'d8\'b1\'d5\'cb\'f9\'d3\'d0\'b9\'a6\'c4\'dc\par
+                    magnifierEnabled = false;\par
+                    spotlightEnabled = false;\par
+                    laserMode = false;\par
+                    laserEnabled = false;\par
+                    \par
+                    magnifier.style.display = 'none';\par
+                    spotlight.style.opacity = '0';\par
+                    laserPointer.style.opacity = '0';\par
+                    magnifierPreview.style.display = 'none';\par
+                    \par
+                    magnifierStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                    spotlightStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                    laserStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                    \par
+                    toggleMagnifierBtn.innerHTML = '<i class="fas fa-search-plus"></i> \'bf\'aa\'c6\'f4\'b7\'c5\'b4\'f3\'be\'b5';\par
+                    toggleSpotlightBtn.innerHTML = '<i class="fas fa-lightbulb"></i> \'bf\'aa\'c6\'f4\'be\'db\'b9\'e2\'b5\'c6';\par
+                    toggleLaserBtn.innerHTML = '<i class="fas fa-mouse-pointer"></i> \'bf\'aa\'c6\'f4\'bc\'a4\'b9\'e2';\par
+                    \par
+                    presentationArea.style.cursor = 'default';\par
+                \}\par
+            \});\par
+            \par
+            // \'c7\'d0\'bb\'bb\'bf\'d8\'d6\'c6\'c3\'e6\'b0\'e5\'cf\'d4\'ca\'be\par
+            togglePanelBtn.addEventListener('click', () => \{\par
+                controlPanel.classList.toggle('hidden');\par
+                togglePanelBtn.innerHTML = controlPanel.classList.contains('hidden') ? \par
+                    '<i class="fas fa-sliders-h"></i>' : \par
+                    '<i class="fas fa-times"></i>';\par
+            \});\par
+            \par
+            // \'d6\'d8\'d6\'c3\'cb\'f9\'d3\'d0\'c9\'e8\'d6\'c3\par
+            function resetAllSettings() \{\par
+                // \'b7\'c5\'b4\'f3\'be\'b5\'c9\'e8\'d6\'c3\par
+                magnifierSizeSlider.value = 180;\par
+                magnifierZoomSlider.value = 18;\par
+                magnifier.style.width = '180px';\par
+                magnifier.style.height = '180px';\par
+                magnifierSizeValue.textContent = '180px';\par
+                magnifierZoomValue.textContent = '1.8x';\par
+                \par
+                // \'be\'db\'b9\'e2\'b5\'c6\'c9\'e8\'d6\'c3\par
+                spotlightSizeSlider.value = 300;\par
+                spotlightBrightnessSlider.value = 15;\par
+                spotlight.style.width = '300px';\par
+                spotlight.style.height = '300px';\par
+                spotlight.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 70%)';\par
+                spotlightSizeValue.textContent = '300px';\par
+                spotlightBrightnessValue.textContent = '0.15';\par
+                \par
+                // \'bf\'aa\'c6\'f4\'cb\'f9\'d3\'d0\'b9\'a6\'c4\'dc\par
+                magnifierEnabled = true;\par
+                spotlightEnabled = true;\par
+                laserMode = false;\par
+                laserEnabled = false;\par
+                \par
+                magnifier.style.display = 'block';\par
+                spotlight.style.opacity = '1';\par
+                laserPointer.style.opacity = '0';\par
+                magnifierPreview.style.display = 'flex';\par
+                \par
+                magnifierStatus.textContent = '\'bf\'aa\'c6\'f4';\par
+                spotlightStatus.textContent = '\'bf\'aa\'c6\'f4';\par
+                laserStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                \par
+                toggleMagnifierBtn.innerHTML = '<i class="fas fa-search-plus"></i> \'b9\'d8\'b1\'d5\'b7\'c5\'b4\'f3\'be\'b5';\par
+                toggleSpotlightBtn.innerHTML = '<i class="fas fa-lightbulb"></i> \'b9\'d8\'b1\'d5\'be\'db\'b9\'e2\'b5\'c6';\par
+                toggleLaserBtn.innerHTML = '<i class="fas fa-mouse-pointer"></i> \'bf\'aa\'c6\'f4\'bc\'a4\'b9\'e2';\par
+                \par
+                presentationArea.style.cursor = 'none';\par
+                \par
+                // \'bd\'ab\'be\'db\'b9\'e2\'b5\'c6\'ba\'cd\'b7\'c5\'b4\'f3\'be\'b5\'d2\'c6\'b6\'af\'b5\'bd\'d6\'d0\'d0\'c4\'ce\'bb\'d6\'c3\par
+                const centerX = window.innerWidth / 2;\par
+                const centerY = window.innerHeight / 2;\par
+                updateMagnifier(centerX, centerY);\par
+                updateSpotlightPosition(centerX, centerY);\par
+            \}\par
+            \par
+            // \'b8\'fc\'d0\'c2\'bb\'c3\'b5\'c6\'c6\'ac\'cf\'d4\'ca\'be\par
+            function updateSlide() \{\par
+                // \'d2\'fe\'b2\'d8\'cb\'f9\'d3\'d0\'bb\'c3\'b5\'c6\'c6\'ac\par
+                slides.forEach(slide => \{\par
+                    slide.classList.remove('active');\par
+                \});\par
+                \par
+                // \'cf\'d4\'ca\'be\'b5\'b1\'c7\'b0\'bb\'c3\'b5\'c6\'c6\'ac\par
+                slides[currentSlide].classList.add('active');\par
+                \par
+                // \'b8\'fc\'d0\'c2\'d2\'b3\'c2\'eb\'cf\'d4\'ca\'be\par
+                slideNumberElement.textContent = currentSlide + 1;\par
+                \par
+                // \'cc\'ed\'bc\'d3\'bb\'c3\'b5\'c6\'c6\'ac\'c7\'d0\'bb\'bb\'b6\'af\'bb\'ad\par
+                const slideContainer = document.querySelector('.slide-container');\par
+                slideContainer.style.transform = `translate(-50%, -50%) scale(0.98)`;\par
+                setTimeout(() => \{\par
+                    slideContainer.style.transform = `translate(-50%, -50%) scale(1)`;\par
+                \}, 50);\par
+            \}\par
+            \par
+            // \'bc\'fc\'c5\'cc\'bf\'d8\'d6\'c6\par
+            document.addEventListener('keydown', (e) => \{\par
+                switch(e.key) \{\par
+                    case 'ArrowLeft':\par
+                        if (currentSlide > 0) \{\par
+                            currentSlide--;\par
+                            updateSlide();\par
+                        \}\par
+                        break;\par
+                    case 'ArrowRight':\par
+                        if (currentSlide < slides.length - 1) \{\par
+                            currentSlide++;\par
+                            updateSlide();\par
+                        \}\par
+                        break;\par
+                    case 'm':\par
+                    case 'M':\par
+                        e.preventDefault();\par
+                        toggleMagnifierBtn.click();\par
+                        break;\par
+                    case ' ':\par
+                        e.preventDefault();\par
+                        toggleSpotlightBtn.click();\par
+                        break;\par
+                    case 'l':\par
+                    case 'L':\par
+                        toggleLaserBtn.click();\par
+                        break;\par
+                    case 'Escape':\par
+                        magnifierEnabled = false;\par
+                        spotlightEnabled = false;\par
+                        laserMode = false;\par
+                        laserEnabled = false;\par
+                        \par
+                        magnifier.style.display = 'none';\par
+                        spotlight.style.opacity = '0';\par
+                        laserPointer.style.opacity = '0';\par
+                        magnifierPreview.style.display = 'none';\par
+                        \par
+                        magnifierStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                        spotlightStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                        laserStatus.textContent = '\'b9\'d8\'b1\'d5';\par
+                        \par
+                        toggleMagnifierBtn.innerHTML = '<i class="fas fa-search-plus"></i> \'bf\'aa\'c6\'f4\'b7\'c5\'b4\'f3\'be\'b5';\par
+                        toggleSpotlightBtn.innerHTML = '<i class="fas fa-lightbulb"></i> \'bf\'aa\'c6\'f4\'be\'db\'b9\'e2\'b5\'c6';\par
+                        toggleLaserBtn.innerHTML = '<i class="fas fa-mouse-pointer"></i> \'bf\'aa\'c6\'f4\'bc\'a4\'b9\'e2';\par
+                        \par
+                        presentationArea.style.cursor = 'default';\par
+                        break;\par
+                    case 'r':\par
+                    case 'R':\par
+                        e.preventDefault();\par
+                        resetAllSettings();\par
+                        break;\par
+                \}\par
+            \});\par
+            \par
+            // \'b4\'a5\'c3\'fe\'c6\'c1\'d6\'a7\'b3\'d6\par
+            presentationArea.addEventListener('touchmove', (e) => \{\par
+                e.preventDefault();\par
+                const touch = e.touches[0];\par
+                updateMagnifier(touch.clientX, touch.clientY);\par
+                updateSpotlightPosition(touch.clientX, touch.clientY);\par
+            \});\par
+            \par
+            presentationArea.addEventListener('touchstart', (e) => \{\par
+                e.preventDefault();\par
+                const touch = e.touches[0];\par
+                updateLaserPointer(touch.clientX, touch.clientY);\par
+            \});\par
+            \par
+            // \'b4\'b0\'bf\'da\'b4\'f3\'d0\'a1\'b1\'e4\'bb\'af\'ca\'b1\'d6\'d8\'d0\'c2\'b6\'a8\'ce\'bb\par
+            window.addEventListener('resize', () => \{\par
+                // \'d6\'d8\'d0\'c2\'b3\'f5\'ca\'bc\'bb\'afCanvas\par
+                initCanvas();\par
+                \par
+                // \'bd\'ab\'b7\'c5\'b4\'f3\'be\'b5\'ba\'cd\'be\'db\'b9\'e2\'b5\'c6\'d6\'c3\'d3\'da\'d6\'d0\'d0\'c4\'ce\'bb\'d6\'c3\par
+                const centerX = window.innerWidth / 2;\par
+                const centerY = window.innerHeight / 2;\par
+                updateMagnifier(centerX, centerY);\par
+                updateSpotlightPosition(centerX, centerY);\par
+            \});\par
+            \par
+            // \'b3\'f5\'ca\'bc\'bb\'af\'b7\'c5\'b4\'f3\'be\'b5\'ba\'cd\'be\'db\'b9\'e2\'b5\'c6\'ce\'bb\'d6\'c3\'ce\'aa\'c6\'c1\'c4\'bb\'d6\'d0\'d0\'c4\par
+            const centerX = window.innerWidth / 2;\par
+            const centerY = window.innerHeight / 2;\par
+            updateMagnifier(centerX, centerY);\par
+            updateSpotlightPosition(centerX, centerY);\par
+            \par
+            // \'b3\'f5\'ca\'bc\'d7\'b4\'cc\'ac\par
+            resetAllSettings();\par
+        \});\par
+    </script>\par
+</body>\par
+</html>\par
+}
+ 
