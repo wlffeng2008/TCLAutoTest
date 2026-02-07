@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/a-left.png</file>
+        <file>images/a-right.png</file>
+        <file>images/BoxChecked.png</file>
+        <file>images/BoxUncheck.png</file>
+        <file>images/down-arrow.png</file>
+        <file>images/x.png</file>
+    </qresource>
+</RCC>

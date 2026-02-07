@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "gencomport.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -19,5 +21,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    GenComport *m_COM0 = nullptr;
+    GenComport *m_COM1 = nullptr;
 };
 #endif // MAINWINDOW_H
