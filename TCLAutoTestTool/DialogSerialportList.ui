@@ -18,7 +18,7 @@
     <rect>
      <x>11</x>
      <y>310</y>
-     <width>80</width>
+     <width>91</width>
      <height>30</height>
     </rect>
    </property>
@@ -26,7 +26,7 @@
     <string>刷新</string>
    </property>
   </widget>
-  <widget class="QTableView" name="tableView_serialportList">
+  <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
      <x>11</x>
@@ -40,10 +40,10 @@
 color: rgb(0, 0, 0);</string>
    </property>
    <property name="selectionMode">
-    <enum>QAbstractItemView::SingleSelection</enum>
+    <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
    </property>
    <property name="selectionBehavior">
-    <enum>QAbstractItemView::SelectRows</enum>
+    <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
    </property>
    <property name="cornerButtonEnabled">
     <bool>false</bool>
@@ -51,6 +51,19 @@ color: rgb(0, 0, 0);</string>
    <attribute name="verticalHeaderVisible">
     <bool>false</bool>
    </attribute>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>310</y>
+     <width>91</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
   </widget>
  </widget>
  <resources/>

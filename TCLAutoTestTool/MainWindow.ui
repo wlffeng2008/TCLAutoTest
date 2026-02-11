@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>28</x>
-      <y>108</y>
+      <y>122</y>
       <width>747</width>
       <height>121</height>
      </rect>
@@ -262,7 +262,7 @@ background-color: rgb(255, 255, 0);</string>
       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineEditBase0">
      <property name="geometry">
       <rect>
        <x>105</x>
@@ -272,7 +272,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineEditBase1">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -282,7 +282,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
+    <widget class="QLineEdit" name="lineEditBase2">
      <property name="geometry">
       <rect>
        <x>520</x>
@@ -292,7 +292,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
+    <widget class="QLineEdit" name="lineEditBase6">
      <property name="geometry">
       <rect>
        <x>520</x>
@@ -302,7 +302,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_5">
+    <widget class="QLineEdit" name="lineEditBase3">
      <property name="geometry">
       <rect>
        <x>666</x>
@@ -312,7 +312,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_6">
+    <widget class="QLineEdit" name="lineEditBase7">
      <property name="geometry">
       <rect>
        <x>666</x>
@@ -322,7 +322,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_7">
+    <widget class="QLineEdit" name="lineEditBase11">
      <property name="geometry">
       <rect>
        <x>666</x>
@@ -332,7 +332,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_8">
+    <widget class="QLineEdit" name="lineEditBase10">
      <property name="geometry">
       <rect>
        <x>520</x>
@@ -342,7 +342,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_9">
+    <widget class="QLineEdit" name="lineEditBase9">
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -352,7 +352,7 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_10">
+    <widget class="QLineEdit" name="lineEditBase8">
      <property name="geometry">
       <rect>
        <x>105</x>
@@ -362,25 +362,22 @@ background-color: rgb(255, 255, 0);</string>
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
-     <property name="geometry">
-      <rect>
-       <x>105</x>
-       <y>55</y>
-       <width>70</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="maxVisibleItems">
-      <number>30</number>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_11">
+    <widget class="QLineEdit" name="lineEditBase5">
      <property name="geometry">
       <rect>
        <x>320</x>
        <y>55</y>
        <width>67</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditBase4">
+     <property name="geometry">
+      <rect>
+       <x>105</x>
+       <y>58</y>
+       <width>70</width>
        <height>21</height>
       </rect>
      </property>
@@ -390,7 +387,7 @@ background-color: rgb(255, 255, 0);</string>
     <property name="geometry">
      <rect>
       <x>28</x>
-      <y>234</y>
+      <y>248</y>
       <width>747</width>
       <height>119</height>
      </rect>
@@ -582,7 +579,7 @@ background-color: rgb(255, 255, 0);</string>
       <string>一键默认</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="comboBoxTV0">
      <property name="geometry">
       <rect>
        <x>108</x>
@@ -625,7 +622,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="comboBoxTV1">
      <property name="geometry">
       <rect>
        <x>302</x>
@@ -683,7 +680,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_4">
+    <widget class="QComboBox" name="comboBoxTV2">
      <property name="geometry">
       <rect>
        <x>522</x>
@@ -711,7 +708,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_5">
+    <widget class="QComboBox" name="comboBoxTV6">
      <property name="geometry">
       <rect>
        <x>108</x>
@@ -734,7 +731,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_6">
+    <widget class="QComboBox" name="comboBoxTV4">
      <property name="geometry">
       <rect>
        <x>302</x>
@@ -767,7 +764,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_7">
+    <widget class="QComboBox" name="comboBoxTV3">
      <property name="geometry">
       <rect>
        <x>108</x>
@@ -800,7 +797,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_8">
+    <widget class="QComboBox" name="comboBoxTV8">
      <property name="geometry">
       <rect>
        <x>522</x>
@@ -833,7 +830,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_9">
+    <widget class="QComboBox" name="comboBoxTV7">
      <property name="geometry">
       <rect>
        <x>302</x>
@@ -856,7 +853,7 @@ background-color: rgb(255, 255, 0);</string>
       </property>
      </item>
     </widget>
-    <widget class="QComboBox" name="comboBox_10">
+    <widget class="QComboBox" name="comboBoxTV5">
      <property name="geometry">
       <rect>
        <x>522</x>
@@ -884,47 +881,18 @@ background-color: rgb(255, 255, 0);</string>
     <property name="geometry">
      <rect>
       <x>28</x>
-      <y>358</y>
+      <y>372</y>
       <width>747</width>
-      <height>209</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="title">
      <string>测试数据</string>
     </property>
-    <widget class="QLabel" name="label_34">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>53</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>亮度计:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>82</x>
-       <y>28</y>
-       <width>64</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0-Call</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_35">
      <property name="geometry">
       <rect>
-       <x>242</x>
+       <x>102</x>
        <y>30</y>
        <width>67</width>
        <height>16</height>
@@ -944,7 +912,7 @@ color: rgb(255, 0, 0);</string>
     <widget class="QLabel" name="label_36">
      <property name="geometry">
       <rect>
-       <x>384</x>
+       <x>288</x>
        <y>30</y>
        <width>86</width>
        <height>16</height>
@@ -964,7 +932,7 @@ color: rgb(255, 0, 0);</string>
     <widget class="QLineEdit" name="lineEdit_13">
      <property name="geometry">
       <rect>
-       <x>478</x>
+       <x>380</x>
        <y>28</y>
        <width>64</width>
        <height>21</height>
@@ -974,7 +942,7 @@ color: rgb(255, 0, 0);</string>
     <widget class="QLabel" name="label_37">
      <property name="geometry">
       <rect>
-       <x>166</x>
+       <x>26</x>
        <y>30</y>
        <width>65</width>
        <height>16</height>
@@ -982,329 +950,6 @@ color: rgb(255, 0, 0);</string>
      </property>
      <property name="text">
       <string>逻辑分析仪</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_38">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>64</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>全白亮度:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_39">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>全白色点x:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_40">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>116</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>全白色点y:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_41">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>140</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>L32亮度:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_42">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>164</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>Boost亮度:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_43">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>64</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>总数据量:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_44">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>140</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>L32电流:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_45">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>164</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>时序T1:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_46">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>90</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>头码:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_47">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>116</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>全白电流:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_48">
-     <property name="geometry">
-      <rect>
-       <x>175</x>
-       <y>188</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>时序T3:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_49">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>182</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>时序T4:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_50">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>84</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>尾码:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_51">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>134</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>Boost电流:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_52">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>58</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>数据传输时间:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_53">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>110</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>拐点电流:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_54">
-     <property name="geometry">
-      <rect>
-       <x>360</x>
-       <y>158</y>
-       <width>80</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>时序T2:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -1336,12 +981,12 @@ color: rgb(255, 0, 0);</string>
       <string>一键导出Excel</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_11">
+    <widget class="QComboBox" name="comboBoxSample">
      <property name="geometry">
       <rect>
-       <x>316</x>
+       <x>176</x>
        <y>28</y>
-       <width>63</width>
+       <width>71</width>
        <height>22</height>
       </rect>
      </property>
@@ -1372,6 +1017,350 @@ color: rgb(255, 0, 0);</string>
       </property>
      </item>
     </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>450</x>
+       <y>56</y>
+       <width>75</width>
+       <height>160</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLineEdit" name="lineEditOut20"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut21"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut22"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut23"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut24"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut25"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>355</x>
+       <y>56</y>
+       <width>89</width>
+       <height>158</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_52">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>数据传输时间:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_50">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>尾码:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_53">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>拐点电流:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_51">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Boost电流:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_54">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>时序T2:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_49">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>时序T4:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>265</x>
+       <y>56</y>
+       <width>79</width>
+       <height>160</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="lineEditOut10"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut11"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut12"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut13"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut14"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut15"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>175</x>
+       <y>56</y>
+       <width>83</width>
+       <height>158</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_43">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>总数据量:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_46">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>头码:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_47">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>全白电流:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_44">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>L32电流:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_45">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>时序T1:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_48">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>时序T3:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>102</x>
+       <y>62</y>
+       <width>69</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLineEdit" name="lineEditOut00"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut01"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut02"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut03"/>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditOut04"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>64</y>
+       <width>87</width>
+       <height>123</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QLabel" name="label_38">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>全白亮度:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_39">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>全白色点x:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_40">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>全白色点y:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_41">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>L32亮度:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_42">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>Boost亮度:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox0">
     <property name="geometry">
@@ -1379,7 +1368,7 @@ color: rgb(255, 0, 0);</string>
       <x>30</x>
       <y>10</y>
       <width>747</width>
-      <height>89</height>
+      <height>107</height>
      </rect>
     </property>
     <property name="title">
@@ -1409,6 +1398,9 @@ color: rgb(255, 0, 0);</string>
        <width>65</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>COM0</string>
@@ -1557,6 +1549,122 @@ color: rgb(255, 0, 0);</string>
        <string>115200</string>
       </property>
      </item>
+    </widget>
+    <widget class="QPushButton" name="pushButtonMeasure">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>13</y>
+       <width>81</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Measure</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxOpen0">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>20</y>
+       <width>80</width>
+       <height>19</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>打开串口</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStatus0">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>20</y>
+       <width>71</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="text">
+      <string>未打开</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelStatus1">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>50</y>
+       <width>71</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="text">
+      <string>未打开</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxOpen1">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>50</y>
+       <width>80</width>
+       <height>19</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>打开串口</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboBoxTVCmd">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>50</y>
+       <width>231</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maxVisibleItems">
+      <number>30</number>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonTVSend">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>42</y>
+       <width>81</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Send</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonZeroCall">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>13</y>
+       <width>64</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>0-Call</string>
+     </property>
     </widget>
    </widget>
   </widget>

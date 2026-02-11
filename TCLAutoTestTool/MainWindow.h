@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
+#include <QTcpSocket>
 
 #include "gencomport.h"
 
@@ -24,5 +26,11 @@ private:
 
     GenComport *m_COM0 = nullptr;
     GenComport *m_COM1 = nullptr;
+
+    QSettings *m_setting=nullptr;
+
+    QTcpSocket *s_sock=nullptr;
+    QStringList m_LmCmds;
+    void sendLmCmd();
 };
 #endif // MAINWINDOW_H

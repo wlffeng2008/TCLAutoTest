@@ -16,13 +16,15 @@ public:
     explicit DialogSerialportList(QWidget *parent = nullptr);
     ~DialogSerialportList();
 
+    QString selectedCOM(){ return m_select;}
 private slots:
     void on_pushButtonRefresh_clicked();
 
 private:
     Ui::DialogSerialportList *ui;
 
-    QStandardItemModel *model = nullptr ;
+    QStandardItemModel *model = nullptr;
+    QString m_select;
 };
 
 #endif // DIALOGSERIALPORTLIST_H

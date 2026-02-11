@@ -16,15 +16,30 @@ DialogSerialportList::DialogSerialportList(QWidget *parent) :
     QStringList headers;
     headers << "名称" << "描述" << "序列号";
     model->setHorizontalHeaderLabels(headers);
-    ui->tableView_serialportList->setModel(model);
+    ui->tableView->setModel(model);
 
-    QHeaderView *header = ui->tableView_serialportList->horizontalHeader();
+    QHeaderView *header = ui->tableView->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::Stretch);
     header->setSectionResizeMode(0,QHeaderView::Fixed);
     header->resizeSection(0,90) ;
     header->setSectionResizeMode(1,QHeaderView::Fixed);
     header->resizeSection(1,280) ;
     on_pushButtonRefresh_clicked();
+
+    connect(ui->tableView,&QTableView::doubleClicked,this,[=](const QModelIndex &index){
+        int row = index.row();
+        QStandardItem *item = model->item(row);
+        m_select = item->text().trimmed();
+        accept();
+    });
+
+    connect(ui->tableView,&QTableView::clicked,this,[=](const QModelIndex &index){
+        int row = index.row();
+        QStandardItem *item = model->item(row);
+        m_select = item->text().trimmed();
+    });
+
+    connect(ui->pushButtonOK,&QPushButton::clicked,this,[=]{ accept(); });
 }
 
 DialogSerialportList::~DialogSerialportList()
@@ -37,6 +52,7 @@ void DialogSerialportList::on_pushButtonRefresh_clicked()
     while(model->rowCount())
         model->removeRow(0);
 
+    m_select.clear();
     QList<QSerialPortInfo> serialPortInfos = QSerialPortInfo::availablePorts();
 
     foreach (const QSerialPortInfo &serialPortInfo, serialPortInfos)
