@@ -1,4 +1,4 @@
-QT       += core gui serialport network
+QT       += core gui serialport network xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,12 +28,14 @@ SOURCES += \
     DialogSerialportList.cpp \
     gencomport.cpp \
     main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    tinyxml2.cpp
 
 HEADERS += \
     DialogSerialportList.h \
     MainWindow.h \
-    gencomport.h
+    gencomport.h \
+    tinyxml2.h
 
 FORMS += \
     DialogSerialportList.ui \

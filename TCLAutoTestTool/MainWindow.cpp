@@ -9,6 +9,10 @@
 #include <QStandardPaths>
 #include <QTimer>
 
+#define NO_MSXML_XMLDOCUMENT
+#include <windows.h>
+#include "tinyxml2.h"
+using namespace tinyxml2;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
 
-    QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) ;
+    QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     qDebug() << "AppData 路径：" << appDataPath;
 
     connect(ui->checkBoxOntop,&QCheckBox::clicked,this,[=](bool checked){
@@ -49,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
         ::SetWindowPos(hWnd, checked?HWND_TOPMOST:HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     });
 
+    // COM0
     connect(ui->pushButtonCom0,&QPushButton::clicked,this,[=]{
         DialogSerialportList comList;
         if(QDialog::Accepted == comList.exec())
@@ -85,7 +90,6 @@ MainWindow::MainWindow(QWidget *parent)
                 QString reply(data.data());
                 qDebug() << reply;
                 QTimer::singleShot(100,this,[=]{ sendLmCmd(); });
-
             });
         }
         else
@@ -96,7 +100,6 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->pushButtonMeasure,&QPushButton::clicked,this,[=]{
-
         m_LmCmds.append("STR,1,23\r");
         m_LmCmds.append("STR,1,23\r");
         m_LmCmds.append("XYZ,1\r");
@@ -109,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
         if(m_COM0) m_COM0->send(strCmd,true);
     });
 
-
+    // COM1
     connect(ui->pushButtonCom1,&QPushButton::clicked,this,[=]{
         DialogSerialportList comList;
         if(QDialog::Accepted == comList.exec())
@@ -188,7 +191,13 @@ MainWindow::MainWindow(QWidget *parent)
             s_sock = new QTcpSocket(this);
 
             connect(s_sock,&QAbstractSocket::connected,this,[=]{
-                s_sock->write("start");
+                // s_sock->write("start");
+            });
+
+            connect(s_sock,&QAbstractSocket::disconnected,this,[=]{
+                s_sock->close();
+                s_sock->deleteLater();
+                s_sock = nullptr;
             });
 
             connect(s_sock,&QAbstractSocket::readyRead,this,[=]{
@@ -198,9 +207,48 @@ MainWindow::MainWindow(QWidget *parent)
             s_sock->connectToHost("127.0.0.1",23367);
         }
 
-        qDebug() << s_sock->state();
         s_sock->write("start");
     });
+
+    {
+        tinyxml2::XMLDocument doc;
+        XMLError error = doc.LoadFile("D:/vis(ch0~3).config");
+        //XMLError tinyxml2::XMLDocument::Parse(const char *xml,size_t nBytes = static_cast<size_t>(-1));
+        if (error != XMLError::XML_SUCCESS)
+            return;
+        tinyxml2::XMLElement* settings = doc.RootElement();      // settings
+        qDebug() << settings->Name();
+        tinyxml2::XMLElement* global = settings->FirstChildElement();  // global
+        tinyxml2::XMLElement* devices = settings->FirstChildElement("devices"); // device
+        tinyxml2::XMLElement* analyzers = settings->FirstChildElement("analyzers"); // analyzers
+        qDebug() << global->Name();
+        qDebug() << devices->Name();
+        qDebug() << analyzers->Name();
+
+        tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
+        socket->SetText("1");
+
+        tinyxml2::XMLElement* g1 = global->FirstChildElement("chnShowIndex");
+        tinyxml2::XMLElement* g2 = global->FirstChildElement("chnShowMultip");
+        qDebug() << g1->Name() << g1->GetText();
+        qDebug() << g2->Name() << g2->GetText();
+
+        tinyxml2::XMLElement* LA2016 = devices->FirstChildElement("LA2016");
+        tinyxml2::XMLElement* LA5016 = devices->FirstChildElement("LA5016");
+        tinyxml2::XMLElement* L1 = LA5016->FirstChildElement("chnTrig");
+        tinyxml2::XMLElement* L2 = LA5016->FirstChildElement("chnEnable");
+        qDebug() << L1->Name() << L1->GetText();
+        qDebug() << L2->Name() << L2->GetText();
+
+        tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
+        tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
+        tinyxml2::XMLElement* format = item0->FirstChildElement("format");
+        qDebug() << parameters->Name() << parameters->GetText();
+        qDebug() << format->Name() << format->GetText();
+
+
+        doc.SaveFile("D:\\test.xml");
+    }
 
 }
 
