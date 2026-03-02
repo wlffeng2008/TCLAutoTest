@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
                 color: white;
                 border: 1px solid #6C9F50;
                 padding: 2px 2px;
-                min-width: 60px;
+                min-width: 40px;
                 min-height: 16px; }
 
         QPushButton:hover { background-color: #87ceeb; }

@@ -14,6 +14,51 @@
 #include "tinyxml2.h"
 using namespace tinyxml2;
 
+static QStringList TVCmds = {
+    "AA 06 10 01 A7 EF",    // 进入工程菜单
+    "AA 06 11 03 B4 9C",    // 关闭左下角工厂菜单提升信息(退出售后服务菜单)
+    "AA 06 11 02 A4 BD",
+    "AA 07 9F 07 01 F1 55", // LDM档位设置；(Local dimming开关)
+    "AA 06 30 03 A1 09",    // 图效选择；(图像状态)
+    "AA 07 9F 3E 01 4E 58", // 峰值亮度档位设置；
+    "AA 07 9F 0A 01 87 09", // 环境光感应”开关设置；
+    "AA 06 25 01 5D 8F",    // 信源选择；
+    "AA 06 31 01 92 38",    // 色温设置；
+    "AA 09 93 01 02 03 04 4A 36", // 自然光参数设置；
+
+    "AA 06 27 01 3B ED",
+    "AA 06 27 00 3B ED",
+    "AA 08 28 FF FF FF 0B F6",
+    "AA 08 28 FF 00 FF 08 09",
+    "AA 08 28 FF 00 00 16 F9",
+    "AA 08 28 00 FF 00 DA 65",
+    "AA 08 28 00 00 FF C7 6A",
+    "AA 08 28 00 00 00 D9 9A",
+    "AA 07 7C 03 00 D4 D1",
+    "AA 06 3A 01 4E C2",
+    "AA 06 36 64 37 AC",
+    "AA 06 32 00 D7 4A"
+};
+
+uint16_t crc = 0x0000;
+const uint16_t polynomial = 0xA001 ;// 0x1021;//
+WORD Get_CRC16_Sum(BYTE const* CRC_Buf, WORD nLen)
+{
+    WORD wCrc = 0xFFFF;
+    for (WORD i = 0; i < nLen; i++)
+    {
+        wCrc ^= CRC_Buf[i]; //异或
+        for (BYTE j = 0; j < 8; j++)
+        {
+            if (wCrc & 0x0001)
+                wCrc = (wCrc >> 1) ^ polynomial;
+            else
+                wCrc = wCrc >> 1;
+        }
+    }
+    return wCrc;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,7 +67,11 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(QString("LDM自动化调试 -- By QT") + QT_VERSION_STR);
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
-    m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini",QSettings::IniFormat);
+    m_bLoading = true;
+
+    m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
+
+    qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6)) ;
 
     ui->pushButtonCom0->setText(m_setting->value("port0","COM0").toString());
     ui->pushButtonCom1->setText(m_setting->value("port1","COM0").toString());
@@ -88,8 +137,41 @@ MainWindow::MainWindow(QWidget *parent)
 
             connect(m_COM0,&GenComport::onReceive,this,[=](const QByteArray &data){
                 QString reply(data.data());
+
+                // OK00,P1 0.0992179;0.1051576;0.1289090;+0.09\r
+
                 qDebug() << reply;
-                QTimer::singleShot(100,this,[=]{ sendLmCmd(); });
+                if(reply.startsWith("OK") && reply.contains(",P1"))
+                {
+                    reply = reply.mid(8);
+                    QStringList values = reply.split(';');
+
+                    qreal X = values[0].toFloat();
+                    qreal Y = values[1].toFloat();
+                    qreal Z = values[2].toFloat();
+
+                    qreal x = X / (X+Y+Z);
+                    qreal y = Y / (X+Y+Z);
+
+                    switch(m_nLMRead)
+                    {
+                    case 0:
+                        ui->lineEditOut00->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut01->setText(QString::asprintf("%f",x));
+                        ui->lineEditOut02->setText(QString::asprintf("%f",y));
+                        break;
+
+                    case 1:
+                        ui->lineEditOut03->setText(QString::asprintf("%f",Y));
+                        break;
+                    case 2:
+                        ui->lineEditOut04->setText(QString::asprintf("%f",Y));
+                        break;
+                    }
+                    m_nLMRead++;
+                }
+
+                QTimer::singleShot(20,this,[=]{ sendLmCmd(); });
             });
         }
         else
@@ -106,6 +188,14 @@ MainWindow::MainWindow(QWidget *parent)
         sendLmCmd();
     });
     connect(ui->pushButtonZeroCall,&QPushButton::clicked,this,[=]{
+        m_nLMRead = 0;
+
+        ui->lineEditOut00->setText("--");
+        ui->lineEditOut01->setText("--");
+        ui->lineEditOut02->setText("--");
+        ui->lineEditOut03->setText("--");
+        ui->lineEditOut04->setText("--");
+
         QDateTime tm = QDateTime::currentDateTime();
         QString strCmd = QString::asprintf("ZRC,1,%d,%d,%d,%d,%d,%d\r",tm.date().year(),tm.date().month(),tm.date().day(),
                                                               tm.time().hour(),tm.time().minute(),tm.time().second());
@@ -159,25 +249,11 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
 
-    QStringList TVCmds = {
-        "AA 06 10 01 A7 EF",
-        "AA 06 11 03 B4 9C",
-        "AA 06 11 02 B4 9C",
-        "AA 07 9F 07 01 F1 55",
-        "AA 06 30 03 A1 09",
-        "AA 07 9F 3E 01 4E 58",
-        "AA 07 9F 0A 01 87 09",
-        "AA 06 25 01 5D 8F",
-        "AA 06 31 01 92 38",
-        "AA 09 93 01 02 03 04 4A 36",
-        "AA 06 27 01 3B ED",
-        "AA 08 28 FF FF FF D9 9A",
-        "AA 08 28 00 00 00 D9 9A",
-        "AA 07 7C 03 00 D4 D1",
-        "AA 06 3A 01 4E C2",
-        "AA 06 36 64 37 AC",
-        "AA 06 32 00 D7 4A"
-    };
+    connect(ui->comboBoxTVCmd,&QComboBox::activated,this,[=](int index){
+        if(!m_bLoading)
+            ui->pushButtonTVSend->click();
+    });
+
 
     ui->comboBoxTVCmd->addItems(TVCmds);
     connect(ui->pushButtonTVSend,&QPushButton::clicked,this,[=]{
@@ -214,42 +290,70 @@ MainWindow::MainWindow(QWidget *parent)
         tinyxml2::XMLDocument doc;
         XMLError error = doc.LoadFile("D:/vis(ch0~3).config");
         //XMLError tinyxml2::XMLDocument::Parse(const char *xml,size_t nBytes = static_cast<size_t>(-1));
-        if (error != XMLError::XML_SUCCESS)
-            return;
-        tinyxml2::XMLElement* settings = doc.RootElement();      // settings
-        qDebug() << settings->Name();
-        tinyxml2::XMLElement* global = settings->FirstChildElement();  // global
-        tinyxml2::XMLElement* devices = settings->FirstChildElement("devices"); // device
-        tinyxml2::XMLElement* analyzers = settings->FirstChildElement("analyzers"); // analyzers
-        qDebug() << global->Name();
-        qDebug() << devices->Name();
-        qDebug() << analyzers->Name();
+        if (error == XMLError::XML_SUCCESS)
+        {
+            tinyxml2::XMLElement* settings = doc.RootElement();      // settings
+            qDebug() << settings->Name();
+            tinyxml2::XMLElement* global = settings->FirstChildElement();  // global
+            tinyxml2::XMLElement* devices = settings->FirstChildElement("devices"); // device
+            tinyxml2::XMLElement* analyzers = settings->FirstChildElement("analyzers"); // analyzers
+            qDebug() << global->Name();
+            qDebug() << devices->Name();
+            qDebug() << analyzers->Name();
 
-        tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
-        socket->SetText("1");
+            tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
+            socket->SetText("1");
 
-        tinyxml2::XMLElement* g1 = global->FirstChildElement("chnShowIndex");
-        tinyxml2::XMLElement* g2 = global->FirstChildElement("chnShowMultip");
-        qDebug() << g1->Name() << g1->GetText();
-        qDebug() << g2->Name() << g2->GetText();
+            tinyxml2::XMLElement* g1 = global->FirstChildElement("chnShowIndex");
+            tinyxml2::XMLElement* g2 = global->FirstChildElement("chnShowMultip");
+            qDebug() << g1->Name() << g1->GetText();
+            qDebug() << g2->Name() << g2->GetText();
 
-        tinyxml2::XMLElement* LA2016 = devices->FirstChildElement("LA2016");
-        tinyxml2::XMLElement* LA5016 = devices->FirstChildElement("LA5016");
-        tinyxml2::XMLElement* L1 = LA5016->FirstChildElement("chnTrig");
-        tinyxml2::XMLElement* L2 = LA5016->FirstChildElement("chnEnable");
-        qDebug() << L1->Name() << L1->GetText();
-        qDebug() << L2->Name() << L2->GetText();
+            tinyxml2::XMLElement* LA2016 = devices->FirstChildElement("LA2016");
+            tinyxml2::XMLElement* LA5016 = devices->FirstChildElement("LA5016");
+            tinyxml2::XMLElement* L1 = LA5016->FirstChildElement("chnTrig");
+            tinyxml2::XMLElement* L2 = LA5016->FirstChildElement("chnEnable");
+            qDebug() << L1->Name() << L1->GetText();
+            qDebug() << L2->Name() << L2->GetText();
 
-        tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
-        tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
-        tinyxml2::XMLElement* format = item0->FirstChildElement("format");
-        qDebug() << parameters->Name() << parameters->GetText();
-        qDebug() << format->Name() << format->GetText();
+            tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
+            tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
+            tinyxml2::XMLElement* format = item0->FirstChildElement("format");
+            qDebug() << parameters->Name() << parameters->GetText();
+            qDebug() << format->Name() << format->GetText();
 
-
-        doc.SaveFile("D:\\test.xml");
+            doc.SaveFile("D:\\test.xml");
+        }
     }
 
+    QTimer::singleShot(100,this,[=]{
+        InitTest();
+        m_bLoading=false;
+    });
+
+}
+
+void MainWindow::InitTest()
+{
+    ui->lineEditOut00->setText("--");
+    ui->lineEditOut01->setText("--");
+    ui->lineEditOut02->setText("--");
+    ui->lineEditOut03->setText("--");
+    ui->lineEditOut04->setText("--");
+
+    ui->lineEditOut10->setText("--");
+    ui->lineEditOut11->setText("--");
+    ui->lineEditOut12->setText("--");
+    ui->lineEditOut13->setText("--");
+    ui->lineEditOut14->setText("--");
+    ui->lineEditOut15->setText("--");
+
+    ui->lineEditOut20->setText("--");
+    ui->lineEditOut21->setText("--");
+    ui->lineEditOut22->setText("--");
+    ui->lineEditOut23->setText("--");
+    ui->lineEditOut24->setText("--");
+    ui->lineEditOut25->setText("--");
 }
 
 void MainWindow::sendLmCmd()
@@ -262,6 +366,19 @@ void MainWindow::sendLmCmd()
     m_LmCmds.pop_front();
 
     if(m_COM0) m_COM0->send(strCmd,true);
+}
+
+
+void MainWindow::sendTvCmd()
+{
+    int count = m_TvCmds.count();
+    if(count <= 0)
+        return;
+
+    QString strCmd = m_TvCmds[0];
+    m_TvCmds.pop_front();
+
+    if(m_COM1) m_COM1->send(strCmd,true);
 }
 
 MainWindow::~MainWindow()

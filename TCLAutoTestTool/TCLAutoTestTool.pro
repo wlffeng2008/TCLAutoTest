@@ -25,6 +25,7 @@ win32 {
 }
 
 SOURCES += \
+    DialogSPISetting.cpp \
     DialogSerialportList.cpp \
     gencomport.cpp \
     main.cpp \
@@ -32,12 +33,14 @@ SOURCES += \
     tinyxml2.cpp
 
 HEADERS += \
+    DialogSPISetting.h \
     DialogSerialportList.h \
     MainWindow.h \
     gencomport.h \
     tinyxml2.h
 
 FORMS += \
+    DialogSPISetting.ui \
     DialogSerialportList.ui \
     MainWindow.ui
 
