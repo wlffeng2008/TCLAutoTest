@@ -22,9 +22,9 @@
    <widget class="QGroupBox" name="groupBox1">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>14</x>
       <y>122</y>
-      <width>750</width>
+      <width>770</width>
       <height>189</height>
      </rect>
     </property>
@@ -57,7 +57,7 @@
       <rect>
        <x>107</x>
        <y>26</y>
-       <width>441</width>
+       <width>506</width>
        <height>21</height>
       </rect>
      </property>
@@ -65,10 +65,10 @@
     <widget class="QPushButton" name="pushButtonLoadInfo">
      <property name="geometry">
       <rect>
-       <x>552</x>
-       <y>20</y>
+       <x>620</x>
+       <y>24</y>
        <width>64</width>
-       <height>30</height>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -78,23 +78,23 @@
     <widget class="QPushButton" name="pushButtonReload">
      <property name="geometry">
       <rect>
-       <x>622</x>
-       <y>20</y>
-       <width>120</width>
-       <height>30</height>
+       <x>690</x>
+       <y>24</y>
+       <width>75</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
       <string>刷新</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>26</x>
        <y>59</y>
-       <width>591</width>
-       <height>117</height>
+       <width>658</width>
+       <height>109</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
@@ -308,9 +308,9 @@ background-color: rgb(255, 255, 0);</string>
    <widget class="QGroupBox" name="groupBox2">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>14</x>
       <y>322</y>
-      <width>750</width>
+      <width>770</width>
       <height>119</height>
      </rect>
     </property>
@@ -320,10 +320,10 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonSetDefault">
      <property name="geometry">
       <rect>
-       <x>625</x>
-       <y>76</y>
-       <width>120</width>
-       <height>36</height>
+       <x>690</x>
+       <y>84</y>
+       <width>75</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -335,7 +335,7 @@ background-color: rgb(255, 255, 0);</string>
       <rect>
        <x>9</x>
        <y>24</y>
-       <width>609</width>
+       <width>674</width>
        <height>85</height>
       </rect>
      </property>
@@ -346,7 +346,7 @@ background-color: rgb(255, 255, 0);</string>
          <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
-         <string>信源：</string>
+         <string>信源:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -496,7 +496,7 @@ background-color: rgb(255, 255, 0);</string>
          <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
-         <string>LMD档位：</string>
+         <string>LMD档位:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -606,7 +606,7 @@ background-color: rgb(255, 255, 0);</string>
          <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
-         <string>智能区域控光：</string>
+         <string>智能区域控光:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -706,9 +706,9 @@ background-color: rgb(255, 255, 0);</string>
    <widget class="QGroupBox" name="groupBox3">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>14</x>
       <y>454</y>
-      <width>750</width>
+      <width>770</width>
       <height>233</height>
      </rect>
     </property>
@@ -775,7 +775,7 @@ color: rgb(255, 0, 0);</string>
       </rect>
      </property>
      <property name="text">
-      <string>逻辑分析仪</string>
+      <string>逻辑分析仪:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -784,10 +784,10 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonDotest">
      <property name="geometry">
       <rect>
-       <x>625</x>
-       <y>134</y>
-       <width>120</width>
-       <height>36</height>
+       <x>690</x>
+       <y>68</y>
+       <width>75</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
@@ -797,14 +797,14 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonExcel">
      <property name="geometry">
       <rect>
-       <x>625</x>
-       <y>182</y>
-       <width>120</width>
-       <height>36</height>
+       <x>690</x>
+       <y>186</y>
+       <width>75</width>
+       <height>30</height>
       </rect>
      </property>
      <property name="text">
-      <string>一键导出Excel</string>
+      <string>导出Excel</string>
      </property>
     </widget>
     <widget class="QComboBox" name="comboBoxSample">
@@ -846,9 +846,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>14</x>
+       <x>32</x>
        <y>64</y>
-       <width>601</width>
+       <width>652</width>
        <height>160</height>
       </rect>
      </property>
@@ -962,7 +962,7 @@ color: rgb(255, 0, 0);</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>20</width>
           <height>20</height>
          </size>
         </property>
@@ -1194,13 +1194,26 @@ color: rgb(255, 0, 0);</string>
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="pushButtonSPISet">
+     <property name="geometry">
+      <rect>
+       <x>518</x>
+       <y>26</y>
+       <width>97</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>高级设置...</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox0">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>14</x>
       <y>10</y>
-      <width>750</width>
+      <width>770</width>
       <height>93</height>
      </rect>
     </property>
@@ -1229,7 +1242,7 @@ color: rgb(255, 0, 0);</string>
        <x>104</x>
        <y>18</y>
        <width>65</width>
-       <height>23</height>
+       <height>24</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1274,7 +1287,7 @@ color: rgb(255, 0, 0);</string>
        <x>104</x>
        <y>50</y>
        <width>65</width>
-       <height>23</height>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -1389,7 +1402,7 @@ color: rgb(255, 0, 0);</string>
        <x>470</x>
        <y>13</y>
        <width>81</width>
-       <height>30</height>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -1465,7 +1478,7 @@ color: rgb(255, 0, 0);</string>
       <rect>
        <x>400</x>
        <y>50</y>
-       <width>211</width>
+       <width>212</width>
        <height>22</height>
       </rect>
      </property>
@@ -1476,10 +1489,10 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonTVSend">
      <property name="geometry">
       <rect>
-       <x>618</x>
-       <y>46</y>
-       <width>60</width>
-       <height>30</height>
+       <x>620</x>
+       <y>48</y>
+       <width>62</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -1492,7 +1505,7 @@ color: rgb(255, 0, 0);</string>
        <x>400</x>
        <y>13</y>
        <width>64</width>
-       <height>31</height>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
@@ -1502,10 +1515,10 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonTVSendX">
      <property name="geometry">
       <rect>
-       <x>682</x>
-       <y>46</y>
-       <width>61</width>
-       <height>30</height>
+       <x>690</x>
+       <y>48</y>
+       <width>75</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogTVCmd</class>
+ <widget class="QDialog" name="DialogTVCmd">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>680</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>电视机命令及调试</string>
+  </property>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>14</x>
+     <y>16</y>
+     <width>614</width>
+     <height>589</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonSend">
+   <property name="geometry">
+    <rect>
+     <x>474</x>
+     <y>644</y>
+     <width>70</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>发送</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonHide">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>644</y>
+     <width>70</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>隐藏</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxAutoSend">
+   <property name="geometry">
+    <rect>
+     <x>336</x>
+     <y>648</y>
+     <width>133</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>点击自动发送命令</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEditTVCommand">
+   <property name="geometry">
+    <rect>
+     <x>88</x>
+     <y>616</y>
+     <width>375</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>16</x>
+     <y>618</y>
+     <width>67</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>命令(HEX):</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonAdd">
+   <property name="geometry">
+    <rect>
+     <x>474</x>
+     <y>612</y>
+     <width>70</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>添加</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonDel">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>612</y>
+     <width>70</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>删除</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -7,11 +7,18 @@
 
 #include "gencomport.h"
 
+#include <QXlsx>
+using namespace QXlsx;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+class DialogTVCmd;
+class DialogTestFlow;
+class DialogSPISetting;
 
 class MainWindow : public QMainWindow
 {
@@ -24,7 +31,7 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    bool m_bLoading=true;
+    bool m_bLoading = true;
     GenComport *m_COM0 = nullptr;
     GenComport *m_COM1 = nullptr;
 
@@ -40,5 +47,10 @@ private:
     void sendTvCmd();
 
     void InitTest();
+
+    void ReloadInfo();
+    DialogTVCmd     *m_pTVCmd = nullptr;
+    DialogTestFlow  *m_pTest = nullptr;
+    DialogSPISetting*m_pSPI = nullptr;
 };
 #endif // MAINWINDOW_H

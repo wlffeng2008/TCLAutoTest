@@ -1,5 +1,6 @@
 QT       += core gui serialport network xml
 
+include(./QXlsx/QXlsx.pri)
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -27,6 +28,8 @@ win32 {
 SOURCES += \
     DialogSPISetting.cpp \
     DialogSerialportList.cpp \
+    DialogTVCmd.cpp \
+    DialogTestFlow.cpp \
     gencomport.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -35,6 +38,8 @@ SOURCES += \
 HEADERS += \
     DialogSPISetting.h \
     DialogSerialportList.h \
+    DialogTVCmd.h \
+    DialogTestFlow.h \
     MainWindow.h \
     gencomport.h \
     tinyxml2.h
@@ -42,6 +47,8 @@ HEADERS += \
 FORMS += \
     DialogSPISetting.ui \
     DialogSerialportList.ui \
+    DialogTVCmd.ui \
+    DialogTestFlow.ui \
     MainWindow.ui
 
 TRANSLATIONS += \

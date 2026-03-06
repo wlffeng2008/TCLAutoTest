@@ -120,11 +120,11 @@ int main(int argc, char *argv[])
         QRadioButton::indicator:disabled { border: 2px solid #dddddd; background: white; }
 
         QCheckBox { spacing: 5px; color: #333; }
-        QCheckBox::indicator { width: 14px; height: 14px; }
-        QCheckBox::indicator:unchecked { background: white; border: 2px solid #999; }
+        QCheckBox::indicator { width: 16px; height: 16px; }
+        QCheckBox::indicator:unchecked { background: white; border: 1px solid #999; }
         QCheckBox::indicator:checked {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             background: transparent;
             image: url(:/images/BoxChecked.png);
         }

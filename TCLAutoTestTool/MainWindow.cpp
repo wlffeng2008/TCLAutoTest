@@ -3,11 +3,17 @@
 
 #include "DialogSerialportList.h"
 
+#include "DialogTVCmd.h"
+#include "DialogTestFlow.h"
+#include "DialogSPISetting.h"
+
 #include <windows.h>
 #include <QTcpSocket>
 #include <QDateTime>
 #include <QStandardPaths>
 #include <QTimer>
+#include <QMessageBox>
+#include <QFileDialog>
 
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
@@ -16,15 +22,15 @@ using namespace tinyxml2;
 
 static QStringList TVCmds = {
     "AA 06 10 01 A7 EF",    // 进入工程菜单
-    "AA 06 11 03 B4 9C",    // 关闭左下角工厂菜单提升信息(退出售后服务菜单)
+    "AA 06 11 03 B4 9C",    // 退出售后服务菜单
     "AA 06 11 02 A4 BD",
-    "AA 07 9F 07 01 F1 55", // LDM档位设置；(Local dimming开关)
-    "AA 06 30 03 A1 09",    // 图效选择；(图像状态)
-    "AA 07 9F 3E 01 4E 58", // 峰值亮度档位设置；
-    "AA 07 9F 0A 01 87 09", // 环境光感应”开关设置；
-    "AA 06 25 01 5D 8F",    // 信源选择；
-    "AA 06 31 01 92 38",    // 色温设置；
-    "AA 09 93 01 02 03 04 4A 36", // 自然光参数设置；
+    "AA 07 9F 07 01 F1 55", // Local dimming开关
+    "AA 06 30 03 A1 09",    // 图效选择(图像状态)
+    "AA 07 9F 3E 01 4E 58", // 峰值亮度档位设置
+    "AA 07 9F 0A 01 87 09", // 环境光感应开关设置
+    "AA 06 25 01 5D 8F",    // 信源选择
+    "AA 06 31 01 92 38",    // 色温设置
+    "AA 09 93 01 02 03 04 4A 36", // 自然光参数设置
 
     "AA 06 27 01 3B ED",
     "AA 06 27 00 3B ED",
@@ -69,12 +75,31 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_bLoading = true;
 
+    m_pTVCmd = new DialogTVCmd(this);
+    m_pTest  = new DialogTestFlow(this);
+    m_pSPI   = new DialogSPISetting(this);
+
+    connect(ui->pushButtonTVSendX,&QPushButton::clicked,this,[=]{
+        m_pTVCmd->show();
+    });
+    connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
+        m_pTest->show();
+    });
+    connect(ui->pushButtonSPISet,&QPushButton::clicked,this,[=]{
+        m_pSPI->show();
+    });
+
+
+    connect(m_pTVCmd,&DialogTVCmd::onSendCmd,this,[=](const QString&strCmd){
+        if(m_COM1) m_COM1->send(strCmd,false);
+    });
+
     m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
 
-    qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6)) ;
+    qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6));
 
     ui->pushButtonCom0->setText(m_setting->value("port0","COM0").toString());
-    ui->pushButtonCom1->setText(m_setting->value("port1","COM0").toString());
+    ui->pushButtonCom1->setText(m_setting->value("port1","COM1").toString());
     ui->comboBoxBaud0->setCurrentIndex(m_setting->value("baud0",6).toInt());
     ui->comboBoxBaud1->setCurrentIndex(m_setting->value("baud1",6).toInt());
 
@@ -92,14 +117,74 @@ MainWindow::MainWindow(QWidget *parent)
         ui->comboBoxTV8->setCurrentIndex(0);
     });
 
-    //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
+    connect(ui->lineEditInfoFile,&QLineEdit::textChanged,this,[=](const QString&text){
+        ReloadInfo();
+    });
+    connect(ui->pushButtonReload,&QPushButton::clicked,this,[=]{
+        ReloadInfo();
+    });
 
-    QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    qDebug() << "AppData 路径：" << appDataPath;
+    connect(ui->comboModel,&QComboBox::currentIndexChanged,this,[=](int index){
+        QString strFile = ui->lineEditInfoFile->text().trimmed();
+        Document xlsx(strFile);
+        if (!xlsx.load())
+        {
+            QMessageBox::critical(this, "提示", "文件无法加载！\n" + strFile);
+        }
+        else
+        {
+            //QStringList sheets = xlsx.sheetNames();
+            //foreach (const QString &strSheet, sheets)
+            {
+                //if (!xlsx.selectSheet(strSheet))
+                //    continue;
+
+                QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M"};
+
+                for (int col = 0; col < readCols.count(); col++)
+                {
+                    QString strCell = QString::asprintf("%s%d", readCols[col].toStdString().c_str(), index+2);
+                    QString strValue = xlsx.read(strCell).toString().trimmed();
+                    if (strValue.isEmpty() && col == 0) {
+                        continue;
+                    }
+
+                    switch (col) {
+                    case 0: break;
+                    case 1: ui->lineEditBase1->setText(strValue);  break;
+                    case 2: ui->lineEditBase2->setText(strValue);  break;
+                    case 3: ui->lineEditBase3->setText(strValue);  break;
+                    case 4: ui->lineEditBase4->setText(strValue);  break;
+                    case 5: ui->lineEditBase5->setText(strValue);  break;
+                    case 6: ui->lineEditBase6->setText(strValue);  break;
+                    case 7: ui->lineEditBase7->setText(strValue);  break;
+                    case 8: ui->lineEditBase8->setText(strValue);  break;
+                    case 9: ui->lineEditBase9->setText(strValue);  break;
+                    case 10:ui->lineEditBase10->setText(strValue); break;
+                    case 11:ui->lineEditBase11->setText(strValue); break;
+                    default:
+                        break;
+                    }
+                }
+
+               // break;
+            }
+        }
+    });
+
+    QString strExcel=m_setting->value("Excel","./自动化测试导入数据.xlsx").toString();
+    ui->lineEditInfoFile->setText(strExcel);
+    connect(ui->pushButtonLoadInfo,&QPushButton::clicked,this,[=]{
+        QString strFile = QFileDialog::getOpenFileName(
+            this, "选择配置文件", nullptr, tr("XLSX文件(*.xlsx);;所有文件 (*.*)"));
+        if (strFile.isEmpty())
+            return;
+        ui->lineEditInfoFile->setText(strFile);
+    });
 
     connect(ui->checkBoxOntop,&QCheckBox::clicked,this,[=](bool checked){
         HWND hWnd = (HWND)this->winId();
-        ::SetWindowPos(hWnd, checked?HWND_TOPMOST:HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+        ::SetWindowPos(hWnd, checked ? HWND_TOPMOST:HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     });
 
     // COM0
@@ -254,7 +339,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->pushButtonTVSend->click();
     });
 
-
     ui->comboBoxTVCmd->addItems(TVCmds);
     connect(ui->pushButtonTVSend,&QPushButton::clicked,this,[=]{
         if(m_COM1)
@@ -283,13 +367,20 @@ MainWindow::MainWindow(QWidget *parent)
             s_sock->connectToHost("127.0.0.1",23367);
         }
 
-        s_sock->write("start");
+        QTimer::singleShot(20,this,[=]{
+            if(s_sock->state() == QAbstractSocket::ConnectedState)
+                s_sock->write("start");
+        });
     });
 
     {
+        //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
+
+        QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        QString strFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
         tinyxml2::XMLDocument doc;
-        XMLError error = doc.LoadFile("D:/vis(ch0~3).config");
-        //XMLError tinyxml2::XMLDocument::Parse(const char *xml,size_t nBytes = static_cast<size_t>(-1));
+        XMLError error = doc.LoadFile(strFile.toStdString().c_str());
+        qDebug() << "AppData 路径：" << strFile << error;
         if (error == XMLError::XML_SUCCESS)
         {
             tinyxml2::XMLElement* settings = doc.RootElement();      // settings
@@ -322,7 +413,7 @@ MainWindow::MainWindow(QWidget *parent)
             qDebug() << parameters->Name() << parameters->GetText();
             qDebug() << format->Name() << format->GetText();
 
-            doc.SaveFile("D:\\test.xml");
+            doc.SaveFile(strFile.toStdString().c_str());
         }
     }
 
@@ -330,7 +421,39 @@ MainWindow::MainWindow(QWidget *parent)
         InitTest();
         m_bLoading=false;
     });
+}
 
+void MainWindow::ReloadInfo()
+{
+    QString strFile = ui->lineEditInfoFile->text().trimmed();
+    Document xlsx(strFile);
+    if (!xlsx.load())
+    {
+        QMessageBox::critical(this, "提示", "文件无法加载！\n" + strFile);
+    }
+    else
+    {
+        ui->comboModel->clear();
+        QStringList sheets = xlsx.sheetNames();
+        foreach (const QString &strSheet, sheets)
+        {
+            if (!xlsx.selectSheet(strSheet))
+                continue;
+            for (int i = 2; i < 200; i++)
+            {
+                QString strCell = QString::asprintf("B%d", i);
+                QString strValue = xlsx.read(strCell).toString().trimmed();
+                if(strValue.isEmpty()) continue;
+                ui->comboModel->addItem(strValue);
+            }
+            if(ui->comboModel->count())
+            {
+                ui->comboModel->setCurrentIndex(0);
+                m_setting->setValue("Excel",strFile);
+            }
+            break;
+        }
+    }
 }
 
 void MainWindow::InitTest()
@@ -367,7 +490,6 @@ void MainWindow::sendLmCmd()
 
     if(m_COM0) m_COM0->send(strCmd,true);
 }
-
 
 void MainWindow::sendTvCmd()
 {
