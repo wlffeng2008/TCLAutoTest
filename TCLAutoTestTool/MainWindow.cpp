@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QProcess>
 
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
@@ -74,10 +75,13 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
     m_bLoading = true;
+    m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
 
     m_pTVCmd = new DialogTVCmd(this);
     m_pTest  = new DialogTestFlow(this);
     m_pSPI   = new DialogSPISetting(this);
+
+    m_pTest->m_pSet = m_setting;
 
     connect(ui->pushButtonTVSendX,&QPushButton::clicked,this,[=]{
         m_pTVCmd->show();
@@ -89,12 +93,23 @@ MainWindow::MainWindow(QWidget *parent)
         m_pSPI->show();
     });
 
-
     connect(m_pTVCmd,&DialogTVCmd::onSendCmd,this,[=](const QString&strCmd){
         if(m_COM1) m_COM1->send(strCmd,false);
     });
 
-    m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
+    ui->comboBoxWindows->blockSignals(true);
+    ui->comboBoxWindows->addItem("L0");
+    for(int i=20; i<54; i++)
+    {
+        ui->comboBoxWindows->addItem(QString::asprintf("L%02d",i));
+    }
+    ui->comboBoxWindows->addItem("L100");
+    ui->comboBoxWindows->blockSignals(false);
+    ui->comboBoxWindows->setCurrentIndex(22);
+    connect(ui->comboBoxWindows,&QComboBox::currentIndexChanged,this,[=]{
+        ui->lineEditBase3->setText(ui->comboBoxWindows->currentText().trimmed());
+    });
+
 
     qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6));
 
@@ -102,6 +117,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButtonCom1->setText(m_setting->value("port1","COM1").toString());
     ui->comboBoxBaud0->setCurrentIndex(m_setting->value("baud0",6).toInt());
     ui->comboBoxBaud1->setCurrentIndex(m_setting->value("baud1",6).toInt());
+    ui->lineEditUDisk->setText(m_setting->value("udisk","0004-6C3D").toString());
 
     QStringList tvSet = m_setting->value("TVSet","0,0,0,0,0,0,0,0,0,0,0,0,0").toStringList();
 
@@ -417,10 +433,163 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    {
+        connect(ui->lineEditBase3,&QLineEdit::textChanged,this,[=](const QString&text){
+            ShowImage();
+        });
+        connect(ui->pushButtonShowImage,&QPushButton::clicked,this,[=](){
+            ShowImage();
+        });
+    }
+
+    {
+        connect(ui->comboBoxTV0,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+
+            QStringList cmds={
+                "AA 06 25 01 5D 8F",
+                "AA 06 25 02 6D EC",
+                "AA 06 25 03 7D CD",
+                "AA 06 25 04 0D 2A",
+                "AA 06 25 05 1D 0B",
+                "AA 06 25 06 2D 68",
+                "AA 06 25 07 3D 49",
+                "AA 06 25 08 CC A6",
+                "AA 06 25 09 DC 87"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV1,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 06 30 01 A1 09",
+                "AA 06 30 02 91 6A",
+                "AA 06 30 03 81 4B",
+                "AA 06 30 04 F1 AC",
+                "AA 06 30 05 E1 8D",
+                "AA 06 30 06 D1 EE",
+                "AA 06 30 07 C1 CF",
+                "AA 06 30 08 30 20",
+                "AA 06 30 09 20 01",
+                "AA 06 30 0A 10 62",
+                "AA 06 30 0B 00 43",
+                "AA 06 30 0C 70 A4",
+                "AA 06 30 0D 60 85",
+                "AA 06 30 0E 50 E6",
+                "AA 06 30 0F 40 C7"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV2,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 06 31 01 92 38",
+                "AA 06 31 02 A2 5B",
+                "AA 06 31 03 B2 7A"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV3,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 07 9F 07 01 F1 55",
+                "AA 07 9F 07 00 E1 74"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV4,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 07 9F 3E 00 5E 79",
+                "AA 07 9F 3E 01 4E 58"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV5,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 07 9F 0A 00 97 28",
+                "AA 07 9F 0A 01 87 09"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV6,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 06 25 01 5D 8F",
+                "AA 06 25 02 6D EC",
+                "AA 06 25 03 7D CD"
+            };
+            //DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV7,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 06 25 01 5D 8F",
+                "AA 06 25 02 6D EC",
+                "AA 06 25 03 7D CD"
+            };
+            DoSendTV(cmds[index]);
+        });
+
+        connect(ui->comboBoxTV8,&QComboBox::currentIndexChanged,this,[=](int index){
+            if(m_bLoading) return;
+            QStringList cmds={
+                "AA 06 25 01 5D 8F",
+                "AA 06 25 02 6D EC",
+                "AA 06 25 03 7D CD"
+            };
+            //DoSendTV(cmds[index]);
+        });
+    }
+
+    connect(m_pTest,&DialogTestFlow::onTestIndex,this,[=](int item){
+        DoTEST(item);
+    });
+
     QTimer::singleShot(100,this,[=]{
         InitTest();
         m_bLoading=false;
     });
+}
+
+void MainWindow::DoSendTV(const QString&cmd)
+{
+    if(!m_COM1) return;
+    m_COM1->send(cmd);
+}
+
+void MainWindow::ShowImage()
+{
+    QString strFile = QApplication::applicationDirPath() + "/platform-tools/test001.bat";
+    QString strAdb = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
+    QString strUDisk = ui->lineEditUDisk->text().trimmed();
+    QString strImage = ui->lineEditBase3->text().trimmed();
+    QString strType = "bmp";
+    QString strMedia = "image";
+    QFile batFile(strFile);
+    if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QString strTex = QString("%1 root\n%2 shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
+            strAdb,strAdb,strUDisk,strImage,strType,strMedia);
+
+        QTextStream out(&batFile);
+
+        out<< strTex;
+
+        batFile.close();
+
+        QProcess::execute(strFile,QStringList{});
+    }
+
+    m_setting->setValue("udisk",strUDisk);
 }
 
 void MainWindow::ReloadInfo()
@@ -501,6 +670,51 @@ void MainWindow::sendTvCmd()
     m_TvCmds.pop_front();
 
     if(m_COM1) m_COM1->send(strCmd,true);
+}
+
+void MainWindow::DoTEST(int step)
+{
+    switch(step)
+    {
+    case 0:
+        DoSendTV("AA 06 10 01 A7 EF");
+        DoSendTV("AA 06 27 01 3B ED");
+        DoSendTV("AA 08 28 FF FF FF 0B F6");
+        break;
+
+    case 1:
+        ui->pushButtonMeasure->click();
+        break;
+
+    case 2:
+        m_Boost = ui->lineEditBase3->text();
+        ui->lineEditBase3->setText("L32");
+        ui->pushButtonShowImage->click();
+        //ui->comboBoxWindows->setCurrentIndex(32);
+        break;
+
+    case 3:
+        ui->pushButtonMeasure->click();
+        break;
+
+    case 4:
+        DoSendTV("AA 06 27 01 3B ED");
+        DoSendTV("AA 08 28 00 00 00 D9 9A");
+        break;
+
+    case 5:
+        ui->lineEditBase3->setText(m_Boost);
+        ui->pushButtonShowImage->click();
+        break;
+
+    case 6:
+        ui->pushButtonMeasure->click();
+        break;
+
+    case 7:
+        DoSendTV("AA 08 28 FF FF FF 0B F6");
+        break;
+    }
 }
 
 MainWindow::~MainWindow()

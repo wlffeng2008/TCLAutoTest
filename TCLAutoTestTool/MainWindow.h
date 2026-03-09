@@ -47,6 +47,13 @@ private:
     void sendTvCmd();
 
     void InitTest();
+    void ShowImage();
+
+    void DoTEST(int step);
+
+    QString m_Boost;
+
+    void DoSendTV(const QString&cmd);
 
     void ReloadInfo();
     DialogTVCmd     *m_pTVCmd = nullptr;
