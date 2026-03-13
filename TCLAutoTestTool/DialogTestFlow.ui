@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>427</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,14 +26,27 @@
   <widget class="QPushButton" name="pushButtonAction">
    <property name="geometry">
     <rect>
-     <x>18</x>
-     <y>372</y>
-     <width>83</width>
-     <height>33</height>
+     <x>14</x>
+     <y>358</y>
+     <width>90</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
     <string>开始测试</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonSave">
+   <property name="geometry">
+    <rect>
+     <x>538</x>
+     <y>356</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>保存参数</string>
    </property>
   </widget>
  </widget>

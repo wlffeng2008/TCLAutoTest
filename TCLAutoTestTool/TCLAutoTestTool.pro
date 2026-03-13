@@ -30,6 +30,7 @@ SOURCES += \
     DialogSerialportList.cpp \
     DialogTVCmd.cpp \
     DialogTestFlow.cpp \
+    EasyToast.cpp \
     gencomport.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     DialogSerialportList.h \
     DialogTVCmd.h \
     DialogTestFlow.h \
+    EasyToast.h \
     MainWindow.h \
     gencomport.h \
     tinyxml2.h
@@ -49,6 +51,7 @@ FORMS += \
     DialogSerialportList.ui \
     DialogTVCmd.ui \
     DialogTestFlow.ui \
+    EasyToast.ui \
     MainWindow.ui
 
 TRANSLATIONS += \

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>700</height>
+    <height>720</height>
    </rect>
   </property>
   <property name="font">
@@ -23,9 +23,9 @@
     <property name="geometry">
      <rect>
       <x>14</x>
-      <y>108</y>
+      <y>106</y>
       <width>775</width>
-      <height>184</height>
+      <height>180</height>
      </rect>
     </property>
     <property name="font">
@@ -57,17 +57,20 @@
       <rect>
        <x>122</x>
        <y>26</y>
-       <width>491</width>
+       <width>480</width>
        <height>21</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>./自动化测试导入数据.xlsx</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButtonLoadInfo">
      <property name="geometry">
       <rect>
-       <x>620</x>
+       <x>608</x>
        <y>24</y>
-       <width>64</width>
+       <width>75</width>
        <height>24</height>
       </rect>
      </property>
@@ -80,7 +83,7 @@
       <rect>
        <x>690</x>
        <y>24</y>
-       <width>75</width>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>
@@ -93,7 +96,7 @@
       <rect>
        <x>41</x>
        <y>59</y>
-       <width>643</width>
+       <width>640</width>
        <height>111</height>
       </rect>
      </property>
@@ -307,9 +310,9 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QComboBox" name="comboBoxWindows">
      <property name="geometry">
       <rect>
-       <x>692</x>
+       <x>690</x>
        <y>62</y>
-       <width>74</width>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>
@@ -339,9 +342,9 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QLineEdit" name="lineEditUDisk">
      <property name="geometry">
       <rect>
-       <x>694</x>
+       <x>690</x>
        <y>112</y>
-       <width>75</width>
+       <width>80</width>
        <height>21</height>
       </rect>
      </property>
@@ -352,14 +355,14 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonShowImage">
      <property name="geometry">
       <rect>
-       <x>694</x>
+       <x>690</x>
        <y>140</y>
-       <width>75</width>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>
      <property name="text">
-      <string>刷新图片</string>
+      <string>刷新窗口</string>
      </property>
     </widget>
    </widget>
@@ -367,7 +370,7 @@ background-color: rgb(255, 255, 0);</string>
     <property name="geometry">
      <rect>
       <x>14</x>
-      <y>300</y>
+      <y>294</y>
       <width>775</width>
       <height>119</height>
      </rect>
@@ -379,8 +382,8 @@ background-color: rgb(255, 255, 0);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>84</y>
-       <width>75</width>
+       <y>82</y>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>
@@ -392,8 +395,8 @@ background-color: rgb(255, 255, 0);</string>
      <property name="geometry">
       <rect>
        <x>9</x>
-       <y>24</y>
-       <width>674</width>
+       <y>22</y>
+       <width>672</width>
        <height>85</height>
       </rect>
      </property>
@@ -765,65 +768,25 @@ background-color: rgb(255, 255, 0);</string>
     <property name="geometry">
      <rect>
       <x>14</x>
-      <y>438</y>
+      <y>420</y>
       <width>775</width>
-      <height>253</height>
+      <height>289</height>
      </rect>
     </property>
     <property name="title">
      <string>测试数据</string>
     </property>
-    <widget class="QLabel" name="label_35">
-     <property name="geometry">
-      <rect>
-       <x>142</x>
-       <y>52</y>
-       <width>79</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 0);
-color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string> 采样率设置:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_36">
-     <property name="geometry">
-      <rect>
-       <x>364</x>
-       <y>52</y>
-       <width>86</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 0);
-color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>采样频率:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_37">
      <property name="geometry">
       <rect>
-       <x>46</x>
+       <x>19</x>
        <y>52</y>
-       <width>76</width>
+       <width>103</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>逻辑分析仪:</string>
+      <string>参数设置:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -833,8 +796,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>142</y>
-       <width>75</width>
+       <y>198</y>
+       <width>80</width>
        <height>30</height>
       </rect>
      </property>
@@ -846,8 +809,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>202</y>
-       <width>75</width>
+       <y>242</y>
+       <width>80</width>
        <height>30</height>
       </rect>
      </property>
@@ -855,103 +818,12 @@ color: rgb(255, 0, 0);</string>
       <string>导出Excel</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBoxSample">
-     <property name="geometry">
-      <rect>
-       <x>228</x>
-       <y>50</y>
-       <width>95</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <property name="maxVisibleItems">
-      <number>30</number>
-     </property>
-     <item>
-      <property name="text">
-       <string>20 KSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>200 KSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>20 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>50 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>100 MSa</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>200 MSa*</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>500 MSa&quot;</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1 GSa&quot;</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2 GSa&quot;</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5 GSa&quot;</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10 GSa&quot;</string>
-      </property>
-     </item>
-    </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>53</x>
        <y>78</y>
-       <width>631</width>
+       <width>625</width>
        <height>160</height>
       </rect>
      </property>
@@ -1300,9 +1172,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonSPISet">
      <property name="geometry">
       <rect>
-       <x>574</x>
+       <x>688</x>
        <y>46</y>
-       <width>107</width>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>
@@ -1310,91 +1182,353 @@ color: rgb(255, 0, 0);</string>
       <string>高级设置...</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBoxFreq">
+    <widget class="QLabel" name="label_55">
      <property name="geometry">
       <rect>
-       <x>458</x>
-       <y>48</y>
-       <width>95</width>
-       <height>22</height>
+       <x>21</x>
+       <y>22</y>
+       <width>101</width>
+       <height>16</height>
       </rect>
      </property>
-     <property name="currentIndex">
-      <number>0</number>
+     <property name="text">
+      <string>逻辑分析仪程序:</string>
      </property>
-     <property name="maxVisibleItems">
-      <number>30</number>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
-     <item>
-      <property name="text">
-       <string>500 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>200 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>100 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>50 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>20 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>10 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>5 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>2 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1 MHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>500 KHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>200 KHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>100 KHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>50 KHz</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>20 KHz</string>
-      </property>
-     </item>
+    </widget>
+    <widget class="QPushButton" name="pushButtonFindKIS">
+     <property name="geometry">
+      <rect>
+       <x>688</x>
+       <y>18</y>
+       <width>80</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonFindExcel">
+     <property name="geometry">
+      <rect>
+       <x>598</x>
+       <y>246</y>
+       <width>80</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_56">
+     <property name="geometry">
+      <rect>
+       <x>21</x>
+       <y>250</y>
+       <width>99</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>导出模版文件:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditInfoFile_3">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>248</y>
+       <width>461</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>./LDM调试和自检表模版.xlsx</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>48</y>
+       <width>546</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_58">
+        <property name="text">
+         <string> 设备型号:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBoxModel">
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>LA1010</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>LA2016</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>LA5016</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>LA5032</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_35">
+        <property name="text">
+         <string> 采样深度:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBoxSample">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>20 KSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>200 KSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>20 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>50 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100 MSa</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>200 MSa*</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>500 MSa&quot;</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1 GSa&quot;</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 GSa&quot;</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5 GSa&quot;</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 GSa&quot;</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_36">
+        <property name="text">
+         <string>采样率:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBoxFreq">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>500 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>200 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>50 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>20 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1 MHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>500 KHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>200 KHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100 KHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>50 KHz</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>20 KHz</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>132</x>
+       <y>18</y>
+       <width>547</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLineEdit" name="lineEditKingstKIS">
+        <property name="text">
+         <string>./KingstVIS/KingstVIS.exe</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_57">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 0);
+color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>注意：设置参数时须关闭</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxStartVIS">
+        <property name="text">
+         <string>开启</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox0">
@@ -1413,7 +1547,7 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>8</x>
-       <y>20</y>
+       <y>24</y>
        <width>93</width>
        <height>16</height>
       </rect>
@@ -1429,8 +1563,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>104</x>
-       <y>18</y>
-       <width>65</width>
+       <y>22</y>
+       <width>60</width>
        <height>24</height>
       </rect>
      </property>
@@ -1444,8 +1578,8 @@ color: rgb(255, 0, 0);</string>
     <widget class="QCheckBox" name="checkBoxOntop">
      <property name="geometry">
       <rect>
-       <x>622</x>
-       <y>14</y>
+       <x>610</x>
+       <y>20</y>
        <width>87</width>
        <height>19</height>
       </rect>
@@ -1458,7 +1592,7 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>8</x>
-       <y>52</y>
+       <y>56</y>
        <width>93</width>
        <height>16</height>
       </rect>
@@ -1474,8 +1608,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>104</x>
-       <y>50</y>
-       <width>65</width>
+       <y>54</y>
+       <width>60</width>
        <height>24</height>
       </rect>
      </property>
@@ -1486,9 +1620,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QComboBox" name="comboBoxBaud0">
      <property name="geometry">
       <rect>
-       <x>176</x>
-       <y>18</y>
-       <width>73</width>
+       <x>170</x>
+       <y>22</y>
+       <width>70</width>
        <height>22</height>
       </rect>
      </property>
@@ -1537,9 +1671,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QComboBox" name="comboBoxBaud1">
      <property name="geometry">
       <rect>
-       <x>176</x>
-       <y>50</y>
-       <width>73</width>
+       <x>170</x>
+       <y>54</y>
+       <width>70</width>
        <height>22</height>
       </rect>
      </property>
@@ -1589,7 +1723,7 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>470</x>
-       <y>13</y>
+       <y>19</y>
        <width>81</width>
        <height>24</height>
       </rect>
@@ -1601,8 +1735,8 @@ color: rgb(255, 0, 0);</string>
     <widget class="QCheckBox" name="checkBoxOpen0">
      <property name="geometry">
       <rect>
-       <x>262</x>
-       <y>20</y>
+       <x>248</x>
+       <y>24</y>
        <width>80</width>
        <height>19</height>
       </rect>
@@ -1614,9 +1748,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QLabel" name="labelStatus0">
      <property name="geometry">
       <rect>
-       <x>342</x>
-       <y>20</y>
-       <width>50</width>
+       <x>334</x>
+       <y>24</y>
+       <width>56</width>
        <height>18</height>
       </rect>
      </property>
@@ -1624,7 +1758,7 @@ color: rgb(255, 0, 0);</string>
       <string notr="true">color: rgb(255, 0, 0);</string>
      </property>
      <property name="text">
-      <string>未打开</string>
+      <string>未连接</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -1633,9 +1767,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QLabel" name="labelStatus1">
      <property name="geometry">
       <rect>
-       <x>342</x>
-       <y>50</y>
-       <width>50</width>
+       <x>334</x>
+       <y>54</y>
+       <width>56</width>
        <height>18</height>
       </rect>
      </property>
@@ -1643,7 +1777,7 @@ color: rgb(255, 0, 0);</string>
       <string notr="true">color: rgb(255, 0, 0);</string>
      </property>
      <property name="text">
-      <string>未打开</string>
+      <string>未连接</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -1652,8 +1786,8 @@ color: rgb(255, 0, 0);</string>
     <widget class="QCheckBox" name="checkBoxOpen1">
      <property name="geometry">
       <rect>
-       <x>262</x>
-       <y>50</y>
+       <x>248</x>
+       <y>54</y>
        <width>80</width>
        <height>19</height>
       </rect>
@@ -1666,8 +1800,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>50</y>
-       <width>212</width>
+       <y>54</y>
+       <width>199</width>
        <height>22</height>
       </rect>
      </property>
@@ -1678,9 +1812,9 @@ color: rgb(255, 0, 0);</string>
     <widget class="QPushButton" name="pushButtonTVSend">
      <property name="geometry">
       <rect>
-       <x>620</x>
-       <y>48</y>
-       <width>62</width>
+       <x>608</x>
+       <y>52</y>
+       <width>75</width>
        <height>24</height>
       </rect>
      </property>
@@ -1692,8 +1826,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>13</y>
-       <width>64</width>
+       <y>19</y>
+       <width>65</width>
        <height>24</height>
       </rect>
      </property>
@@ -1705,8 +1839,8 @@ color: rgb(255, 0, 0);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>48</y>
-       <width>75</width>
+       <y>52</y>
+       <width>80</width>
        <height>24</height>
       </rect>
      </property>

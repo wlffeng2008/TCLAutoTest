@@ -35,7 +35,7 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
         addTestItem("全黑",Times[4],true);
         addTestItem("Boost",Times[5],true);
         addTestItem("读取数据",Times[6],true);
-        addTestItem("导出数据",Times[7],true);
+        addTestItem("全白",Times[7],true);
     });
 
     connect(&m_TMTest,&QTimer::timeout,this,[=]{
@@ -101,6 +101,13 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
         {
             toCancel();
         }
+    });
+
+    connect(ui->pushButtonSave,&QPushButton::clicked,this,[=]{
+        QStringList Values;
+        for(int i=0; i<m_model->rowCount(); i++)
+            Values.append(m_model->item(i,2)->text().trimmed());
+        m_pSet->setValue("WaitTimes",Values);
     });
 }
 

@@ -66,6 +66,37 @@ WORD Get_CRC16_Sum(BYTE const* CRC_Buf, WORD nLen)
     return wCrc;
 }
 
+
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
+#include<tlhelp32.h>
+static void killProcess(const QString &processName)
+{
+    if (processName.isEmpty()) return;
+
+    HANDLE hRootHandle = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (INVALID_HANDLE_VALUE == hRootHandle) return;
+
+    PROCESSENTRY32 pEntry = {0};
+    pEntry.dwSize = sizeof(PROCESSENTRY32);
+
+    BOOL bProcess = ::Process32First(hRootHandle, &pEntry);
+
+    while (bProcess)
+    {
+        QString strProcName = QString::fromWCharArray(pEntry.szExeFile);
+        if (strProcName.compare(processName,Qt::CaseInsensitive) == 0)
+        {
+            HANDLE handLe = ::OpenProcess(PROCESS_TERMINATE, FALSE, pEntry.th32ProcessID);
+            if (handLe) ::TerminateProcess(handLe, 0);
+        }
+        bProcess = ::Process32Next(hRootHandle, &pEntry);
+    }
+}
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -203,6 +234,11 @@ MainWindow::MainWindow(QWidget *parent)
         ::SetWindowPos(hWnd, checked ? HWND_TOPMOST:HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
     });
 
+    QTimer::singleShot(500,this,[=]{
+        ui->checkBoxOpen0->click();
+        ui->checkBoxOpen1->click();
+    }) ;
+
     // COM0
     connect(ui->pushButtonCom0,&QPushButton::clicked,this,[=]{
         DialogSerialportList comList;
@@ -277,7 +313,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            ui->labelStatus0->setText("未打开");
+            ui->labelStatus0->setText("未连接");
             ui->labelStatus0->setStyleSheet("QLabel{color:red;}");
         }
     });
@@ -345,7 +381,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            ui->labelStatus1->setText("未打开");
+            ui->labelStatus1->setText("未连接");
             ui->labelStatus1->setStyleSheet("QLabel{color:red;}");
         }
     });
@@ -390,6 +426,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     {
+        killProcess("KingstVIS.exe");
         //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
 
         QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
@@ -430,6 +467,16 @@ MainWindow::MainWindow(QWidget *parent)
             qDebug() << format->Name() << format->GetText();
 
             doc.SaveFile(strFile.toStdString().c_str());
+
+            QTimer::singleShot(500,this,[=]{
+                ui->checkBoxStartVIS->click();
+            });
+            connect(ui->checkBoxStartVIS,&QCheckBox::clicked,this,[=](bool checked){
+
+                killProcess("KingstVIS.exe");
+                if(checked)
+                    QProcess::startDetached("./KingstVIS/KingstVIS.exe", QStringList{});
+            });
         }
     }
 
@@ -677,6 +724,8 @@ void MainWindow::DoTEST(int step)
     switch(step)
     {
     case 0:
+        m_nLMRead = 0;
+        InitTest();
         DoSendTV("AA 06 10 01 A7 EF");
         DoSendTV("AA 06 27 01 3B ED");
         DoSendTV("AA 08 28 FF FF FF 0B F6");
@@ -690,7 +739,6 @@ void MainWindow::DoTEST(int step)
         m_Boost = ui->lineEditBase3->text();
         ui->lineEditBase3->setText("L32");
         ui->pushButtonShowImage->click();
-        //ui->comboBoxWindows->setCurrentIndex(32);
         break;
 
     case 3:
@@ -712,6 +760,7 @@ void MainWindow::DoTEST(int step)
         break;
 
     case 7:
+        m_nLMRead = 0;
         DoSendTV("AA 08 28 FF FF FF 0B F6");
         break;
     }
