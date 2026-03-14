@@ -94,9 +94,9 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>41</x>
+       <x>25</x>
        <y>59</y>
-       <width>640</width>
+       <width>650</width>
        <height>111</height>
       </rect>
      </property>
@@ -307,63 +307,54 @@ background-color: rgb(255, 255, 0);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QComboBox" name="comboBoxWindows">
+    <widget class="QFrame" name="FrameExtras">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>680</x>
        <y>62</y>
-       <width>80</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="maxVisibleItems">
-      <number>30</number>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_16">
-     <property name="geometry">
-      <rect>
-       <x>692</x>
-       <y>90</y>
-       <width>53</width>
-       <height>21</height>
+       <width>89</width>
+       <height>102</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 0, 0);</string>
+      <string notr="true">#FrameExtras{background-color: rgb(85, 170, 255);}</string>
      </property>
-     <property name="text">
-      <string>U盘名称:</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditUDisk">
-     <property name="geometry">
-      <rect>
-       <x>690</x>
-       <y>112</y>
-       <width>80</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0004-6C3D</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonShowImage">
-     <property name="geometry">
-      <rect>
-       <x>690</x>
-       <y>140</y>
-       <width>80</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>刷新窗口</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QComboBox" name="comboBoxWindows">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_16">
+        <property name="styleSheet">
+         <string notr="true">color: rgb(255, 0, 0);</string>
+        </property>
+        <property name="text">
+         <string>U盘名称:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditUDisk">
+        <property name="text">
+         <string>0004-6C3D</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonShowImage">
+        <property name="text">
+         <string>刷新窗口</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox2">
@@ -396,7 +387,7 @@ background-color: rgb(255, 255, 0);</string>
       <rect>
        <x>9</x>
        <y>22</y>
-       <width>672</width>
+       <width>668</width>
        <height>85</height>
       </rect>
      </property>
@@ -779,9 +770,9 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QLabel" name="label_37">
      <property name="geometry">
       <rect>
-       <x>19</x>
-       <y>52</y>
-       <width>103</width>
+       <x>68</x>
+       <y>48</y>
+       <width>51</width>
        <height>16</height>
       </rect>
      </property>
@@ -796,26 +787,26 @@ background-color: rgb(255, 255, 0);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>198</y>
+       <y>204</y>
        <width>80</width>
-       <height>30</height>
+       <height>26</height>
       </rect>
      </property>
      <property name="text">
-      <string>开始测试</string>
+      <string>测试 ...</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButtonExcel">
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>242</y>
+       <y>244</y>
        <width>80</width>
-       <height>30</height>
+       <height>26</height>
       </rect>
      </property>
      <property name="text">
-      <string>导出Excel</string>
+      <string>导出...</string>
      </property>
     </widget>
     <widget class="QWidget" name="layoutWidget">
@@ -1172,22 +1163,34 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonSPISet">
      <property name="geometry">
       <rect>
-       <x>688</x>
-       <y>46</y>
+       <x>690</x>
+       <y>49</y>
        <width>80</width>
-       <height>24</height>
+       <height>23</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
-      <string>高级设置...</string>
+      <string>高级设置 ...</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_55">
      <property name="geometry">
       <rect>
-       <x>21</x>
-       <y>22</y>
-       <width>101</width>
+       <x>32</x>
+       <y>19</y>
+       <width>87</width>
        <height>16</height>
       </rect>
      </property>
@@ -1201,11 +1204,23 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonFindKIS">
      <property name="geometry">
       <rect>
-       <x>688</x>
-       <y>18</y>
+       <x>690</x>
+       <y>19</y>
        <width>80</width>
-       <height>24</height>
+       <height>23</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="text">
       <string>...</string>
@@ -1227,42 +1242,45 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QLabel" name="label_56">
      <property name="geometry">
       <rect>
-       <x>21</x>
+       <x>6</x>
        <y>250</y>
-       <width>99</width>
+       <width>117</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>导出模版文件:</string>
+      <string>模板文件(Excel):</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEditInfoFile_3">
+    <widget class="QLineEdit" name="lineEditExcelTemp">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>126</x>
        <y>248</y>
        <width>461</width>
        <height>21</height>
       </rect>
      </property>
      <property name="text">
-      <string>./LDM调试和自检表模版.xlsx</string>
+      <string>./LDM调试和自检表模板.xlsx</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>132</x>
+       <x>125</x>
        <y>48</y>
-       <width>546</width>
-       <height>23</height>
+       <width>552</width>
+       <height>25</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_58">
         <property name="text">
@@ -1314,7 +1332,7 @@ background-color: rgb(255, 255, 0);</string>
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBoxSample">
+       <widget class="QComboBox" name="comboBoxDepth">
         <property name="currentIndex">
          <number>0</number>
         </property>
@@ -1488,18 +1506,44 @@ background-color: rgb(255, 255, 0);</string>
         </item>
        </widget>
       </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonLoadConfig">
+        <property name="text">
+         <string>导入配置 ...</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>132</x>
-       <y>18</y>
-       <width>547</width>
+       <x>125</x>
+       <y>19</y>
+       <width>552</width>
        <height>23</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLineEdit" name="lineEditKingstKIS">
         <property name="text">
@@ -1510,8 +1554,7 @@ background-color: rgb(255, 255, 0);</string>
       <item>
        <widget class="QLabel" name="label_57">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 0);
-color: rgb(255, 0, 0);</string>
+         <string notr="true">color: rgb(255, 0, 0);</string>
         </property>
         <property name="text">
          <string>注意：设置参数时须关闭</string>
@@ -1845,7 +1888,7 @@ color: rgb(255, 0, 0);</string>
       </rect>
      </property>
      <property name="text">
-      <string>高级...</string>
+      <string>高级 ...</string>
      </property>
     </widget>
    </widget>

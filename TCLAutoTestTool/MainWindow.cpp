@@ -15,6 +15,9 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QProcess>
+#include <QDateTime>
+#include <QDir>
+#include <QCloseEvent>
 
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
@@ -97,6 +100,22 @@ static void killProcess(const QString &processName)
 }
 
 
+QString getOpenFileName(QWidget *parent = nullptr,
+                                   const QString &caption = "打开文件",
+                                   const QString &dir = "",
+                                   const QString &filter = "",
+                                   const QString &defaultFileName = "") {
+    QFileDialog dialog(parent, caption, dir, filter);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+    if (!defaultFileName.isEmpty()) {
+        dialog.selectFile(defaultFileName); // 设置默认文件名
+    }
+    if (dialog.exec() == QDialog::Accepted) {
+        return dialog.selectedFiles().first();
+    }
+    return "";
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -118,6 +137,7 @@ MainWindow::MainWindow(QWidget *parent)
         m_pTVCmd->show();
     });
     connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
+        DoRemote();
         m_pTest->show();
     });
     connect(ui->pushButtonSPISet,&QPushButton::clicked,this,[=]{
@@ -180,41 +200,32 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            //QStringList sheets = xlsx.sheetNames();
-            //foreach (const QString &strSheet, sheets)
+            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M"};
+
+            for (int col = 0; col < readCols.count(); col++)
             {
-                //if (!xlsx.selectSheet(strSheet))
-                //    continue;
-
-                QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M"};
-
-                for (int col = 0; col < readCols.count(); col++)
-                {
-                    QString strCell = QString::asprintf("%s%d", readCols[col].toStdString().c_str(), index+2);
-                    QString strValue = xlsx.read(strCell).toString().trimmed();
-                    if (strValue.isEmpty() && col == 0) {
-                        continue;
-                    }
-
-                    switch (col) {
-                    case 0: break;
-                    case 1: ui->lineEditBase1->setText(strValue);  break;
-                    case 2: ui->lineEditBase2->setText(strValue);  break;
-                    case 3: ui->lineEditBase3->setText(strValue);  break;
-                    case 4: ui->lineEditBase4->setText(strValue);  break;
-                    case 5: ui->lineEditBase5->setText(strValue);  break;
-                    case 6: ui->lineEditBase6->setText(strValue);  break;
-                    case 7: ui->lineEditBase7->setText(strValue);  break;
-                    case 8: ui->lineEditBase8->setText(strValue);  break;
-                    case 9: ui->lineEditBase9->setText(strValue);  break;
-                    case 10:ui->lineEditBase10->setText(strValue); break;
-                    case 11:ui->lineEditBase11->setText(strValue); break;
-                    default:
-                        break;
-                    }
+                QString strCell = QString::asprintf("%s%d", readCols[col].toStdString().c_str(), index+2);
+                QString strValue = xlsx.read(strCell).toString().trimmed();
+                if (strValue.isEmpty() && col == 0) {
+                    continue;
                 }
 
-               // break;
+                switch (col) {
+                case 0: break;
+                case 1: ui->lineEditBase1->setText(strValue);  break;
+                case 2: ui->lineEditBase2->setText(strValue);  break;
+                case 3: ui->lineEditBase3->setText(strValue);  break;
+                case 4: ui->lineEditBase4->setText(strValue);  break;
+                case 5: ui->lineEditBase5->setText(strValue);  break;
+                case 6: ui->lineEditBase6->setText(strValue);  break;
+                case 7: ui->lineEditBase7->setText(strValue);  break;
+                case 8: ui->lineEditBase8->setText(strValue);  break;
+                case 9: ui->lineEditBase9->setText(strValue);  break;
+                case 10:ui->lineEditBase10->setText(strValue); break;
+                case 11:ui->lineEditBase11->setText(strValue); break;
+                default:
+                    break;
+                }
             }
         }
     });
@@ -238,6 +249,9 @@ MainWindow::MainWindow(QWidget *parent)
         ui->checkBoxOpen0->click();
         ui->checkBoxOpen1->click();
     }) ;
+
+    m_tmLM = new QTimer(this);
+    m_tmTV = new QTimer(this);
 
     // COM0
     connect(ui->pushButtonCom0,&QPushButton::clicked,this,[=]{
@@ -273,6 +287,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->labelStatus0->setStyleSheet("QLabel{color:blue;}");
 
             connect(m_COM0,&GenComport::onReceive,this,[=](const QByteArray &data){
+                m_tmLM->stop();
                 QString reply(data.data());
 
                 // OK00,P1 0.0992179;0.1051576;0.1289090;+0.09\r
@@ -334,8 +349,8 @@ MainWindow::MainWindow(QWidget *parent)
         ui->lineEditOut04->setText("--");
 
         QDateTime tm = QDateTime::currentDateTime();
-        QString strCmd = QString::asprintf("ZRC,1,%d,%d,%d,%d,%d,%d\r",tm.date().year(),tm.date().month(),tm.date().day(),
-                                                              tm.time().hour(),tm.time().minute(),tm.time().second());
+        QString strCmd = QString::asprintf("ZRC,1,%d,%d,%d,%d,%d,%d\r",tm.date().year(),
+                tm.date().month(),tm.date().day(),tm.time().hour(),tm.time().minute(),tm.time().second());
         if(m_COM0) m_COM0->send(strCmd,true);
     });
 
@@ -375,6 +390,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->labelStatus1->setStyleSheet("QLabel{color:blue;}");
 
             connect(m_COM1,&GenComport::onReceive,this,[=](const QByteArray &data){
+                m_tmTV->stop();
                 QString reply(data.data());
                 //qDebug() << data.toHex(' ').toUpper();
             });
@@ -397,87 +413,207 @@ MainWindow::MainWindow(QWidget *parent)
             m_COM1->send(ui->comboBoxTVCmd->currentText(),false);
     });
 
-    connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
-        if(!s_sock)
-        {
-            s_sock = new QTcpSocket(this);
-
-            connect(s_sock,&QAbstractSocket::connected,this,[=]{
-                // s_sock->write("start");
-            });
-
-            connect(s_sock,&QAbstractSocket::disconnected,this,[=]{
-                s_sock->close();
-                s_sock->deleteLater();
-                s_sock = nullptr;
-            });
-
-            connect(s_sock,&QAbstractSocket::readyRead,this,[=]{
-                qDebug() << s_sock->readAll();
-            });
-
-            s_sock->connectToHost("127.0.0.1",23367);
-        }
-
-        QTimer::singleShot(20,this,[=]{
-            if(s_sock->state() == QAbstractSocket::ConnectedState)
-                s_sock->write("start");
-        });
-    });
-
     {
         killProcess("KingstVIS.exe");
-        //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
 
         QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
         QString strFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
-        tinyxml2::XMLDocument doc;
-        XMLError error = doc.LoadFile(strFile.toStdString().c_str());
-        qDebug() << "AppData 路径：" << strFile << error;
-        if (error == XMLError::XML_SUCCESS)
+        QFile F(strFile);
+        if(!F.exists())
         {
-            tinyxml2::XMLElement* settings = doc.RootElement();      // settings
-            qDebug() << settings->Name();
-            tinyxml2::XMLElement* global = settings->FirstChildElement();  // global
-            tinyxml2::XMLElement* devices = settings->FirstChildElement("devices"); // device
-            tinyxml2::XMLElement* analyzers = settings->FirstChildElement("analyzers"); // analyzers
-            qDebug() << global->Name();
-            qDebug() << devices->Name();
-            qDebug() << analyzers->Name();
-
-            tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
-            socket->SetText("1");
-
-            tinyxml2::XMLElement* g1 = global->FirstChildElement("chnShowIndex");
-            tinyxml2::XMLElement* g2 = global->FirstChildElement("chnShowMultip");
-            qDebug() << g1->Name() << g1->GetText();
-            qDebug() << g2->Name() << g2->GetText();
-
-            tinyxml2::XMLElement* LA2016 = devices->FirstChildElement("LA2016");
-            tinyxml2::XMLElement* LA5016 = devices->FirstChildElement("LA5016");
-            tinyxml2::XMLElement* L1 = LA5016->FirstChildElement("chnTrig");
-            tinyxml2::XMLElement* L2 = LA5016->FirstChildElement("chnEnable");
-            qDebug() << L1->Name() << L1->GetText();
-            qDebug() << L2->Name() << L2->GetText();
-
-            tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
-            tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
-            tinyxml2::XMLElement* format = item0->FirstChildElement("format");
-            qDebug() << parameters->Name() << parameters->GetText();
-            qDebug() << format->Name() << format->GetText();
-
-            doc.SaveFile(strFile.toStdString().c_str());
-
-            QTimer::singleShot(500,this,[=]{
-                ui->checkBoxStartVIS->click();
-            });
-            connect(ui->checkBoxStartVIS,&QCheckBox::clicked,this,[=](bool checked){
-
-                killProcess("KingstVIS.exe");
-                if(checked)
-                    QProcess::startDetached("./KingstVIS/KingstVIS.exe", QStringList{});
-            });
+            QFile::copy(QApplication::applicationDirPath() + "/vis.config",strFile);
         }
+
+        QTimer::singleShot(500,this,[=]{
+
+            //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
+
+            tinyxml2::XMLDocument doc;
+            XMLError error = doc.LoadFile(strFile.toStdString().c_str());
+
+            if (error == XMLError::XML_SUCCESS)
+            {
+                tinyxml2::XMLElement* settings = doc.RootElement();      // settings
+                tinyxml2::XMLElement* global   = settings->FirstChildElement();  // global
+                tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
+                socket->SetText("1");
+
+                doc.SaveFile(strFile.toStdString().c_str());
+            }
+            ui->checkBoxStartVIS->click();
+        });
+
+        ui->lineEditKingstKIS->setText(m_setting->value("KingstVIS",QApplication::applicationDirPath() + "/KingstVIS/KingstVIS.exe").toString());
+        ui->lineEditExcelTemp->setText(m_setting->value("ExcelTemp",QApplication::applicationDirPath() + "/LDM调试和自检表模板.xlsx").toString());
+
+        connect(ui->checkBoxStartVIS,&QCheckBox::clicked,this,[=](bool checked){
+            QString strExe = ui->lineEditKingstKIS->text().trimmed();
+            int index = strExe.lastIndexOf('/');
+            killProcess(strExe.mid(index+1));
+            if(checked)
+            {
+                QProcess::startDetached(strExe, QStringList{});
+
+                QTimer::singleShot(200,this,[=]{
+                    if(!s_sock)
+                    {
+                        s_sock = new QTcpSocket(this);
+
+                        connect(s_sock,&QAbstractSocket::connected,this,[=]{
+                            qDebug() << "Socket Connected ..." ;
+                        });
+
+                        connect(s_sock,&QAbstractSocket::disconnected,this,[=]{
+                            s_sock->close();
+                            s_sock->deleteLater();
+                            s_sock = nullptr;
+                            qDebug() << "Socket disconnected ...";
+                        });
+
+                        connect(s_sock,&QAbstractSocket::readyRead,this,[=]{
+                            QString strAck = s_sock->readAll();
+                            qDebug() << strAck;
+                            if(m_strRCmd == "start" && strAck == "ACK")
+                            {
+                                QString strPath = QApplication::applicationDirPath() + QString("/save");
+                                QDir D(strPath);
+                                if(!D.exists()) D.mkdir(strPath);
+                                QString strFile = strPath + QString("/kisdata%1.csv").arg(m_nRemote);
+                                QString strCmd = QString("export-data \"%1\" --chn-select 4 5 6 7").arg(strFile);
+
+                                s_sock->write(strCmd.toStdString().c_str());
+                            }
+                            m_nRemote ++;
+                            m_strRCmd.clear();
+                        });
+
+                        s_sock->connectToHost("127.0.0.1",23367);
+                    }
+                });
+            }
+        });
+
+        connect(m_pSPI,&DialogSPISetting::onLoadConfig,this,[=](int index0,int index1){
+
+            ui->comboBoxDepth->blockSignals(true);
+            ui->comboBoxDepth->setCurrentIndex(index0);
+            ui->comboBoxDepth->blockSignals(false);
+
+            ui->comboBoxFreq->blockSignals(true);
+            ui->comboBoxFreq->setCurrentIndex(index1);
+            ui->comboBoxFreq->blockSignals(false);
+        });
+
+        ui->comboBoxModel->blockSignals(true);
+        ui->comboBoxModel->setCurrentIndex(m_setting->value("deviceModel",2).toInt());
+        ui->comboBoxModel->blockSignals(false);
+
+        ui->comboBoxDepth->blockSignals(true);
+        ui->comboBoxDepth->setCurrentIndex(m_setting->value("deviceDepth",2).toInt());
+        ui->comboBoxDepth->blockSignals(false);
+
+        ui->comboBoxFreq->blockSignals(true);
+        ui->comboBoxFreq->setCurrentIndex(m_setting->value("deviceFreq",2).toInt());
+        ui->comboBoxFreq->blockSignals(false);
+
+        connect(ui->comboBoxModel,&QComboBox::activated,this,[=](int index){
+            m_pSPI->setModel(ui->comboBoxModel->currentText());
+            m_setting->setValue("deviceModel",index);
+        });
+        connect(ui->comboBoxDepth,&QComboBox::activated,this,[=](int index){
+            m_pSPI->setDeepth(index);
+            m_setting->setValue("deviceDepth",index);
+        });
+        connect(ui->comboBoxFreq,&QComboBox::activated,this,[=](int index){
+            m_pSPI->setFreq(index);
+            m_setting->setValue("deviceFreq",index);
+        });
+
+        connect(ui->pushButtonFindKIS,&QPushButton::clicked,this,[=](){
+
+            QString strFile = getOpenFileName(
+                this, "选择分析仪程序", "KingstVIS", tr("exe文件(*.exe);;所有文件 (*.*)"),"KingstVIS.exe");
+            if (strFile.isEmpty())
+                return;
+            ui->lineEditKingstKIS->setText(strFile);
+            m_setting->setValue("KingstVIS",strFile);
+        });
+
+        connect(ui->pushButtonFindExcel,&QPushButton::clicked,this,[=](){
+
+            QString strFile = QFileDialog::getOpenFileName(
+                this, "选择模板文件", nullptr, tr("XLSX文件(*.xlsx);;所有文件 (*.*)"));
+            if (strFile.isEmpty())
+                return;
+            ui->lineEditExcelTemp->setText(strFile);
+            m_setting->setValue("ExcelTemp",strFile);
+        });
+
+        connect(ui->pushButtonExcel,&QPushButton::clicked,this,[=](){
+            QString strFile = ui->lineEditExcelTemp->text().trimmed();
+
+            Document xlsx(strFile);
+            if ( xlsx.load() && xlsx.selectSheet("LDM调试和自检清单"))
+            {
+                xlsx.write("F10","1");
+                xlsx.write("F11","1");
+                xlsx.write("F12","1");
+                xlsx.write("F13","1");
+
+                xlsx.write("F15","1");
+                xlsx.write("F16","1");
+
+                xlsx.write("F18","1");
+                xlsx.write("F19","1");
+                xlsx.write("F20","1");
+
+                xlsx.write("E10","1");
+                xlsx.write("E11","1");
+                xlsx.write("E12","1");
+                xlsx.write("E13","1");
+
+                xlsx.write("E15","1");
+                xlsx.write("E16","1");
+
+                xlsx.write("E18","1");
+                xlsx.write("E19","1");
+                xlsx.write("E20","1");
+
+
+                xlsx.write("D10","1");
+                xlsx.write("D11","1");
+                xlsx.write("D12","1");
+                xlsx.write("D13","1");
+
+                xlsx.write("D15","1");
+                xlsx.write("D16","1");
+
+                xlsx.write("D20",0.2233);
+                xlsx.write("D29",0.2333);
+                xlsx.write("D30",0.2533);
+                xlsx.write("D31",0.2633);
+                xlsx.write("D32",0.004451233455);
+
+                QString strPath(QApplication::applicationDirPath() + QString("/output"));
+                QDir D(strPath);
+                if(!D.exists()) D.mkdir(strPath);
+                QDateTime now = QDateTime::currentDateTime();
+                strFile = strPath+QString("/LDM调试和自检表(%1).xlsx").arg(now.toString("yyyy-MM-dd_HH-mm"));
+                if(xlsx.saveAs(strFile))
+                {
+                    QMessageBox::information(this, "提示", "数据导出成功！\n" + strFile);
+                }
+                else
+                {
+                    QMessageBox::critical(this, "提示", "数据导出失败！\n" + strFile);
+
+                }
+            }
+            else
+            {
+                QMessageBox::critical(this, "提示", "模板文件无法打开！\n" + strFile);
+            }
+        });
     }
 
     {
@@ -616,15 +752,15 @@ void MainWindow::DoSendTV(const QString&cmd)
 void MainWindow::ShowImage()
 {
     QString strFile = QApplication::applicationDirPath() + "/platform-tools/test001.bat";
-    QString strAdb = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
+    QString strAdb  = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
     QString strUDisk = ui->lineEditUDisk->text().trimmed();
     QString strImage = ui->lineEditBase3->text().trimmed();
-    QString strType = "bmp";
+    QString strType  = "bmp";
     QString strMedia = "image";
     QFile batFile(strFile);
     if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QString strTex = QString("%1 root\n%2 shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
+        QString strTex = QString("\"%1\" root\n\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
             strAdb,strAdb,strUDisk,strImage,strType,strMedia);
 
         QTextStream out(&batFile);
@@ -674,6 +810,7 @@ void MainWindow::ReloadInfo()
 
 void MainWindow::InitTest()
 {
+    m_nLMRead = 0;
     ui->lineEditOut00->setText("--");
     ui->lineEditOut01->setText("--");
     ui->lineEditOut02->setText("--");
@@ -721,10 +858,18 @@ void MainWindow::sendTvCmd()
 
 void MainWindow::DoTEST(int step)
 {
+    if(!(m_COM0 && m_COM0->isOpen() && m_COM1 && m_COM1->isOpen()))
+    {
+        m_pTest->toCancel();
+        QMessageBox::critical(this, "提示", "设备尚未全部连接，无法进行测试！");
+        return ;
+    }
+
     switch(step)
     {
     case 0:
         m_nLMRead = 0;
+        m_nRemote = 0;
         InitTest();
         DoSendTV("AA 06 10 01 A7 EF");
         DoSendTV("AA 06 27 01 3B ED");
@@ -733,6 +878,7 @@ void MainWindow::DoTEST(int step)
 
     case 1:
         ui->pushButtonMeasure->click();
+        DoRemote();
         break;
 
     case 2:
@@ -743,6 +889,7 @@ void MainWindow::DoTEST(int step)
 
     case 3:
         ui->pushButtonMeasure->click();
+        DoRemote();
         break;
 
     case 4:
@@ -757,6 +904,7 @@ void MainWindow::DoTEST(int step)
 
     case 6:
         ui->pushButtonMeasure->click();
+        DoRemote();
         break;
 
     case 7:
@@ -766,7 +914,27 @@ void MainWindow::DoTEST(int step)
     }
 }
 
+void MainWindow::DoRemote()
+{
+    if(s_sock && s_sock->state() == QAbstractSocket::ConnectedState)
+        s_sock->write("start");
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if(QMessageBox::question(this, "提示", "确定要退出吗？" ) != QMessageBox::Yes)
+    {
+        event->ignore();
+        return;
+    }
+
+    if(ui->checkBoxStartVIS->isChecked())
+        ui->checkBoxStartVIS->click();
+
+    QMainWindow::closeEvent(event);
 }

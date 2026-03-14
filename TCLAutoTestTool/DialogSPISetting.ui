@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>240</height>
+    <width>360</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,9 +22,9 @@
      <height>104</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1" columnminimumwidth="0,0">
     <item row="0" column="1">
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="comboBox_1">
       <property name="maxVisibleItems">
        <number>50</number>
       </property>
@@ -418,29 +418,149 @@
     <rect>
      <x>196</x>
      <y>14</y>
-     <width>129</width>
+     <width>135</width>
      <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioButton1">
       <property name="text">
        <string>模式1</string>
       </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="radioButton2">
       <property name="text">
        <string>模式2</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="radioButton3">
+      <property name="text">
+       <string>自定义模式</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButtonOK">
+   <property name="geometry">
+    <rect>
+     <x>54</x>
+     <y>280</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonCancel">
+   <property name="geometry">
+    <rect>
+     <x>152</x>
+     <y>280</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>56</x>
+     <y>128</y>
+     <width>285</width>
+     <height>139</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QComboBox" name="comboBox_5">
+      <item>
+       <property name="text">
+        <string>高位(MSB)在前(标准)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>低位(LSB)在前</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_6">
+      <property name="maxVisibleItems">
+       <number>30</number>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton_3">
+     <widget class="QComboBox" name="comboBox_7">
+      <item>
+       <property name="text">
+        <string>总线空闲时，时钟为低电平(CPOL = 0)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>总线空闲时，时钟为高电平(CPOL = 1)</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_8">
+      <item>
+       <property name="text">
+        <string>数据在前一个时钟沿有效(被读取)(CPHA = 0)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>数据在后一个时钟沿有效(被读取)(CPHA = 1)</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="comboBox_9">
+      <item>
+       <property name="text">
+        <string>Enable信号低电平有效(标准)</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Enable信号高电平有效</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="checkBox">
       <property name="text">
-       <string>自定义模式</string>
+       <string>显示解码标记</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -449,4 +569,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

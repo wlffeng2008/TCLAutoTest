@@ -25,8 +25,9 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
     //ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QTimer::singleShot(500,this,[=]{
-        QString strTimes= m_pSet->value("WaitTimes","3000,2000,3000,2000,15000,4000,2000,2000,2000,1000").toString();
-        QStringList Times = strTimes.split(',');
+        QStringList Times = m_pSet->value("WaitTimes").toStringList();
+        if(Times.isEmpty())
+            Times = QString("3000,2000,3000,2000,15000,4000,2000,2000,2000,1000").split(',');
 
         addTestItem("全白",Times[0],true);
         addTestItem("读取数据",Times[1],true);
@@ -150,7 +151,7 @@ void DialogTestFlow::addTestItem(const QString&text, const QString &time, bool o
 
     item0->setEditable(false);
     item1->setEditable(false);
-    item2->setEditable(false);
+    item2->setEditable(true);
     item3->setEditable(false);
     item1->setCheckable(option);
     item1->setCheckState(Qt::Checked);

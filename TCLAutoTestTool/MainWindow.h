@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QTcpSocket>
+#include <QTimer>
 
 #include "gencomport.h"
 
@@ -28,6 +29,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+    void closeEvent(QCloseEvent *event) final;
+
 private:
     Ui::MainWindow *ui;
 
@@ -36,6 +40,8 @@ private:
     GenComport *m_COM1 = nullptr;
 
     int m_nLMRead = 0;
+    QTimer *m_tmLM = nullptr;
+    QTimer *m_tmTV = nullptr;
 
     QSettings *m_setting=nullptr;
 
@@ -50,6 +56,10 @@ private:
     void ShowImage();
 
     void DoTEST(int step);
+
+    QString m_strRCmd;
+    int  m_nRemote=0;
+    void DoRemote();
 
     QString m_Boost;
 
