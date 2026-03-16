@@ -41,6 +41,8 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
 
     connect(&m_TMTest,&QTimer::timeout,this,[=]{
         m_TMTest.stop();
+        if(!m_bInTest)
+            return;
 
         int index = m_nTestIndex;
 
@@ -61,8 +63,7 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
         if(m_model->item(index,1)->isCheckable())
         {
             toTest = (m_model->item(index,1)->checkState() == Qt::Checked);
-            if(!toTest)
-                wait = 0;
+            if(!toTest) wait = 0;
         }
 
         if(toTest)
@@ -76,13 +77,10 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
 
         int waitX = 100;
 
-        if(!toTest) waitX = 100;
-
         m_TCount = 0;
         m_TMCount.start(100);
         m_TMTest.start(wait + waitX);
     });
-
 
     connect(&m_TMCount,&QTimer::timeout,this,[=]{
         m_TCount += 100;
@@ -122,7 +120,10 @@ void DialogTestFlow::toCancel()
     m_TMCount.stop();
     m_TMTest.stop();
     m_nTestIndex = -1;
+    m_bInTest=false;
     ui->pushButtonAction->setText("开始测试");
+
+    qDebug() << "toCancel()-----------------"  ;
 }
 
 void DialogTestFlow::toTheEnd()
@@ -135,10 +136,11 @@ void DialogTestFlow::startTest()
 {
     if(m_nTestIndex != -1)
         return;
-    m_nTestIndex = -1 ;
+    m_bInTest=true;
+    m_nTestIndex = -1;
     for(int i=0; i<m_model->rowCount(); i++)
         m_model->item(i,3)->setText("");
-    m_TMTest.start(10);
+    m_TMTest.start(100);
     ui->pushButtonAction->setText("停止测试");
 }
 

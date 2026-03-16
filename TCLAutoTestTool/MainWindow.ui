@@ -70,7 +70,7 @@
       <rect>
        <x>608</x>
        <y>24</y>
-       <width>75</width>
+       <width>67</width>
        <height>24</height>
       </rect>
      </property>
@@ -81,7 +81,7 @@
     <widget class="QPushButton" name="pushButtonReload">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>24</y>
        <width>80</width>
        <height>24</height>
@@ -320,6 +320,21 @@ background-color: rgb(255, 255, 0);</string>
       <string notr="true">#FrameExtras{background-color: rgb(85, 170, 255);}</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QComboBox" name="comboBoxWindows">
         <property name="maxVisibleItems">
@@ -372,7 +387,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonSetDefault">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>82</y>
        <width>80</width>
        <height>24</height>
@@ -457,12 +472,20 @@ background-color: rgb(255, 255, 0);</string>
       </item>
       <item row="0" column="3">
        <widget class="QComboBox" name="comboBoxTV1">
+        <property name="currentIndex">
+         <number>2</number>
+        </property>
         <property name="maxVisibleItems">
          <number>30</number>
         </property>
         <item>
          <property name="text">
-          <string>TSR计算画质</string>
+          <string>标准(Standard)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Movie(电影)</string>
          </property>
         </item>
         <item>
@@ -472,22 +495,17 @@ background-color: rgb(255, 255, 0);</string>
         </item>
         <item>
          <property name="text">
+          <string>TSR计算画质</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Intelligent</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>标准(Standard)</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>Sports</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Movie(电影)</string>
          </property>
         </item>
         <item>
@@ -786,7 +804,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonDotest">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>204</y>
        <width>80</width>
        <height>26</height>
@@ -799,7 +817,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonExcel">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>244</y>
        <width>80</width>
        <height>26</height>
@@ -1163,7 +1181,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonSPISet">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>49</y>
        <width>80</width>
        <height>23</height>
@@ -1204,7 +1222,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonFindKIS">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>19</y>
        <width>80</width>
        <height>23</height>
@@ -1857,7 +1875,7 @@ background-color: rgb(255, 255, 0);</string>
       <rect>
        <x>608</x>
        <y>52</y>
-       <width>75</width>
+       <width>66</width>
        <height>24</height>
       </rect>
      </property>
@@ -1881,7 +1899,7 @@ background-color: rgb(255, 255, 0);</string>
     <widget class="QPushButton" name="pushButtonTVSendX">
      <property name="geometry">
       <rect>
-       <x>690</x>
+       <x>686</x>
        <y>52</y>
        <width>80</width>
        <height>24</height>

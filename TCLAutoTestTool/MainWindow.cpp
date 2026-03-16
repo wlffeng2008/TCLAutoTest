@@ -8,6 +8,8 @@
 #include "DialogSPISetting.h"
 
 #include <windows.h>
+
+#include <QThread>
 #include <QTcpSocket>
 #include <QDateTime>
 #include <QStandardPaths>
@@ -18,6 +20,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QCloseEvent>
+#include <QClipboard>
 
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
@@ -116,12 +119,33 @@ QString getOpenFileName(QWidget *parent = nullptr,
     return "";
 }
 
+BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
+{
+    int length = GetWindowTextLength(hWnd);
+    if (length == 0) {
+        return TRUE;
+    }
+
+    wchar_t title[1024]={0};
+    GetWindowText(hWnd,title,length+1);
+    QString strTitle = QString::fromStdWString(title);
+
+    if(strTitle.contains(" - KingstVIS"))
+    {
+        qDebug() << hWnd  << strTitle;
+        ::SetWindowPos(hWnd,HWND_TOPMOST,0,0,800,320,SWP_NOACTIVATE);
+        return false;
+    }
+
+    return true;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle(QString("LDM自动化调试 -- By QT") + QT_VERSION_STR);
+    setWindowTitle(QString("LDM自动化调试 --- By QT") + QT_VERSION_STR);
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
     m_bLoading = true;
@@ -137,7 +161,6 @@ MainWindow::MainWindow(QWidget *parent)
         m_pTVCmd->show();
     });
     connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
-        DoRemote();
         m_pTest->show();
     });
     connect(ui->pushButtonSPISet,&QPushButton::clicked,this,[=]{
@@ -161,7 +184,6 @@ MainWindow::MainWindow(QWidget *parent)
         ui->lineEditBase3->setText(ui->comboBoxWindows->currentText().trimmed());
     });
 
-
     qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6));
 
     ui->pushButtonCom0->setText(m_setting->value("port0","COM0").toString());
@@ -170,11 +192,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxBaud1->setCurrentIndex(m_setting->value("baud1",6).toInt());
     ui->lineEditUDisk->setText(m_setting->value("udisk","0004-6C3D").toString());
 
-    QStringList tvSet = m_setting->value("TVSet","0,0,0,0,0,0,0,0,0,0,0,0,0").toStringList();
+    QStringList tvSet = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
 
     connect(ui->pushButtonSetDefault,&QPushButton::clicked,this,[=]{
-        ui->comboBoxTV0->setCurrentIndex(0);
-        ui->comboBoxTV1->setCurrentIndex(0);
+        ui->comboBoxTV0->setCurrentIndex(1);
+        ui->comboBoxTV1->setCurrentIndex(2);
         ui->comboBoxTV2->setCurrentIndex(0);
         ui->comboBoxTV3->setCurrentIndex(0);
         ui->comboBoxTV4->setCurrentIndex(0);
@@ -182,6 +204,16 @@ MainWindow::MainWindow(QWidget *parent)
         ui->comboBoxTV6->setCurrentIndex(0);
         ui->comboBoxTV7->setCurrentIndex(0);
         ui->comboBoxTV8->setCurrentIndex(0);
+
+        ui->comboBoxTV0->activated(1);
+        ui->comboBoxTV1->activated(2);
+        ui->comboBoxTV2->activated(0);
+        ui->comboBoxTV3->activated(0);
+        ui->comboBoxTV4->activated(0);
+        ui->comboBoxTV5->activated(0);
+        ui->comboBoxTV6->activated(0);
+        ui->comboBoxTV7->activated(0);
+        ui->comboBoxTV8->activated(0);
     });
 
     connect(ui->lineEditInfoFile,&QLineEdit::textChanged,this,[=](const QString&text){
@@ -425,15 +457,12 @@ MainWindow::MainWindow(QWidget *parent)
         }
 
         QTimer::singleShot(500,this,[=]{
-
-            //Windows 版：C:\Users\'用户名'\AppData\Local\kingst\vis.config
-
             tinyxml2::XMLDocument doc;
             XMLError error = doc.LoadFile(strFile.toStdString().c_str());
 
             if (error == XMLError::XML_SUCCESS)
             {
-                tinyxml2::XMLElement* settings = doc.RootElement();      // settings
+                tinyxml2::XMLElement* settings = doc.RootElement();              // settings
                 tinyxml2::XMLElement* global   = settings->FirstChildElement();  // global
                 tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
                 socket->SetText("1");
@@ -461,6 +490,8 @@ MainWindow::MainWindow(QWidget *parent)
 
                         connect(s_sock,&QAbstractSocket::connected,this,[=]{
                             qDebug() << "Socket Connected ..." ;
+
+                            EnumWindows(EnumWindowsProc,9527);
                         });
 
                         connect(s_sock,&QAbstractSocket::disconnected,this,[=]{
@@ -478,12 +509,12 @@ MainWindow::MainWindow(QWidget *parent)
                                 QString strPath = QApplication::applicationDirPath() + QString("/save");
                                 QDir D(strPath);
                                 if(!D.exists()) D.mkdir(strPath);
-                                QString strFile = strPath + QString("/kisdata%1.csv").arg(m_nRemote);
-                                QString strCmd = QString("export-data \"%1\" --chn-select 4 5 6 7").arg(strFile);
+                                QString strFile = strPath + QString("/kisdata.csv");
+                                QString strCmd = QString("export-data \"%1\"").arg(strFile);
 
                                 s_sock->write(strCmd.toStdString().c_str());
+                                m_nRemote ++;
                             }
-                            m_nRemote ++;
                             m_strRCmd.clear();
                         });
 
@@ -626,7 +657,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     {
-        connect(ui->comboBoxTV0,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV0,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
 
             QStringList cmds={
@@ -643,7 +674,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV1,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV1,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 06 30 01 A1 09",
@@ -665,7 +696,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV2,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV2,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 06 31 01 92 38",
@@ -675,7 +706,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV3,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV3,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 07 9F 07 01 F1 55",
@@ -684,7 +715,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV4,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV4,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 07 9F 3E 00 5E 79",
@@ -693,7 +724,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV5,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV5,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 07 9F 0A 00 97 28",
@@ -702,7 +733,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV6,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV6,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 06 25 01 5D 8F",
@@ -712,7 +743,7 @@ MainWindow::MainWindow(QWidget *parent)
             //DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV7,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV7,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 06 25 01 5D 8F",
@@ -722,7 +753,7 @@ MainWindow::MainWindow(QWidget *parent)
             DoSendTV(cmds[index]);
         });
 
-        connect(ui->comboBoxTV8,&QComboBox::currentIndexChanged,this,[=](int index){
+        connect(ui->comboBoxTV8,&QComboBox::activated,this,[=](int index){
             if(m_bLoading) return;
             QStringList cmds={
                 "AA 06 25 01 5D 8F",
@@ -862,8 +893,23 @@ void MainWindow::DoTEST(int step)
     {
         m_pTest->toCancel();
         QMessageBox::critical(this, "提示", "设备尚未全部连接，无法进行测试！");
-        return ;
+        return;
     }
+
+    if(!s_sock)
+    {
+        m_pTest->toCancel();
+        QMessageBox::critical(this, "提示", "分析仪程序未运行，无法进行测试！");
+        return;
+    }
+
+    QString strPath = QApplication::applicationDirPath() + QString("/save");
+    QDir D(strPath);
+    if(!D.exists()) D.mkdir(strPath);
+    QFile::remove(strPath + QString("/kisdata.csv"));
+    QFile::remove(strPath + QString("/1.csv"));
+    QFile::remove(strPath + QString("/2.csv"));
+    QFile::remove(strPath + QString("/3.csv"));
 
     switch(step)
     {
@@ -874,22 +920,26 @@ void MainWindow::DoTEST(int step)
         DoSendTV("AA 06 10 01 A7 EF");
         DoSendTV("AA 06 27 01 3B ED");
         DoSendTV("AA 08 28 FF FF FF 0B F6");
+        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         break;
 
     case 1:
         ui->pushButtonMeasure->click();
         DoRemote();
+        DoSaveFile(strPath  + "/1.csv");
         break;
 
     case 2:
         m_Boost = ui->lineEditBase3->text();
         ui->lineEditBase3->setText("L32");
         ui->pushButtonShowImage->click();
+        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         break;
 
     case 3:
-        ui->pushButtonMeasure->click();
-        DoRemote();
+        ui->pushButtonMeasure->click();        
+        DoSaveFile(strPath  + "/2.csv");
+        //DoRemote();
         break;
 
     case 4:
@@ -900,24 +950,129 @@ void MainWindow::DoTEST(int step)
     case 5:
         ui->lineEditBase3->setText(m_Boost);
         ui->pushButtonShowImage->click();
+        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         break;
 
     case 6:
         ui->pushButtonMeasure->click();
-        DoRemote();
+        //DoRemote();
+        DoSaveFile(strPath  + "/3.csv");
         break;
 
     case 7:
         m_nLMRead = 0;
         DoSendTV("AA 08 28 FF FF FF 0B F6");
+        // DoSendTV("AA 06 10 01 A7 EF");
+        // DoSendTV("AA 06 11 03 B4 9C");
+        // DoSendTV("AA 06 11 02 A4 BD");
+        DoDealData();
         break;
     }
 }
 
 void MainWindow::DoRemote()
 {
+    m_strRCmd = "start";
     if(s_sock && s_sock->state() == QAbstractSocket::ConnectedState)
         s_sock->write("start");
+}
+
+void MainWindow::DoSaveFile(const QString&file)
+{
+    SetCursorPos(770,302);
+    mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
+    mouse_event(MOUSEEVENTF_LEFTUP  ,0,0,0,0);
+    QThread::msleep(50);
+    SetCursorPos(850,362);
+
+    QThread::msleep(50);
+
+    mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
+    mouse_event(MOUSEEVENTF_LEFTUP  ,0,0,0,0);
+
+    QThread::msleep(50);
+
+    keybd_event(VK_DOWN,0,0,0);
+    keybd_event(VK_DOWN,0,KEYEVENTF_KEYUP,0);
+    Sleep(5) ;
+    keybd_event(VK_DOWN,0,0,0);
+    keybd_event(VK_DOWN,0,KEYEVENTF_KEYUP,0);
+    Sleep(5) ;
+    keybd_event(VK_RETURN,0,0,0);
+    keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
+
+    QClipboard *pClip = QApplication::clipboard() ;
+    pClip->setText(file);
+    QThread::msleep(200);
+
+    keybd_event(VK_CONTROL,0,0,0);
+    keybd_event('V',0,0,0);
+    Sleep(5) ;
+    keybd_event('V',0,2,0);
+    keybd_event(VK_CONTROL,0,2,0);
+
+    QThread::msleep(50);
+    keybd_event(VK_RETURN,0,0,0);
+    keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
+
+    //SetCursorPos(950,362);
+    //SetCursorPos(960,390);
+}
+
+void MainWindow::DoDealData()
+{
+    QString strPath = QApplication::applicationDirPath() + QString("/save");
+
+    {
+        QString strFile = strPath + QString("/kisdata.csv");
+        Document xlsx(strFile);
+        if (!xlsx.load())
+        {
+            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
+        }
+        else
+        {
+
+        }
+    }
+
+    {
+        QString strFile = strPath + QString("/1.csv");
+        Document xlsx(strFile);
+        if (!xlsx.load())
+        {
+            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
+        }
+        else
+        {
+
+        }
+    }
+
+    {
+        QString strFile = strPath + QString("/2.csv");
+        Document xlsx(strFile);
+        if (!xlsx.load())
+        {
+            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
+        }
+        else
+        {
+
+        }
+    }
+    {
+        QString strFile = strPath + QString("/3.csv");
+        Document xlsx(strFile);
+        if (!xlsx.load())
+        {
+            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
+        }
+        else
+        {
+
+        }
+    }
 }
 
 MainWindow::~MainWindow()

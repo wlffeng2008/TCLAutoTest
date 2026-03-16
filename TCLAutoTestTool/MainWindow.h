@@ -65,6 +65,9 @@ private:
 
     void DoSendTV(const QString&cmd);
 
+    void DoSaveFile(const QString&file);
+    void DoDealData();
+
     void ReloadInfo();
     DialogTVCmd     *m_pTVCmd = nullptr;
     DialogTestFlow  *m_pTest = nullptr;

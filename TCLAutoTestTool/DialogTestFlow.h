@@ -60,6 +60,8 @@ private:
     int m_nTestIndex = -1;
     QTimer m_TMTest;
 
+    bool m_bInTest=false;
+
     int m_TCount = 0;
     QTimer m_TMCount;
 
