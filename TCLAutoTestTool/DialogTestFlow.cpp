@@ -14,10 +14,10 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
     ui->tableView->setModel(m_model);
 
     QHeaderView *pHeader = ui->tableView->horizontalHeader() ;
-    pHeader->setSectionResizeMode(QHeaderView::Stretch) ;
-    pHeader->setSectionResizeMode(0,QHeaderView::Fixed) ;
-    pHeader->setSectionResizeMode(1,QHeaderView::Fixed) ;
-    pHeader->setSectionResizeMode(2,QHeaderView::Fixed) ;
+    pHeader->setSectionResizeMode(QHeaderView::Stretch);
+    pHeader->setSectionResizeMode(0,QHeaderView::Fixed);
+    pHeader->setSectionResizeMode(1,QHeaderView::Fixed);
+    pHeader->setSectionResizeMode(2,QHeaderView::Fixed);
     pHeader->resizeSection(0,150);
     pHeader->resizeSection(1,32);
     pHeader->resizeSection(2,100);

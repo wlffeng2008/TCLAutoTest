@@ -118,11 +118,13 @@ QString getOpenFileName(QWidget *parent = nullptr,
     }
     return "";
 }
-
+static HWND m_hVisWnd = nullptr;
 BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 {
+    if(!::IsWindowVisible(hWnd))
+        return true;
     int length = GetWindowTextLength(hWnd);
-    if (length == 0) {
+    if (length <= 0 || length>256) {
         return TRUE;
     }
 
@@ -130,9 +132,10 @@ BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
     GetWindowText(hWnd,title,length+1);
     QString strTitle = QString::fromStdWString(title);
 
+    qDebug() << hWnd  << strTitle;
     if(strTitle.contains(" - KingstVIS"))
     {
-        qDebug() << hWnd  << strTitle;
+        m_hVisWnd = hWnd;
         ::SetWindowPos(hWnd,HWND_TOPMOST,0,0,800,320,SWP_NOACTIVATE);
         return false;
     }
@@ -148,20 +151,26 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle(QString("LDM自动化调试 --- By QT") + QT_VERSION_STR);
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
+    EnumWindows(EnumWindowsProc,9527);
+
     m_bLoading = true;
     m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
 
     m_pTVCmd = new DialogTVCmd(this);
     m_pTest  = new DialogTestFlow(this);
-    m_pSPI   = new DialogSPISetting(this);
-
     m_pTest->m_pSet = m_setting;
+    QTimer::singleShot(200,this,[=]{
+        m_pSPI = new DialogSPISetting(this);
+    });
 
     connect(ui->pushButtonTVSendX,&QPushButton::clicked,this,[=]{
         m_pTVCmd->show();
     });
     connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
         m_pTest->show();
+
+        //DoSaveFile("D:\\12345.csv");
+        //DoDealData();
     });
     connect(ui->pushButtonSPISet,&QPushButton::clicked,this,[=]{
         m_pSPI->show();
@@ -278,8 +287,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     QTimer::singleShot(500,this,[=]{
-        ui->checkBoxOpen0->click();
-        ui->checkBoxOpen1->click();
+       ui->checkBoxOpen0->click();
+       ui->checkBoxOpen1->click();
     }) ;
 
     m_tmLM = new QTimer(this);
@@ -446,7 +455,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     {
-        killProcess("KingstVIS.exe");
+        //killProcess("KingstVIS.exe");
 
         QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
         QString strFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
@@ -478,20 +487,26 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ui->checkBoxStartVIS,&QCheckBox::clicked,this,[=](bool checked){
             QString strExe = ui->lineEditKingstKIS->text().trimmed();
             int index = strExe.lastIndexOf('/');
-            killProcess(strExe.mid(index+1));
-            if(checked)
+            //killProcess(strExe.mid(index+1));
+            if(!checked)
             {
-                QProcess::startDetached(strExe, QStringList{});
+                if(m_hVisWnd) ::PostMessage(m_hVisWnd,WM_CLOSE,0,0);
+                m_hVisWnd=NULL;
+            }
+            else
+            {
+                if(!m_hVisWnd) QProcess::startDetached(strExe, QStringList{});
 
-                QTimer::singleShot(200,this,[=]{
+                QTimer::singleShot(2000,this,[=]{
                     if(!s_sock)
                     {
                         s_sock = new QTcpSocket(this);
 
                         connect(s_sock,&QAbstractSocket::connected,this,[=]{
                             qDebug() << "Socket Connected ..." ;
-
-                            EnumWindows(EnumWindowsProc,9527);
+                            QTimer::singleShot(200,this,[=]{
+                                EnumWindows(EnumWindowsProc,9527);
+                            });
                         });
 
                         connect(s_sock,&QAbstractSocket::disconnected,this,[=]{
@@ -502,26 +517,57 @@ MainWindow::MainWindow(QWidget *parent)
                         });
 
                         connect(s_sock,&QAbstractSocket::readyRead,this,[=]{
-                            QString strAck = s_sock->readAll();
-                            qDebug() << strAck;
-                            if(m_strRCmd == "start" && strAck == "ACK")
-                            {
-                                QString strPath = QApplication::applicationDirPath() + QString("/save");
-                                QDir D(strPath);
-                                if(!D.exists()) D.mkdir(strPath);
-                                QString strFile = strPath + QString("/kisdata.csv");
-                                QString strCmd = QString("export-data \"%1\"").arg(strFile);
 
-                                s_sock->write(strCmd.toStdString().c_str());
-                                m_nRemote ++;
+                            QString strAck = s_sock->readAll();
+                            qDebug() << m_strRCmd << strAck;
+                            QString strPath = QApplication::applicationDirPath() + QString("/save");
+                            QDir D(strPath);
+                            if(!D.exists()) D.mkdir(strPath);
+                            if(strAck == "ACK")
+                            {
+                                if(m_strRCmd == "start")
+                                {
+                                    m_tmRd0->start(100);
+                                }
+
+                                if(m_strRCmd == "export-data")
+                                {
+                                    m_tmRd1->start(100);
+                                }
                             }
-                            m_strRCmd.clear();
                         });
 
                         s_sock->connectToHost("127.0.0.1",23367);
                     }
                 });
             }
+        });
+
+        m_tmRd0 = new QTimer(this);
+        m_tmRd1 = new QTimer(this);
+
+        connect(m_tmRd0,&QTimer::timeout,this,[=]{
+            m_tmRd0->stop();
+            ui->pushButtonDotest1->click();
+        });
+        connect(m_tmRd1,&QTimer::timeout,this,[=]{
+            m_tmRd1->stop();
+            ui->pushButtonDotest2->click();
+        });
+
+        connect(ui->pushButtonDotest1,&QPushButton::clicked,this,[=]{
+
+            m_strRCmd = "export-data";
+            QString strPath = QApplication::applicationDirPath() + QString("/save");
+            QString strFile = strPath + QString("/kisdata.csv");
+            QString strCmd = QString("export-data \"%1\"").arg(strFile);
+            s_sock->write(strCmd.toStdString().c_str());
+        });
+        connect(ui->pushButtonDotest2,&QPushButton::clicked,this,[=]{
+
+            QString strPath = QApplication::applicationDirPath() + QString("/save");
+            QString strFile = strPath + QString("/save%1.csv").arg(m_nExport);
+            DoSaveFile(strFile);
         });
 
         connect(m_pSPI,&DialogSPISetting::onLoadConfig,this,[=](int index0,int index1){
@@ -906,40 +952,51 @@ void MainWindow::DoTEST(int step)
     QString strPath = QApplication::applicationDirPath() + QString("/save");
     QDir D(strPath);
     if(!D.exists()) D.mkdir(strPath);
-    QFile::remove(strPath + QString("/kisdata.csv"));
-    QFile::remove(strPath + QString("/1.csv"));
-    QFile::remove(strPath + QString("/2.csv"));
-    QFile::remove(strPath + QString("/3.csv"));
 
     switch(step)
     {
     case 0:
+        QFile::remove(strPath + QString("/kisdata.csv"));
+        QFile::remove(strPath + QString("/save1.csv"));
+        QFile::remove(strPath + QString("/save2.csv"));
+        QFile::remove(strPath + QString("/save3.csv"));
         m_nLMRead = 0;
         m_nRemote = 0;
         InitTest();
         DoSendTV("AA 06 10 01 A7 EF");
         DoSendTV("AA 06 27 01 3B ED");
         DoSendTV("AA 08 28 FF FF FF 0B F6");
-        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+        QTimer::singleShot(200,this,[=]{
+            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+            EnumWindows(EnumWindowsProc,9527);
+        });
         break;
 
     case 1:
         ui->pushButtonMeasure->click();
+        m_nExport=1;
         DoRemote();
-        DoSaveFile(strPath  + "/1.csv");
+        QTimer::singleShot(500,this,[=]{
+            //DoSaveFile(strPath  + "/save1.csv");
+        });
         break;
 
     case 2:
         m_Boost = ui->lineEditBase3->text();
         ui->lineEditBase3->setText("L32");
         ui->pushButtonShowImage->click();
-        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+        QTimer::singleShot(200,this,[=]{
+            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+        });
         break;
 
     case 3:
-        ui->pushButtonMeasure->click();        
-        DoSaveFile(strPath  + "/2.csv");
-        //DoRemote();
+        ui->pushButtonMeasure->click();
+        m_nExport=2;
+        DoRemote();
+        QTimer::singleShot(500,this,[=]{
+            //DoSaveFile(strPath  + "/save2.csv");
+        });
         break;
 
     case 4:
@@ -950,13 +1007,18 @@ void MainWindow::DoTEST(int step)
     case 5:
         ui->lineEditBase3->setText(m_Boost);
         ui->pushButtonShowImage->click();
-        ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+        QTimer::singleShot(200,this,[=]{
+            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+        });
         break;
 
     case 6:
         ui->pushButtonMeasure->click();
-        //DoRemote();
-        DoSaveFile(strPath  + "/3.csv");
+        m_nExport=4;
+        DoRemote();
+        QTimer::singleShot(500,this,[=]{
+            DoSaveFile(strPath  + "/save3.csv");
+        });
         break;
 
     case 7:
@@ -979,7 +1041,13 @@ void MainWindow::DoRemote()
 
 void MainWindow::DoSaveFile(const QString&file)
 {
-    SetCursorPos(770,302);
+    m_strRCmd = "export-decoded";
+    QString strCmd = QString("export-decoded \"%1\"").arg(file);
+    if(s_sock && s_sock->state() == QAbstractSocket::ConnectedState)
+        s_sock->write(strCmd.toStdString().c_str());
+    return;
+
+    SetCursorPos(768,302);
     mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
     mouse_event(MOUSEEVENTF_LEFTUP  ,0,0,0,0);
     QThread::msleep(50);
@@ -991,29 +1059,32 @@ void MainWindow::DoSaveFile(const QString&file)
     mouse_event(MOUSEEVENTF_LEFTUP  ,0,0,0,0);
 
     QThread::msleep(50);
+    QString strTmp = file;
+    strTmp.replace("/","\\");
+    QClipboard *pClip = QApplication::clipboard();
+    pClip->setText(strTmp);
 
     keybd_event(VK_DOWN,0,0,0);
     keybd_event(VK_DOWN,0,KEYEVENTF_KEYUP,0);
-    Sleep(5) ;
+    Sleep(5);
     keybd_event(VK_DOWN,0,0,0);
     keybd_event(VK_DOWN,0,KEYEVENTF_KEYUP,0);
-    Sleep(5) ;
+    Sleep(5);
     keybd_event(VK_RETURN,0,0,0);
     keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
 
-    QClipboard *pClip = QApplication::clipboard() ;
-    pClip->setText(file);
-    QThread::msleep(200);
+    QTimer::singleShot(500,this,[=]{
+        keybd_event(VK_CONTROL,0,0,0);
+        keybd_event('V',0,0,0);
+        Sleep(5);
+        keybd_event('V',0,2,0);
+        keybd_event(VK_CONTROL,0,2,0);
 
-    keybd_event(VK_CONTROL,0,0,0);
-    keybd_event('V',0,0,0);
-    Sleep(5) ;
-    keybd_event('V',0,2,0);
-    keybd_event(VK_CONTROL,0,2,0);
+        QThread::msleep(100);
+        //keybd_event(VK_RETURN,0,0,0);
+        //keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
+    });
 
-    QThread::msleep(50);
-    keybd_event(VK_RETURN,0,0,0);
-    keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
 
     //SetCursorPos(950,362);
     //SetCursorPos(960,390);
@@ -1021,56 +1092,243 @@ void MainWindow::DoSaveFile(const QString&file)
 
 void MainWindow::DoDealData()
 {
-    QString strPath = QApplication::applicationDirPath() + QString("/save");
-
     {
+        QString strPath = QApplication::applicationDirPath() + QString("/save");
         QString strFile = strPath + QString("/kisdata.csv");
-        Document xlsx(strFile);
-        if (!xlsx.load())
-        {
-            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
-        }
-        else
-        {
 
+        QFile DFile(strFile);
+        if (DFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream in(&DFile);
+            qDebug() << QString(in.readLine());
+
+            QList<double> Time;
+            QList<quint8> col0;
+            QList<quint8> col1;
+            QList<quint8> col2;
+            QList<quint8> col3;
+            while (!in.atEnd())
+            {
+                QString strLine = in.readLine().trimmed();
+                QStringList strVals = strLine.split(',');
+
+                Time.push_back(strVals[0].toDouble());
+                col0.push_back(strVals[1].toInt());
+                col1.push_back(strVals[2].toInt());
+                col2.push_back(strVals[3].toInt());
+                col3.push_back(strVals[4].toInt());
+            }
+            DFile.close();
+
+            //T1：有效帧开始后，通道2第3个1对应的时间轴减去第二个1对应的时间轴，就是T1；从理论上看，也就是通道3的1到0，实测数据是对的(导出有效时间轴的第3个数据减去第2个数据:T1=0.00175-0.001742)；
+            //T2：有效帧开始后，通道2第1个0对应的时间轴减去通道3第2个0对应的时间轴，就是T2；导出有效时间轴的第4个数据减去第3个数据（T2=0.001953-0.00175）；
+            //T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）                                                                                                                                                        0.0019549,1,0,0,0,T3,1.520 ,T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）
+
+            int count = Time.size();
+            int pos = -1 ;
+            for(int i=30000; i<count-3; i++)
+            {
+                if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
+                {
+                    pos = i;
+                    break;
+                }
+            }
+
+            qDebug() << "有效帧开始:" << pos;
+            double T1 = (Time[pos+2] - Time[pos+1]) * 1000000;
+            qDebug() << "T1 = " << Time[pos+2] << "-" << Time[pos+1] << "=" << T1;
+
+            int zero2 = pos+2;
+            for(int i=pos+3; i < count; i++)
+            {
+                if(col2[i] == 0)
+                {
+                    zero2 = i;
+                    break;
+                }
+            }
+
+            int zero3 = pos+2;
+            for(int i=pos; i<count; i++)
+            {
+                if(col1[i] == 0 && col1[i+1] == 0)
+                {
+                    zero3 = i+1;
+                    break;
+                }
+            }
+
+            double T2 = (Time[zero2] - Time[zero3]) * 1000000;
+            qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
+
+            int zero0 = 0;
+            for(int i=pos+2; i<count; i++)
+            {
+                if(col0[i] == 1)
+                {
+                    zero0 = i;
+                    break;
+                }
+            }
+
+            double T3 = (Time[zero0] - Time[zero2]) * 1000000;
+            qDebug() << "T3 = " << Time[zero0] << "-" << Time[zero2] << "=" << T3;
+
+            int zero4 = pos;
+            for(int i=pos+10; i<count-4; i++)
+            {
+                if(col0[i] == 0 && col0[i+1] == 0 && col0[i+2] == 0 && col0[i+3] == 0)
+                {
+                    zero4 = i;
+                    break;
+                }
+            }
+
+            int zero5 = pos;
+            for(int i=zero4; i<count; i++)
+            {
+                if(col2[i] == 1)
+                {
+                    zero5 = i;
+                    break;
+                }
+            }
+            double T4 = (Time[zero5] - Time[zero4]) * 1000000;
+            qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
+
+
+            for(int i=pos+5; i<count-3; i++)
+            {
+                if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
+                {
+                    zero4 = i;
+                    break;
+                }
+            }
+
+            double T5 = (Time[zero4] - Time[pos+4]) * 1000000;
+            qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
+
+            int nData = 0;
+            for(int i=pos; i<zero4; i++)
+                if(col0[i] == 1) nData++;
+            qDebug() << "数据量 = " << nData;
+
+            ui->lineEditOut10->setText(QString::asprintf("%d",nData));
+            ui->lineEditOut20->setText(QString::asprintf("%f",T5));
+
+            ui->lineEditOut14->setText(QString::asprintf("%f",T1));
+            ui->lineEditOut24->setText(QString::asprintf("%f",T2));
+            ui->lineEditOut15->setText(QString::asprintf("%f",T3));
+            ui->lineEditOut25->setText(QString::asprintf("%f",T4));
         }
     }
 
     {
-        QString strFile = strPath + QString("/1.csv");
-        Document xlsx(strFile);
-        if (!xlsx.load())
-        {
-            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
-        }
-        else
-        {
-
-        }
+        DoCurrent(1,"6+10");
+        DoCurrent(2,"6+10");
+        DoCurrent(3,"6+10");
     }
+}
 
+void MainWindow::DoCurrent(int index,const QString&format)
+{
+    QString strPath = QApplication::applicationDirPath() + QString("/save");
+    QString strFile = strPath + QString("/save%1.csv").arg(index);
+
+    QFile DFile(strFile);
+    if (DFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        QString strFile = strPath + QString("/2.csv");
-        Document xlsx(strFile);
-        if (!xlsx.load())
+        QTextStream in(&DFile);
+        qDebug() << QString(in.readLine());
+
+        QList<double> Time;
+        QList<quint16> col0;
+
+        bool bFound = false;
+        while (!in.atEnd())
         {
-            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
+            QString strLine = in.readLine().trimmed();
+            QStringList strVals = strLine.split(',');
+            if(strVals[2].contains("0x55AA"))
+            {
+                if(bFound) break;
+
+                bFound = true;
+            }
+            if(!bFound) continue;
+
+            Time.push_back(strVals[0].toDouble());
+            QString strCur = strVals[2].replace("0x","");
+
+            col0.push_back(strCur.toInt(nullptr,16));
         }
-        else
+        DFile.close();
+
+        int count = col0.size();
+        if(count < 10)
+            return;
+
+        ui->lineEditOut11->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
+        ui->lineEditOut21->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
+
+        int H = ui->lineEditBase1->text().toInt();
+        int V = ui->lineEditBase2->text().toInt();
+        int pos = (H*V*0.5+0.5*H) + 3;
+
+        if(pos >= count)
+            return;
+        quint16 current = col0[pos]; // 0x2BFF
+
+        double curBase = ui->lineEditBase5->text().toDouble();
+        double curStep = ui->lineEditBase6->text().toDouble();
+
+        double C0 = 1;
+        double C1 = 1;
+
+        if(format == "6+10")
+        {
+            //QList<double> CurTable={1.25,2.50,3.75,5.00,6.25,7.50,8.75,10.00,11.25,12.50,13.25};
+            quint16 bit0 = (current >> 10);
+            //C0 = CurTable[bit0];
+            C0 = curBase + curStep * bit0;
+
+            quint16 bit1 = (current&0x3FF);
+            C1 = C0 * bit1 / 0x3FF;
+
+            qDebug() << "中心点:" << pos << QString::asprintf("0x%04X",current) << bit0;
+            qDebug() << "C0 =" << C0  << "C1 =" <<  C1;
+        }
+
+        if(format == "4+12")
+        {
+            quint16 bit0 = (current >> 12);
+            C0 = curBase + curStep * bit0;
+
+            quint16 bit1 = (current&0xFFF);
+            C1 = C0 * bit1 / 0xFFF;
+        }
+
+        if(format == "8+12")
         {
 
         }
-    }
-    {
-        QString strFile = strPath + QString("/3.csv");
-        Document xlsx(strFile);
-        if (!xlsx.load())
-        {
-            QMessageBox::critical(this, "提示", "文件无法打开！\n" + strFile);
-        }
-        else
-        {
 
+        switch(index)
+        {
+        case 1:
+            ui->lineEditOut12->setText(QString::asprintf("%.2f",C1));
+            ui->lineEditOut22->setText(QString::asprintf("%.2f",C0));
+            break;
+
+        case 2:
+            ui->lineEditOut13->setText(QString::asprintf("%.2f",C1));
+            break;
+
+        case 3:
+            ui->lineEditOut23->setText(QString::asprintf("%.2f",C1));
+            break;
         }
     }
 }
@@ -1082,7 +1340,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if(QMessageBox::question(this, "提示", "确定要退出吗？" ) != QMessageBox::Yes)
+    if(QMessageBox::question(this, "提示", "确定要退出吗？") != QMessageBox::Yes)
     {
         event->ignore();
         return;

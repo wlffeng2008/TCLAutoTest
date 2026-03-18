@@ -42,6 +42,8 @@ private:
     int m_nLMRead = 0;
     QTimer *m_tmLM = nullptr;
     QTimer *m_tmTV = nullptr;
+    QTimer *m_tmRd0 = nullptr;
+    QTimer *m_tmRd1 = nullptr;
 
     QSettings *m_setting=nullptr;
 
@@ -59,6 +61,7 @@ private:
 
     QString m_strRCmd;
     int  m_nRemote=0;
+    int  m_nExport=1;
     void DoRemote();
 
     QString m_Boost;
@@ -67,6 +70,7 @@ private:
 
     void DoSaveFile(const QString&file);
     void DoDealData();
+    void DoCurrent(int index,const QString&format);
 
     void ReloadInfo();
     DialogTVCmd     *m_pTVCmd = nullptr;

@@ -28,7 +28,7 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
     for(int i=1; i<=64; i++)
     {
         QString strItem=QString::asprintf("%2d 位单次传输字长", i);
-        if( i==8 ) strItem += "(标准)";
+        if(i == 8) strItem += "(标准)";
         ui->comboBox_6->addItem(strItem);
     }
     ui->comboBox_6->setCurrentIndex(7);
@@ -73,7 +73,6 @@ void DialogSPISetting::saveConfig()
         socket->SetText("1");
 
         tinyxml2::XMLElement* pModel = devices->FirstChildElement(m_strModel.toStdString().c_str());
-        tinyxml2::XMLElement* L1 = pModel->FirstChildElement("chnTrig");
         tinyxml2::XMLElement* L2 = pModel->FirstChildElement("chnEnable");
         QList<int> enables={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         enables[ui->comboBox_1->currentIndex()]=1;
