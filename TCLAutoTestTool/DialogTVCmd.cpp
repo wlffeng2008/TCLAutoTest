@@ -107,29 +107,29 @@ void DialogTVCmd::SaveLoadCmdFile(bool save)
 
         if(m_model->rowCount() == 0)
         {
-            addCommandRow("AA 06 10 01 A7 EF","进入工程菜单");
+            addCommandRow("AA 06 10 01 A7 EF",    "进入工程菜单");
             addCommandRow("AA 06 11 03 B4 9C",    "退出售后服务菜单");
-            addCommandRow("AA 06 11 02 A4 BD","备注说明");
+            addCommandRow("AA 06 11 02 A4 BD",    "备注说明");
             addCommandRow("AA 07 9F 07 01 F1 55", "Local dimming开关");
             addCommandRow("AA 06 30 03 A1 09",    "图效选择(图像状态)");
-            addCommandRow("AA 07 9F 3E 01 4E 58", "峰值亮度档位设置");
-            addCommandRow("AA 07 9F 0A 01 87 09", "环境光感应开关设置");
-            addCommandRow("AA 06 25 01 5D 8F", "信源选择");
-            addCommandRow("AA 06 31 01 92 38", "色温设置");
+            addCommandRow("AA 07 9F 3E 01 4E 58",       "峰值亮度档位设置");
+            addCommandRow("AA 07 9F 0A 01 87 09",       "环境光感应开关设置");
+            addCommandRow("AA 06 25 01 5D 8F",          "信源选择");
+            addCommandRow("AA 06 31 01 92 38",          "色温设置");
             addCommandRow("AA 09 93 01 02 03 04 4A 36", "自然光参数设置");
 
-            addCommandRow("AA 06 27 01 3B ED","备注说明");
-            addCommandRow("AA 06 27 00 3B ED","备注说明");
+            addCommandRow("AA 06 27 01 3B ED",      "备注说明");
+            addCommandRow("AA 06 27 00 3B ED",      "备注说明");
             addCommandRow("AA 08 28 FF FF FF 0B F6","备注说明");
             addCommandRow("AA 08 28 FF 00 FF 08 09","备注说明");
             addCommandRow("AA 08 28 FF 00 00 16 F9","备注说明");
             addCommandRow("AA 08 28 00 FF 00 DA 65","备注说明");
             addCommandRow("AA 08 28 00 00 FF C7 6A","备注说明");
             addCommandRow("AA 08 28 00 00 00 D9 9A","备注说明");
-            addCommandRow("AA 07 7C 03 00 D4 D1","备注说明");
-            addCommandRow("AA 06 3A 01 4E C2","备注说明");
-            addCommandRow("AA 06 36 64 37 AC","备注说明");
-            addCommandRow("AA 06 32 00 D7 4A","备注说明");
+            addCommandRow("AA 07 7C 03 00 D4 D1",   "备注说明");
+            addCommandRow("AA 06 3A 01 4E C2",      "备注说明");
+            addCommandRow("AA 06 36 64 37 AC",      "备注说明");
+            addCommandRow("AA 06 32 00 D7 4A",      "备注说明");
             SaveLoadCmdFile();
         }
     }

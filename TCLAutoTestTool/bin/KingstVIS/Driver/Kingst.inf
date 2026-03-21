@@ -1,0 +1,335 @@
+[Version]
+Signature = "$Windows NT$"
+Class = USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+Provider = %Provider%
+DriverVer=03/26/2021,
+CatalogFile=Kingst.cat
+CatalogFile.NTx86=KingstX86.cat
+CatalogFile.NTAMD64=KingstX64.cat
+
+; ========== Manufacturer/Models sections ===========
+
+[Manufacturer]
+%Provider% = Kingst,NTx86,NTamd64
+
+[Kingst.NTx86]
+%USB\FW01A1.DeviceDesc% = FW01A1Install, USB\VID_77A1&PID_01A1
+%USB\FW01A2.DeviceDesc% = FW01A2Install, USB\VID_77A1&PID_01A2
+%USB\FW01A3.DeviceDesc% = FW01A3Install, USB\VID_77A1&PID_01A3
+%USB\FW01A4.DeviceDesc% = FW01A4Install, USB\VID_77A1&PID_01A4
+%USB\FW02A1.DeviceDesc% = FW02A1Install, USB\VID_77A1&PID_02A1
+%USB\FW02A2.DeviceDesc% = FW02A2Install, USB\VID_77A1&PID_02A2
+%USB\FW02A3.DeviceDesc% = FW02A3Install, USB\VID_77A1&PID_02A3
+%USB\FW03A1.DeviceDesc% = FW03A1Install, USB\VID_77A1&PID_03A1
+%USB\FW03A2.DeviceDesc% = FW03A2Install, USB\VID_77A1&PID_03A2
+%USB\FW03A3.DeviceDesc% = FW03A3Install, USB\VID_77A1&PID_03A3
+
+[Kingst.NTamd64]
+%USB\FW01A1.DeviceDesc% = FW01A1Install, USB\VID_77A1&PID_01A1
+%USB\FW01A2.DeviceDesc% = FW01A2Install, USB\VID_77A1&PID_01A2
+%USB\FW01A3.DeviceDesc% = FW01A3Install, USB\VID_77A1&PID_01A3
+%USB\FW01A4.DeviceDesc% = FW01A4Install, USB\VID_77A1&PID_01A4
+%USB\FW02A1.DeviceDesc% = FW02A1Install, USB\VID_77A1&PID_02A1
+%USB\FW02A2.DeviceDesc% = FW02A2Install, USB\VID_77A1&PID_02A2
+%USB\FW02A3.DeviceDesc% = FW02A3Install, USB\VID_77A1&PID_02A3
+%USB\FW03A1.DeviceDesc% = FW03A1Install, USB\VID_77A1&PID_03A1
+%USB\FW03A2.DeviceDesc% = FW03A2Install, USB\VID_77A1&PID_03A2
+%USB\FW03A3.DeviceDesc% = FW03A3Install, USB\VID_77A1&PID_03A3
+
+; =================== Installation ===================
+
+
+[FW01A1Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW01A2Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW01A3Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW01A4Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW02A1Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW02A2Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW02A3Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW03A1Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW03A2Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+[FW03A3Install]
+Include=winusb.inf
+Needs=WINUSB.NT
+
+
+[FW01A1Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW01A2Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW01A3Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW01A4Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+
+[FW02A1Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW02A2Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW02A3Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW03A1Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW03A2Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[FW03A3Install.Services]
+Include=winusb.inf
+AddService=WinUSB,0x00000002,WinUSB_ServiceInstall
+
+
+[WinUSB_ServiceInstall]
+DisplayName     = %WinUSB_SvcDesc%
+ServiceType     = 1
+StartType       = 3
+ErrorControl    = 1
+ServiceBinary   = %12%\WinUSB.sys
+
+
+
+[FW01A1Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW01A2Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW01A3Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW01A4Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW02A1Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW02A2Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW02A3Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW03A1Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW03A2Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+[FW03A3Install.Wdf]
+KmdfService=WINUSB, WinUsb_Install
+UmdfServiceOrder=WINUSB
+
+
+
+[WinUSB_Install]
+KmdfLibraryVersion=1.9
+
+
+
+[FW01A1Install.HW]
+AddReg=Dev_AddRegFW01A1
+
+[FW01A2Install.HW]
+AddReg=Dev_AddRegFW01A2
+
+[FW01A3Install.HW]
+AddReg=Dev_AddRegFW01A3
+
+[FW01A4Install.HW]
+AddReg=Dev_AddRegFW01A4
+
+[FW02A1Install.HW]
+AddReg=Dev_AddRegFW02A1
+
+[FW02A2Install.HW]
+AddReg=Dev_AddRegFW02A2
+
+[FW02A3Install.HW]
+AddReg=Dev_AddRegFW02A3
+
+
+[FW03A1Install.HW]
+AddReg=Dev_AddRegFW03A1
+
+[FW03A2Install.HW]
+AddReg=Dev_AddRegFW03A2
+
+[FW03A3Install.HW]
+AddReg=Dev_AddRegFW03A3
+
+
+[Dev_AddRegFW01A1]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW01A2]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW01A3]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW01A4]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW02A1]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW02A2]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW02A3]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW03A1]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW03A2]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+[Dev_AddRegFW03A3]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{57baa63d-5e5a-42f5-8ce5-eaf78b45bacf}"
+
+
+[FW01A1Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW01A2Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW01A3Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW01A4Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW02A1Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW02A2Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW02A3Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW03A1Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW03A2Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+[FW03A3Install.CoInstallers]
+AddReg=CoInstallers_AddReg
+CopyFiles=CoInstallers_CopyFiles
+
+
+
+[CoInstallers_AddReg]
+HKR,,CoInstallers32,0x00010000,"WUDFUpdate_01009.dll","WinUSBCoInstaller2.dll","WdfCoInstaller01009.dll,WdfCoInstaller"
+
+[CoInstallers_CopyFiles]
+WdfCoInstaller01009.dll
+WinUSBCoInstaller2.dll
+WUDFUpdate_01009.dll
+
+[DestinationDirs]
+CoInstallers_CopyFiles=11
+
+; ================= Source Media Section =====================
+
+[SourceDisksNames.x86]
+1 = %DISK_NAME%,,,\x86
+
+[SourceDisksNames.amd64]
+2 = %DISK_NAME%,,,\amd64
+
+[SourceDisksFiles.x86]
+WdfCoInstaller01009.dll=1
+WinUSBCoInstaller2.dll=1
+WUDFUpdate_01009.dll=1
+
+[SourceDisksFiles.amd64]
+WdfCoInstaller01009.dll=2
+WinUSBCoInstaller2.dll=2
+WUDFUpdate_01009.dll=2
+
+; =================== Strings ===================
+
+[Strings]
+Provider="Kingst"
+USB\FW01A1.DeviceDesc="Kingst Logic Analyzer"
+USB\FW01A2.DeviceDesc="Kingst Logic Analyzer"
+USB\FW01A3.DeviceDesc="Kingst Logic Analyzer"
+USB\FW01A4.DeviceDesc="Kingst Logic Analyzer"
+
+USB\FW02A1.DeviceDesc="Kingst Instrument"
+USB\FW02A2.DeviceDesc="Kingst Instrument"
+USB\FW02A3.DeviceDesc="Kingst Instrument"
+
+USB\FW03A1.DeviceDesc="Kingst Instrument"
+USB\FW03A2.DeviceDesc="Kingst Instrument"
+USB\FW03A3.DeviceDesc="Kingst Instrument"
+
+
+DISK_NAME = "Driver Disk"
+

@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<language>
+    <head>
+        <code>it-IT</code>
+        <name>Italiano</name>
+        <provider src="XXX translation provided by XXX">Traduzione in Italiano fornita da Daniele Dal Santo</provider>
+        <info src="You need to restart to make the language settings take effect!">È necessario riavviare per rendere effettive le impostazioni della lingua!</info>
+    </head>
+    <vis>
+        <item src="+PulseWidth"></item>
+        <item src="-PulseWidth"></item>
+        <item src="2.5~5V CMOS Compatible"></item>
+        <item src="A Setting is Invalid">Un'impostazione non è valida</item>
+        <item src="About">Riguardo</item>
+        <item src="Add">Inserisci</item>
+        <item src="ALL">TUTTI</item>
+        <item src="All Protocol Analyzers">Tutti Protocollo Analizzatori</item>
+        <item src="All Rights Reserved.">Tutti i diritti riservati.</item>
+        <item src="All time">Tempo totale</item>
+        <item src="An error occurred">Si è verificato un errore</item>
+        <item src="Analyzer">Analizzatore</item>
+        <item src="Analyzers">Analizzatori</item>
+        <item src="Animate zooming">Zoom animato</item>
+        <item src="Are you sure to quit?">Sei sicuro di smettere?</item>
+        <item src="Auto restart sampling">Campionamento riavvio automatico</item>
+        <item src="Automatic update failed.">Aggiornamento automatico fallito.</item>
+        <item src="Automatically zoom to the window width's">Zoom automaticamente alla larghezza della finestra</item>
+        <item src="Timing markers">I marcatori</item>
+        <item src="Bin">Binario</item>
+        <item src="Binary file">File Binario</item>
+        <item src="Byte">Byte</item>
+        <item src="Cancel">Annulla</item>
+        <item src="Cannot keep up with this sample rate.">Impossibile mantenere la frequenza di campionamento corrente.</item>
+        <item src="Channel">Canale</item>
+        <item src="Channel Enable Settings">Abilita Canali Impostazioni</item>
+        <item src="Channel Height">Altezza del Canale</item>
+        <item src="Channel Quick Select"></item>
+        <item src="Channel Select"></item>
+        <item src="Check for Updates">Controlla gli aggiornamenti</item>
+        <item src="Check for updates on launch">Controlla gli aggiornamenti all'avvio</item>
+        <item src="Clear settings when the software starts next time">Cancellare le impostazioni quando il software si avvia la prossima volta</item>
+        <item src="Close">Chiudi</item>
+        <item src="Connected">Connesso</item>
+        <item src="CSV file">File CSV</item>
+        <item src="Custom I/O"></item>
+        <item src="Data reading">Leggi i dati</item>
+        <item src="Data Review">Revisione dei dati</item>
+        <item src="Dec">Decimale</item>
+        <item src="Decoded Results">Risultati decodificati</item>
+        <item src="Device connect">Connessione del dispositivo</item>
+        <item src="Device Connected">Dispositivo Collegato</item>
+        <item src="Device connecting, please wait">Connessione del dispositivo in corso, attendere prego</item>
+        <item src="Device Options">Dispositivo Opzioni</item>
+        <item src="Device Supported List">Dispositivo supportato elenco</item>
+        <item src="Device Disconnected">Dispositivo Scollegato</item>
+        <item src="Disable">Disabilita</item>
+        <item src="Display">Visualizzazione</item>
+        <item src="Display Format">Formato di visualizzazione</item>
+        <item src="Do not change the time span of the window">Non modificare l'intervallo di tempo della finestra</item>
+        <item src="DutyCycle">DutyCycle</item>
+        <item src="Edit">Modifica</item>
+        <item src="Enable">Abilita</item>
+        <item src="Ending Time[s]">Tempo di Fine[s]</item>
+        <item src="Even if the trigger is not met">Anche se il grilletto non si incontra</item>
+        <item src="Expected Sample Time">Tempo di Campionamento</item>
+        <item src="Export">Esporta</item>
+        <item src="Export Data">Esporta Dati</item>
+        <item src="Export File Select">Esporta Selezione File</item>
+        <item src="Falling Edge">Fronte di discesa</item>
+        <item src="FallTime"></item>
+        <item src="Frequency">Frequenza</item>
+        <item src="File open failed.">Apertura file fallita.</item>
+        <item src="File save failed.">Salvataggio file fallito.</item>
+        <item src="Find a new version: ">Cerca una nuova versione: </item>
+        <item src="for more information.">per maggiori informazioni.</item>
+        <item src="Glitch Filter Settings">Filtro Glitch Impostazioni</item>
+        <item src="Hex">Hex</item>
+        <item src="Hide Channel Boundary Lines">Nascondi linee di confine del canale</item>
+        <item src="I/O Standard"></item>
+        <item src="In waveform window">Nella finestra della forma d'onda</item>
+        <item src="In status bar">Nella barra di stato</item>
+        <item src="It's the latest version, no updates required.">Ultima versione già installata, nessun aggiornamento richiesto.</item>
+        <item src="Item Select">Selezione articolo</item>
+        <item src="Keep exactly the same position as before (if possible)">Mantenere esattamente la stessa posizione di prima (se possibile)</item>
+        <item src="Keep settings when the software starts next time">Mantieni le impostazioni quando il software si avvia la prossima volta</item>
+        <item src="Kingst Electronics Co., Ltd.">Kingst Electronics Co., Ltd.</item>
+        <item src="Language">Lingua</item>
+        <item src="Loading file, please wait">Caricamento file, attendere prego</item>
+        <item src="Location">Posizione</item>
+        <item src="Logic Analyzer"></item>
+        <item src="Looking for updates, please wait">Ricerca aggiornamenti in corso, attendere prego</item>
+        <item src="Maximum sample rate is">La frequenza massima di campionamento è: </item>
+        <item src="Measurements">Misurazione</item>
+        <item src="Model Select">Seleziona modello</item>
+        <item src="More Analyzers">Maggiori Analizzatori</item>
+        <item src="More Settings">Maggiori Impostazioni</item>
+        <item src="Move next edge to center">Sposta il bordo successivo al centro</item>
+        <item src="Move previous edge to center">Sposta il bordo precedente al centro</item>
+        <item src="Move the selected item to the center of the waveform window">Sposta l'elemento selezionato al centro della finestra della forma d'onda</item>
+        <item src="Negative Pulses">Impulsi Negativi</item>
+        <item src="None">Nessuno</item>
+        <item src="Normal Mode"></item>
+        <item src="Not Supported"></item>
+        <item src="OK">OK</item>
+        <item src="Only use the computer's memory to store the sampled data, the data is uploaded in real time."></item>
+        <item src="Only when the trigger is met">Solo quando il grilletto si incontra</item>
+        <item src="Open">Apri</item>
+        <item src="Open File">Apri File</item>
+        <item src="Options">Opzioni</item>
+        <item src="Out of memory, Sample abort.">Memoria insufficiente, Annullamento campione.</item>
+        <item src="Overshoot"></item>
+        <item src="Period">Periodo</item>
+        <item src="Place this setting on the toolbar.">Posiziona questa impostazione sulla barra degli strumenti.</item>
+        <item src="Please click the link below to download.">Fare clic sul collegamento sottostante per scaricare.</item>
+        <item src="Please enter an integer in the range">Si prega di inserire un numero intero nell'intervallo</item>
+        <item src="Please select at least one channel.">Si prega di selezionare almeno un canale.</item>
+        <item src="Please try to reduce the sample rate.">Si prega di ridurre la frequenza di campionamento.</item>
+        <item src="Positive Pulse">Impulsi Positivi</item>
+        <item src="Pre-sampling">Pre-campionamento</item>
+        <item src="Preshoot"></item>
+        <item src="Pulse Counters">Contatori di impulsi</item>
+        <item src="PWM Settings">PWM Impostazioni</item>
+        <item src="Quitting can lead to unpredictable errors.">Esci può portare a errori imprevedibili.</item>
+        <item src="Remove">Rimuovi</item>
+        <item src="Remove all">Rimuovi tutti</item>
+        <item src="Reset All Channels">Reset di tutti i Canali</item>
+        <item src="RiseTime"></item>
+        <item src="Rising Edge">Fronte di salita</item>
+        <item src="Sample Depth"></item>
+        <item src="Sample Depth (samples per acquisition)">Profondità di campionamento (campioni per acquisizione)</item>
+        <item src="Sample Mode"></item>
+        <item src="Sample Mode Select"></item>
+        <item src="Sample Rate"></item>
+        <item src="Sample Rate (samples per second)">Frequenza di campionamento (campioni al secondo)</item>
+        <item src="Sample start">Inizia Campionamento</item>
+        <item src="Samples"></item>
+        <item src="Sampling">Campionamento</item>
+        <item src="Sampling progress display">Visualizzazione dell'avanzamento del campionamento</item>
+        <item src="Save Data">Salva Dati</item>
+        <item src="Save File">Salva File</item>
+        <item src="Saving file, please wait">Salvataggio del file, attendere prego</item>
+        <item src="Save Settings">Salva Impostazioni</item>
+        <item src="Search">Cerca</item>
+        <item src="Select">Seleziona</item>
+        <item src="Settings">Impostazioni</item>
+        <item src="Show Real Time Status">Mostra stato in tempo reale</item>
+        <item src="Show time zero, with previous zoom level">Mostra dall'inizio, con il precedente livello di zoom</item>
+        <item src="Simulation data will be generated.">Verranno generati dati di simulazione.</item>
+        <item src="Software License Agreement">Contratto di licenza software</item>
+        <item src="Sorry, timing marker pairs has reached the maximum number.">Siamo spiacenti, Indicatori di temporizzazione hanno raggiunto il numero massimo.</item>
+        <item src="Sorry, there is no measurable data.">Siamo spiacenti, non ci sono dati misurabili.</item>
+        <item src="Sorry, there is no data that can be exported.">Siamo spiacenti, non ci sono dati da esportare.</item>
+        <item src="Sorry, there is no data that can be saved.">Siamo spiacenti, non ci sono dati da salvare.</item>
+        <item src="Specify time interval">Specificare l'intervallo di tempo</item>
+        <item src="Start single sampling">Inizia campionamento singolo</item>
+        <item src="Starting Time[s]">Tempo di Inizio[s]</item>
+        <item src="Stop">Arresta</item>
+        <item src="Stop sampling">Ferma il campionamento</item>
+        <item src="Stream Mode"></item>
+        <item src="System Information">Informazioni di sistema</item>
+        <item src="Text file">File di Testo</item>
+        <item src="The effective range of threshold voltage is ">L'intervallo effettivo della soglia di tensione è: </item>
+        <item src="The effective range of PWM:[0.1Hz,20MHz], duty cycle:[0,1].">Intervallo di frequenza PWM: [0,1 Hz, 20 MHz], Duty Cycle: [0,1].</item>
+        <item src="The GUI of this application is developed based on Qt.">La GUI di questa applicazione è sviluppata sulla base di Qt.</item>
+        <item src="The update is not complete.">L'aggiornamento non è completo.</item>
+        <item src="This mode can provide higher sample rate."></item>
+        <item src="This mode can provide larger sample depth."></item>
+        <item src="Time Select">Selezione Tempi</item>
+        <item src="Timing Markers">Indicatori di temporizzazione</item>
+        <item src="Timing Marker Pairs">Indicatori di temporizzazione</item>
+        <item src="Trigger Position">Posizione Trigger</item>
+        <item src="Trigger position centered"></item>
+        <item src="Trigger position setting failed.">Impostazione posizione trigger fallita.</item>
+        <item src="Disconnected">Disconnesso</item>
+        <item src="Update check failed.">Controllo aggiornamento fallito.</item>
+        <item src="Update Logs">Registro degli aggiornamenti</item>
+        <item src="Update now?">Aggiornare adesso?</item>
+        <item src="Updates">aggiornamenti</item>
+        <item src="Use Color for Waveform">Usa colore per forma d'onda</item>
+        <item src="Use the device's memory as the sample buffer, the data is uploaded to computer after sampled."></item>
+        <item src="User Guide">Guida utente</item>
+        <item src="Vamp"></item>
+        <item src="Vavg"></item>
+        <item src="Vbase"></item>
+        <item src="Version: ">Versione: </item>
+        <item src="View state after new sampling">Visualizza lo stato dopo il nuovo campionamento</item>
+        <item src="Visit">Visita</item>
+        <item src="Data File">File Dati</item>
+        <item src="Settings File">File Impostazioni</item>
+        <item src="Vmax"></item>
+        <item src="Vmin"></item>
+        <item src="Vpp"></item>
+        <item src="Vrms"></item>
+        <item src="Vth:"></item>
+        <item src="Vtop"></item>
+        <item src="Waiting for trigger">In attesa di trigger</item>
+        <item src="Warning">Attenzione</item>
+        <item src="When a channel is checked, pulses less than the set width will be filtered out."></item>
+        <item src="Width">Larghezza</item>
+        <item src="You may need to install a PDF reader to open the user guide.">Potrebbe essere necessario installare un lettore PDF per aprire la guida per l'utente.</item>
+        <item src="Zoom all the way out">Zoom su tutto schermo</item>
+        <item src="Zoom in"></item>
+        <item src="Zoom out"></item>
+        <item src="Zoom to full screen"></item>
+    </vis>
+    <analyzers>
+        <item class="1-Wire" src="Maxim 1-Wire Interface">Interfaccia Maxim 1-Wire</item>
+        <item class="1-Wire" src="Overdrive only mode">Modalità ad alta velocità</item>
+        <item class="1-Wire" src="The analyzer will only operate at high speed overdrive mode.">L'analizzatore funzionerà solo in modalità overdrive ad alta velocità.</item>
+        <item class="Atmel SWI" src="Single Wire Interface SDA">Protocollo Single Wire SDA</item>
+        <item class="Atmel SWI" src="Decode level">Livello di decodifica</item>
+        <item class="Atmel SWI" src="Level of the communication to decode">Livello di decodifica dei dati di comunicazione</item>
+        <item class="Atmel SWI" src="Please select an input for the SDA channel.">Si prega di selezionare un ingresso per il canale SDA.</item>
+        <item class="CAN" src="Controller Area Network - Input"></item>
+        <item class="CAN" src="Bit Rate (Bits/S)">Bit Rate (Bits/s)</item>
+        <item class="CAN" src="Specify the bit rate in bits per second.">Imposta la velocità di trasmissione(bps):</item>
+        <item class="CAN" src="Inverted (CAN High)">Invertito (CAN-High)</item>
+        <item class="CAN" src="Use this option when recording CAN High directly">Utilizzare questa opzione quando si registra direttamente linee di segnale CAN-High</item>
+        <item class="CAN" src="Please select a channel for the CAN interface">Si prega di selezionare un canale per l'interfaccia CAN</item>
+        <item class="DMX-512" src="Standard DMX-512"></item>
+        <item class="DMX-512" src="Accept DMX-1986 4us MAB">Accetta DMX-1986 4us MAB"</item>
+        <item class="DMX-512" src="Accept 4us MAB as per USITT DMX-512 (1986)">Accetta 4us MAB secondo USITT DMX-512 (1986)</item>
+        <item class="HDMI CEC" src="HDMI Consumer Electronics Control (CEC)"></item>
+        <item class="I2C" src="Serial Data Line">Linea Dati Seriale</item>
+        <item class="I2C" src="Serial Clock Line">Linea Clock Seriale</item>
+        <item class="I2C" src="Address Display">Visualizzazione Indirizzo</item>
+        <item class="I2C" src="Specify how you would like the I2C address to be displayed.">Specificare come si desidera visualizzare l'Indirizzo I2C.</item>
+        <item class="I2C" src="-bit, read/write bit included [default]">-bit, bit di lettura/scrittura incluso [predefinito]</item>
+        <item class="I2C" src="-bit, read/write bit set as 0">-bit, bit di lettura/scrittura impostato a 0</item>
+        <item class="I2C" src="-bit, address bits only">-bit, solo bit di indirizzo</item>
+        <item class="I2C" src="SDA and SCL can't be assigned to the same input.">SDA e SCL non possono essere assegnati allo stesso canale.</item>
+        <item class="I2S/PCM" src="Clock, aka I2S SCK - Continuous Serial Clock, aka Bit Clock"> Clock, alias I2S SCK - Continuous Serial Clock, o Bit Clock</item>
+        <item class="I2S/PCM" src="Frame Delimiter / aka I2S WS - Word Select, aka Sampling Clock">Delimitatore Frame, alias I2S WS - Word Select, o Sampling Clock</item>
+        <item class="I2S/PCM" src="Data, aka I2S SD - Serial Data">Dati, alias I2S SD - Dati seriali</item>
+        <item class="I2S/PCM" src="Specify if data comes in MSB first, or LSB first.">Specificare se i dati arrivano prima in MSB o prima in LSB.</item>
+        <item class="I2S/PCM" src="DATA arrives MSB first">DATA, Ordine dei bit MSB</item>
+        <item class="I2S/PCM" src="DATA arrives LSB first">DATA, Ordine dei bit LSB</item>
+        <item class="I2S/PCM" src="Specify if data is valid (should be read) on the rising, or falling clock edge.">Specificare se i dati sono validi (devono essere letti) sul fronte di salita o in discesa del clock.</item>
+        <item class="I2S/PCM" src="DATA is valid (should be read) on the CLOCK falling edge">DATA validi (dovrebbero essere letti) sul fronte di discesa del CLOCK</item>
+        <item class="I2S/PCM" src="DATA is valid (should be read) on the CLOCK rising edge">DATA validi (dovrebbero essere letti) sul fronte di salita del CLOCK</item>
+        <item class="I2S/PCM" src="Specify the number of audio bits/word.  Any additional bits will be ignored">Specificare il numero di audio bit/parola. Qualsiasi bit aggiuntivo verrà ignorato</item>
+        <item class="I2S/PCM" src="Bits/Word (Audio bit depth, bits/sample)">Bits/Word (Audio bit profondità, bits/sample)</item>
+        <item class="I2S/PCM" src="Specify the type of frame signal used.">Specificare il tipo di frame del segnale utilizzato.</item>
+        <item class="I2S/PCM" src="FRAME signal transitions (changes state) twice each word.">Transizione segnale FRAME (cambia stato) due volte ogni parola.</item>
+        <item class="I2S/PCM" src="FRAME signal transitions (changes state) once each word. (I2S, PCM standard)">Transizione segnale FRAME (cambia stato) una volta ogni parola. (I2S, standard PCM)</item>
+        <item class="I2S/PCM" src="FRAME signal transitions(changes state) twice every four (4) words.">Transizione segnale FRAME (cambia stato) due volte ogni quattro (4) parole.</item>
+        <item class="I2S/PCM" src="Specify whether data bits are left or right aligned wrt FRAME edges. Only needed if more bits are sent than needed each frame, and additional bits are ignored.">Specificare se i bit di dati sono allineati a destra o sinistra rispetto ai bordi FRAME. Serve solo se vengono inviati più bit del necessario per ciascun fotogramma e i bit aggiuntivi vengono ignorati.</item>
+        <item class="I2S/PCM" src="DATA bits are left-aligned with respect to FRAME edges">I bit DATA sono allineati a sinistra rispetto ai bordi del FRAME</item>
+        <item class="I2S/PCM" src="DATA bits are right-aligned with respect to FRAME edges">I bit DATA sono allineati a destra rispetto ai bordi del FRAME</item>
+        <item class="I2S/PCM" src="Specify the bit alignment type to use.">Specificare il tipo di allineamento bit da utilizzare.</item>
+        <item class="I2S/PCM" src="Bits are right-shifted by one with respect to FRAME edges (I2S typical)">I bit sono spostati a destra di uno rispetto ai bordi FRAME (I2S tipico)</item>
+        <item class="I2S/PCM" src="Bits are not shifted with respect to FRAME edges (PCM typical)">I bit non sono spostati rispetto ai bordi FRAME (tipico PCM)</item>
+        <item class="I2S/PCM" src="Select whether samples are unsigned or signed values (only shows up if the display type is decimal)">Seleziona se i campioni sono senza segno o con segno (viene visualizzato solo se il tipo di visualizzazione è decimale)</item>
+        <item class="I2S/PCM" src="Samples are unsigned numbers">I Campioni sono numeri senza segno</item>
+        <item class="I2S/PCM" src="Samples are signed (two's compliment)">I Campioni sono numeri con segno (complemento a due)</item>
+        <item class="I2S/PCM" src="Interpret samples as signed integers -- only when display type is set to decimal">Interpretare i campioni come numeri interi con segno - solo quando il tipo di visualizzazione è impostato su decimale</item>
+        <item class="I2S/PCM" src="Select whether WS high is channel 1 or channel 2">Selezionare Word Select WS alto è il canale 1 o canale 2</item>
+        <item class="I2S/PCM" src="Word select high is channel 2 (right) (I2S typical)">Il Word Select WS alto è il canale 2 (a destra) (tipico di I2S)</item>
+        <item class="I2S/PCM" src="Word select high is channel 1 (left) (inverted)">Il Word Select WS alto è il canale 1 (a sinistra) (Invertito)</item>
+        <item class="I2S/PCM" src="Please select a channel for I2S/PCM CLOCK signal">Selezionare un canale per il segnale CLOCK I2S/PCM</item>
+        <item class="I2S/PCM" src="Please select a channel for I2S/PCM FRAME signal">Selezionare un canale per il segnale FRAME I2S/PCM</item>
+        <item class="I2S/PCM" src="Please select a channel for I2S/PCM DATA signal">Selezionare un canale per il segnale DATA I2S/PCM</item>
+        <item class="I2S/PCM" src="Please select different channels for the I2S/PCM signals">Selezionare diversi canali per i segnali I2S/PCM</item>
+        <item class="IR-NEC" src="Standard InfraRed"></item>
+        <item class="IR-NEC" src="Bit Rate (Bits/S)">Bit Rate (Bits/s)</item>
+        <item class="IR-NEC" src="Specify the bit rate used.">Specificare il bit rate utilizzato.</item>
+        <item class="IR-NEC" src="Protocol Type">Tipo di Protocollo</item>
+        <item class="JTAG" src="JTAG Test mode select">Selezione della modalità test JTAG</item>
+        <item class="JTAG" src="JTAG Test clock"></item>
+        <item class="JTAG" src="JTAG Test data input"></item>
+        <item class="JTAG" src="JTAG Test data output"></item>
+        <item class="JTAG" src="JTAG Test reset"></item>
+        <item class="JTAG" src="TAP initial state">TAP stato iniziale</item>
+        <item class="JTAG" src="JTAG TAP controller initial state">Stato iniziale del controller TAP JTAG</item>
+        <item class="JTAG" src="Shift-IR bit order">Shift-IR Ordine bit</item>
+        <item class="JTAG" src="Instruction register shift bit order">Ordine di spostamento del registro di istruzioni</item>
+        <item class="JTAG" src="Most significant bit first">bit con peso maggiore (MSB)</item>
+        <item class="JTAG" src="Least significant bit first">bit con peso minore (LSB)</item>
+        <item class="JTAG" src="Shift-DR bit order">Shift-DR Ordine bit</item>
+        <item class="JTAG" src="Data register shift bit order">Ordine di spostamento del registro dati</item>
+        <item class="JTAG" src="Data register shift MOST significant bit first">Spostamento del registro dati bit più significativo (MSB)</item>
+        <item class="JTAG" src="Data register shift LEAST significant bit first">Spostamento del registro dati bit meno significativo (LSB)</item>
+        <item class="JTAG" src="Show TDI/TDO bit counts">Visualizza conteggio bit TDI / TDO</item>
+        <item class="JTAG" src="Used to count bits sent during Shift state">Utilizzato per contare i bit inviati durante lo spostamento</item>
+        <item class="JTAG" src="Please select inputs for TMS and TCK channels.">Selezionare l'input per i canali TMS e TCK.</item>
+        <item class="JTAG" src="Please select different channels for each input.">Si prega di selezionare un canale diverso per ciascun ingresso.</item>
+        <item class="LIN" src="Standard LIN"></item>
+        <item class="LIN" src="LIN Version">Versione LIN</item>
+        <item class="LIN" src="Specify the LIN protocol version 1 or 2.">Specificare il protocollo LIN versione 1 o 2.</item>
+        <item class="LIN" src="Bit Rate (Bits/s)"></item>
+        <item class="LIN" src="Specify the bit rate in bits per second.">Specificare il bit rate in bit al secondo (bps).</item>
+        <item class="Manchester" src="Mode">Codifica</item>
+        <item class="Manchester" src="Specify the Manchester Mode">Specifica la modalità di codifica Manchester</item>
+        <item class="Manchester" src="Manchester"></item>
+        <item class="Manchester" src="Differential Manchester">Manchester differenziale</item>
+        <item class="Manchester" src="Bi-Phase Mark Code (FM1)"></item>
+        <item class="Manchester" src="Bi-Phase Space Code (FM0)"></item>
+        <item class="Manchester" src="Bit Rate (Bits/s)"></item>
+        <item class="Manchester" src="Specify the bit rate in bits per second.">Specificare il bit rate in bit al secondo (bps).</item>
+        <item class="Manchester" src="Specify the Manchester edge polarity (Normal Manchester mode only)">Specificare la polarità del bordo del codice Manchester (solo modalità di codifica Manchester normale)</item>
+        <item class="Manchester" src="negative edge is binary one">Il fronte di discesa negativo è binario "1"</item>
+        <item class="Manchester" src="negative edge is binary zero">Il fronte di discesa negativo è binario "0"</item>
+        <item class="Manchester" src="Select the number of bits per frame">Seleziona la lunghezza del frame (bits/frame)</item>
+        <item class="Manchester" src="Bit per Transfer">Bit per trasferimento</item>
+        <item class="Manchester" src="Bits per Transfer">Bits per trasferimento</item>
+        <item class="Manchester" src="Select if the most significant bit or least significant bit is transmitted first">Selezionare se il bit più significativo (MSB) o il bit meno significativo viene trasmesso per primo (LSB)</item>
+        <item class="Manchester" src="Least Significant Bit Sent First">Il bit meno significativo è inviato per primo (LSB)</item>
+        <item class="Manchester" src="Most Significant Bit Sent First">Il bit più significativo è inviato per primo (MSB)</item>
+        <item class="Manchester" src="Preamble bits to ignore">Ignorare Bit di preambolo</item>
+        <item class="Manchester" src="Specify the number of preamble bits to ignore.">Specificare il numero di bit di preambolo da ignorare.</item>
+        <item class="Manchester" src="Tolerance">Tolleranza</item>
+        <item class="Manchester" src="Specify the Manchester Tolerance as a percentage of period">Specificare le tolleranze di codifica Manchester come percentuale del periodo</item>
+        <item class="Manchester" src="% of period (default)">% del periodo (predefinito)</item>
+        <item class="Manchester" src="% of period">% del periodo</item>
+        <item class="MIDI" src="General MIDI"></item>
+        <item class="Modbus" src="Modbus Mode"></item>
+        <item class="Modbus" src="Specify which mode of Modbus this is">Specificare la modalità di comunicazione Modbus</item>
+        <item class="Modbus" src="Modbus/RTU - Master"></item>
+        <item class="Modbus" src="Modbus/RTU - Slave"></item>
+        <item class="Modbus" src="Modbus/ASCII - Master"></item>
+        <item class="Modbus" src="Modbus/ASCII - Slave"></item>
+        <item class="Modbus" src="Bit Rate (Bits/S)">Bit Rate (Bits/s)</item>
+        <item class="Modbus" src="Specify the bit rate in bits per second.">Specificare il bit rate in bit al secondo.</item>
+        <item class="Modbus" src="Specify if the serial signal is inverted">Specifica se il segnale seriale è invertito</item>
+        <item class="Modbus" src="Non Inverted (Standard)">Non Invertito (Standard)</item>
+        <item class="Modbus" src="Inverted">Invertito</item>
+        <item class="Parallel 6800" src="Data is valid on E/Clock rising edge">I dati sono validi sul Fronte di salita del E/Clock</item>
+        <item class="Parallel 6800" src="Data is valid on E/Clock falling edge">I dati sono validi sul Fronte di discesa del E/Clock</item>
+        <item class="Parallel 6800" src="Show decode marker or not">Indica se visualizzare il Marcatore</item>
+        <item class="Parallel 6800" src="Show Decode Marker">Mostra indicatore</item>
+        <item class="Parallel 6800" src="Please select at least one channel to use in the parallel bus">Si prega di specificare almeno un Canale per il Bus Parallelo</item>
+        <item class="PS/2 Keyboard/Mouse" src="PS/2 - Clock"></item>
+        <item class="PS/2 Keyboard/Mouse" src="PS/2 - Data"></item>
+        <item class="PS/2 Keyboard/Mouse" src="Device Type">Tipo di Dispositivo</item>
+        <item class="PS/2 Keyboard/Mouse" src="Keyboard">Tastiera</item>
+        <item class="PS/2 Keyboard/Mouse" src="Mouse (Standard PS/2)"></item>
+        <item class="PS/2 Keyboard/Mouse" src="Mouse (IntelliMouse)"></item>
+        <item class="PS/2 Keyboard/Mouse" src="Clock and Data must be unique channels!">Assegnare Canali differenti di Clock e Dati!</item>
+        <item class="SDIO" src="Standard SDIO Clock"></item>
+        <item class="SDIO" src="Standard SDIO CMD"></item>
+        <item class="SDIO" src="Standard SDIO Data 0"></item>
+        <item class="SDIO" src="Standard SDIO Data 1"></item>
+        <item class="SDIO" src="Standard SDIO Data 2"></item>
+        <item class="SDIO" src="Standard SDIO Data 3"></item>
+        <item class="SDIO" src="Sample On">Campiona sul</item>
+        <item class="SDIO" src="Determines if sample on rising or falling edge">Specificare se campionare su un fronte di salita o di discesa (leggi dati)</item>
+        <item class="SDIO" src="Read Samples on Falling clock edge">Fronte di Discesa del Clock</item>
+        <item class="SDIO" src="Read Samples on Rising clock edge">Fronte di Salita del Clock</item>
+        <item class="SDIO" src="Please specify the channels for clock and command">Si prega di specificare i canali per Clock e CMD</item>
+        <item class="SDIO" src="Only support 1-bit and 4-bit mode">Supporta solo le modalità 1-bit e 4-bit</item>
+        <item class="SMBus" src="SMBus data line">Linea dati SMBus</item>
+        <item class="SMBus" src="SMBus clock line">Linea Clock SMBus</item>
+        <item class="SMBus" src="SMBus decode level">Livello Decodifica SMBus</item>
+        <item class="SMBus" src="Type of decoded SMBus data">Tipo di decodifica dati SMBus</item>
+        <item class="SMBus" src="Calculate PEC on packets">Calcola il PEC sul pacchetto</item>
+        <item class="SMBus" src="true - calculate PEC, false - no PEC on packets">Vero - Calcola PEC, Falso - Nessun PEC sui pacchetti</item>
+        <item class="SMBus" src="Please select an input for the SMBDAT.">Si prega di selezionare un ingresso per il canale SMBDAT.</item>
+        <item class="SMBus" src="Please select an input for the SMBCLK.">Si prega di selezionare un ingresso per il canale SMBCLK.</item>
+        <item class="SMBus" src="Please select different inputs for the channels.">Si prega di selezionare un canale diverso per ciascun ingresso.</item>
+        <item class="SPI" src="Bit per Transfer">Bit per trasferimento</item>
+        <item class="SPI" src="Bits per Transfer">Bit per trasferimento</item>
+        <item class="SPI" src="Bits per Transfer (Standard)">Bit per trasferimento (Standard)</item>
+        <item class="SPI" src="Master Out, Slave In"></item>
+        <item class="SPI" src="Master In, Slave Out"></item>
+        <item class="SPI" src="Clock (CLK)"></item>
+        <item class="SPI" src="Enable (SS, Slave Select)">Abilita (SS, Slave Select)</item>
+        <item class="SPI" src="Most Significant Bit First (Standard)">bit con peso maggiore (MSB)</item>
+        <item class="SPI" src="Least Significant Bit First">bit con peso minore (LSB)</item>
+        <item class="SPI" src="Show decode marker or not">Indica se visualizzare il Marcatore</item>
+        <item class="SPI" src="Show Decode Marker">Visualizza Marcatore</item>
+        <item class="SPI" src="Clock is Low when inactive (CPOL = 0)">Clock Basso quando inattivo (CPOL = 0)</item>
+        <item class="SPI" src="Clock is High when inactive (CPOL = 1)">Clock Alto quando inattivo (CPOL = 1)</item>
+        <item class="SPI" src="Data is Valid on Clock Leading Edge (CPHA = 0)">I dati sono validi Leggi sul bordo del Clock precedente (CPHA = 0)</item>
+        <item class="SPI" src="Data is Valid on Clock Trailing Edge (CPHA = 1)">I dati sono validi Leggi sul bordo del Clock prossimo (CPHA = 1)</item>
+        <item class="SPI" src="Enable line is Active Low (Standard)">Enable è attivo Basso(Standard)</item>
+        <item class="SPI" src="Enable line is Active High">Enable è attivo Alto</item>
+        <item class="SPI" src="Please select different channels for each input.">Si prega di selezionare un canale diverso per ciascun ingresso.</item>
+        <item class="SPI" src="Please select at least one input for either MISO or MOSI.">Si prega di selezionare almeno un canale MISO o MOSI.</item>
+        <item class="SWD" src="Please select an input for SWDIO channel.">Si prega di selezionare un ingresso per il canale SWDIO.</item>
+        <item class="SWD" src="Please select an input for SWCLK channel.">Si prega di selezionare un ingresso per il canale SWCLK.</item>
+        <item class="SWD" src="Please select different inputs for the channels.">Si prega di selezionare un canale diverso per ciascun ingresso.</item>
+        <item class="UART/RS232/485" src="Standard Async Serial">Interfaccia seriale asincrona standard</item>
+        <item class="UART/RS232/485" src="Bit Rate (Bits/s)"></item>
+        <item class="UART/RS232/485" src="Specify the bit rate in bits per second.">Imposta la velocità di trasmissione(bps):</item>
+        <item class="UART/RS232/485" src="Use Autobaud">Rilevamento automatico della velocità di trasmissione</item>
+        <item class="UART/RS232/485" src="Automatically find the minimum pulse width and calculate the baud rate according to this pulse width.">Trova automaticamente la larghezza minima dell'impulso e calcola la velocità di trasmissione in base a questa larghezza dell'impulso.</item>
+        <item class="UART/RS232/485" src="Inverted (RS232)">Invertito (RS232)</item>
+        <item class="UART/RS232/485" src="Specify if the serial signal is inverted">Specificare se il segnale seriale è invertito</item>
+        <item class="UART/RS232/485" src="Select the number of bits per frame">Seleziona il numero di bit per frame</item>
+        <item class="UART/RS232/485" src="Bit per Transfer">Bit per trasferimento</item>
+        <item class="UART/RS232/485" src="Bits per Transfer">Bits per trasferimento</item>
+        <item class="UART/RS232/485" src="Bits per Transfer (Standard)">Bits per trasferimento (Standard)</item>
+        <item class="UART/RS232/485" src="Specify the number of stop bits.">Specificare il numero di bit di stop.</item>
+        <item class="UART/RS232/485" src="Stop Bit (Standard)">Stop bit (Standard)</item>
+        <item class="UART/RS232/485" src="Stop Bits"></item>
+        <item class="UART/RS232/485" src="Specify None, Even, or Odd Parity.">Specificare Parità: Pari, Dispari, Nessuna</item>
+        <item class="UART/RS232/485" src="No Parity Bit (Standard)">Nessun Bit di Parità (Standard)</item>
+        <item class="UART/RS232/485" src="Even Parity Bit">Pari</item>
+        <item class="UART/RS232/485" src="Odd Parity Bit">Dispari</item>
+        <item class="UART/RS232/485" src="Parity Bit is Fixed 0">Il bit di parità è fisso 0</item>
+        <item class="UART/RS232/485" src="Parity Bit is Fixed 1">Il bit di parità è fisso 1</item>
+        <item class="UART/RS232/485" src="Select if the most significant bit or least significant bit is transmitted first">Selezionare se il bit più significativo (MSB) o il bit meno significativo viene trasmesso per primo (LSB)</item>
+        <item class="UART/RS232/485" src="Least Significant Bit Sent First (Standard)">Il bit meno significativo è inviato per primo (LSB)</item>
+        <item class="UART/RS232/485" src="Most Significant Bit Sent First">Il bit più significativo è inviato per primo (MSB)</item>
+        <item class="UART/RS232/485" src="Special Mode">Modalità speciale</item>
+        <item class="UART/RS232/485" src="Specify if this is normal, or MP serial (aka multi-drop, MP, multi-processor, 9-bit serial)">Specificare se è normale o seriale MP (multi-drop, MP, multiprocessore, seriale a 9 bit)</item>
+        <item class="UART/RS232/485" src="None">Nessuna</item>
+        <item class="UART/RS232/485" src="MP Mode: Address indicated by MSB=0">Modalità MP: indirizzo indicato da MSB = 0</item>
+        <item class="UART/RS232/485" src="MDB Mode: Address indicated by MSB=1">Modalità MDB: indirizzo indicato da MSB = 1</item>
+        <item class="UART/RS232/485" src="Sorry, but we don't support using parity at the same time as MP mode.">Spiacenti, l'utilizzo della parità contemporaneamente alla modalità MP non è supportata.</item>
+        <item class="USB LS/FS" src="USB D+ (green)">USB D+ (Verde)</item>
+        <item class="USB LS/FS" src="USB D- (white)">USB D- (Bianco)</item>
+        <item class="USB LS/FS" src="USB bit-rate">Velocità USB (bit-rate)</item>
+        <item class="USB LS/FS" src="USB data bit-rate">Velocità Dati USB (bit-rate)</item>
+        <item class="USB LS/FS" src="Low speed (1.5 Mbps)">Bassa Velocità (1.5 Mbps)</item>
+        <item class="USB LS/FS" src="Full speed (12 Mbps)">Piena Velocità (12 Mbps)</item>
+        <item class="USB LS/FS" src="USB decode level">Livello di decodifica USB</item>
+        <item class="USB LS/FS" src="Type of decoded USB output">Tipo di uscita USB decodificata</item>
+        <item class="USB LS/FS" src="EP0 Control transfers"></item>
+        <item class="USB LS/FS" src="Packets"></item>
+        <item class="USB LS/FS" src="Bytes"></item>
+        <item class="USB LS/FS" src="Signals">Segnali</item>
+        <item class="USB LS/FS" src="Please select an input for the D+ channel.">Si prega di selezionare un ingresso per il canale D+.</item>
+        <item class="USB LS/FS" src="Please select an input for the D- channel.">Si prega di selezionare un ingresso per il canale D-.</item>
+        <item class="USB LS/FS" src="Please select different inputs for the D- and D+ channels.">Si prega di selezionare un canale diverso per D- e per D+.</item>
+    </analyzers>
+</language>

@@ -19,7 +19,7 @@
      <x>16</x>
      <y>14</y>
      <width>135</width>
-     <height>104</height>
+     <height>95</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout" columnstretch="0,1" columnminimumwidth="0,0">
@@ -419,7 +419,7 @@
      <x>196</x>
      <y>14</y>
      <width>135</width>
-     <height>101</height>
+     <height>80</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -427,6 +427,9 @@
      <widget class="QRadioButton" name="radioButton1">
       <property name="text">
        <string>模式1</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
       <attribute name="buttonGroup">
        <string notr="true">buttonGroup</string>
@@ -481,13 +484,13 @@
     <string>取消</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>56</x>
-     <y>128</y>
+     <y>118</y>
      <width>285</width>
-     <height>139</height>
+     <height>148</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">

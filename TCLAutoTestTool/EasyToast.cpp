@@ -72,15 +72,15 @@ void EasyToast::question(const QString&text,int durtion)
 
 void EasyToast::active(const QString&text, int type, int durtion)
 {
-    m_TMShow.stop() ;
-    m_TMHide.stop() ;
+    m_TMShow.stop();
+    m_TMHide.stop();
 
     switch(type)
     {
-    case 0: ui->labelIcon->setPixmap(pmInformation) ; break ;
-    case 1: ui->labelIcon->setPixmap(pmQuestion) ; break ;
-    case 2: ui->labelIcon->setPixmap(pmWarning) ; break ;
-    case 3: ui->labelIcon->setPixmap(pmCritical) ; break ;
+    case 0: ui->labelIcon->setPixmap(pmInformation) ; break;
+    case 1: ui->labelIcon->setPixmap(pmWarning) ; break;
+    case 2: ui->labelIcon->setPixmap(pmQuestion) ; break;
+    case 3: ui->labelIcon->setPixmap(pmCritical) ; break;
     }
     ui->label->setText(text) ;
     setWindowOpacity(1.0) ;

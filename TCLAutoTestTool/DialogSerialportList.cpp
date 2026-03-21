@@ -21,9 +21,10 @@ DialogSerialportList::DialogSerialportList(QWidget *parent) :
     QHeaderView *header = ui->tableView->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::Stretch);
     header->setSectionResizeMode(0,QHeaderView::Fixed);
-    header->resizeSection(0,90) ;
+    header->resizeSection(0,90);
     header->setSectionResizeMode(1,QHeaderView::Fixed);
-    header->resizeSection(1,280) ;
+    header->resizeSection(1,280);
+
     on_pushButtonRefresh_clicked();
 
     connect(ui->tableView,&QTableView::doubleClicked,this,[=](const QModelIndex &index){
@@ -65,7 +66,7 @@ void DialogSerialportList::on_pushButtonRefresh_clicked()
         item2->setEditable(false);
         item3->setEditable(false);
 
-        model->appendRow({item1,item2,item3}) ;
+        model->appendRow({item1,item2,item3});
     }
 }
 

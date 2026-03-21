@@ -18,11 +18,6 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
 
     QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     QString strFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
-    QFile F(strFile);
-    if(!F.exists())
-    {
-        QFile::copy(QApplication::applicationDirPath() + "/vis.config",strFile);
-    }
     m_VisFile = strFile;
 
     for(int i=1; i<=64; i++)
@@ -60,14 +55,15 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
 
 void DialogSPISetting::saveConfig()
 {
+    QString strCfg = QApplication::applicationDirPath() + "/vis.config";
     tinyxml2::XMLDocument doc;
-    XMLError error = doc.LoadFile(m_VisFile.toStdString().c_str());
+    XMLError error = doc.LoadFile(strCfg.toStdString().c_str());
 
     if (error == XMLError::XML_SUCCESS)
     {
         tinyxml2::XMLElement* settings = doc.RootElement();              // settings
         tinyxml2::XMLElement* global   = settings->FirstChildElement();  // global
-        tinyxml2::XMLElement* devices  = settings->FirstChildElement("devices"); // device
+        tinyxml2::XMLElement* devices  = settings->FirstChildElement("devices");    // device
         tinyxml2::XMLElement* analyzers = settings->FirstChildElement("analyzers"); // analyzers
         tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
         socket->SetText("1");
@@ -82,6 +78,7 @@ void DialogSPISetting::saveConfig()
         QString strValue;
         for(int i=0; i<enables.size(); i++)
             strValue += QString("%1,").arg(enables[i]);
+        strValue = strValue.chopped(1);
         L2->SetText(strValue.toStdString().c_str());
         {
             tinyxml2::XMLElement* V0 = pModel->FirstChildElement("smpDepth");
@@ -116,7 +113,7 @@ void DialogSPISetting::saveConfig()
         tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
         tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
         parameters->SetText(strValue.toStdString().c_str());
-
+        doc.SaveFile(strCfg.toStdString().c_str());
         doc.SaveFile(m_VisFile.toStdString().c_str());
     }
 
@@ -124,8 +121,9 @@ void DialogSPISetting::saveConfig()
 
 void DialogSPISetting::loadConfig()
 {
+    QString strCfg = QApplication::applicationDirPath() + "/vis.config";
     tinyxml2::XMLDocument doc;
-    XMLError error = doc.LoadFile(m_VisFile.toStdString().c_str());
+    XMLError error = doc.LoadFile(strCfg.toStdString().c_str());
 
     if (error == XMLError::XML_SUCCESS)
     {
@@ -162,6 +160,7 @@ void DialogSPISetting::loadConfig()
 
         ui->checkBox->setChecked(params[14].toInt() == 1);
 
+        doc.SaveFile(strCfg.toStdString().c_str());
         doc.SaveFile(m_VisFile.toStdString().c_str());
 
         emit onLoadConfig(m_nDepth,m_nFrequ);

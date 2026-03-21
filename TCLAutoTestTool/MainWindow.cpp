@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "qforeach.h"
 #include "ui_MainWindow.h"
 
 #include "DialogSerialportList.h"
@@ -6,6 +7,7 @@
 #include "DialogTVCmd.h"
 #include "DialogTestFlow.h"
 #include "DialogSPISetting.h"
+#include "EasyToast.h"
 
 #include <windows.h>
 
@@ -54,7 +56,7 @@ static QStringList TVCmds = {
 };
 
 uint16_t crc = 0x0000;
-const uint16_t polynomial = 0xA001 ;// 0x1021;//
+const uint16_t polynomial = 0xA001 ; // 0x1021;//
 WORD Get_CRC16_Sum(BYTE const* CRC_Buf, WORD nLen)
 {
     WORD wCrc = 0xFFFF;
@@ -71,7 +73,6 @@ WORD Get_CRC16_Sum(BYTE const* CRC_Buf, WORD nLen)
     }
     return wCrc;
 }
-
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -102,7 +103,6 @@ static void killProcess(const QString &processName)
     }
 }
 
-
 QString getOpenFileName(QWidget *parent = nullptr,
                                    const QString &caption = "打开文件",
                                    const QString &dir = "",
@@ -118,6 +118,7 @@ QString getOpenFileName(QWidget *parent = nullptr,
     }
     return "";
 }
+
 static HWND m_hVisWnd = nullptr;
 BOOL CALLBACK EnumWindowsProc(HWND hWnd, LPARAM lParam)
 {
@@ -148,10 +149,37 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowTitle(QString("LDM自动化调试 --- By QT") + QT_VERSION_STR);
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
+    QString strBuild;
+
+#ifdef _MSC_VER
+
+    QString strName = "MSVC2017";
+
+#if _MSC_VER >= 1930
+    strName = "MSVC2022";
+#elif _MSC_VER >= 1920
+    strName = "MSVC2019";
+#else
+    strName = "MSVC2017";
+#endif
+
+    strBuild = QString("使用 %1[%2] 编译").arg(strName).arg(_MSC_VER);
+
+#else
+    strBuild = "非 MSVC 编译(如 MinGW, GCC 等)";
+#endif
+
+    QString strTitle = QString("LDM自动化调试(V1.00) -- [Build: %1] [By Qt%2] -- [%3]").arg(__TIMESTAMP__,QT_VERSION_STR,strBuild);
+    setWindowTitle(strTitle);
+
     EnumWindows(EnumWindowsProc,9527);
+
+    //setStyleSheet("* { font: bold 12px 'Microsoft YaHei'; }");
+    //setStyleSheet("QLineEdit { font: normal 12px 'Microsoft YaHei'; }");
+
+    ui->spinBox->hide();
 
     m_bLoading = true;
     m_setting = new QSettings(QCoreApplication::applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
@@ -168,8 +196,6 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
         m_pTest->show();
-
-        //DoSaveFile("D:\\12345.csv");
         //DoDealData();
     });
     connect(ui->pushButtonSPISet,&QPushButton::clicked,this,[=]{
@@ -177,7 +203,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(m_pTVCmd,&DialogTVCmd::onSendCmd,this,[=](const QString&strCmd){
-        if(m_COM1) m_COM1->send(strCmd,false);
+        m_TvCmds.append(strCmd);
+        sendTvCmd();
     });
 
     ui->comboBoxWindows->blockSignals(true);
@@ -200,6 +227,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxBaud0->setCurrentIndex(m_setting->value("baud0",6).toInt());
     ui->comboBoxBaud1->setCurrentIndex(m_setting->value("baud1",6).toInt());
     ui->lineEditUDisk->setText(m_setting->value("udisk","0004-6C3D").toString());
+
+    ui->lineEditOut001->setText(m_setting->value("lumi0","1000").toString());
+    ui->lineEditOut011->setText(m_setting->value("lumi1","1001").toString());
+    ui->lineEditOut021->setText(m_setting->value("lumi2","1002").toString());
 
     QStringList tvSet = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
 
@@ -247,31 +278,30 @@ MainWindow::MainWindow(QWidget *parent)
             {
                 QString strCell = QString::asprintf("%s%d", readCols[col].toStdString().c_str(), index+2);
                 QString strValue = xlsx.read(strCell).toString().trimmed();
-                if (strValue.isEmpty() && col == 0) {
+                if (strValue.isEmpty() && col == 0)
                     continue;
-                }
 
-                switch (col) {
-                case 0: break;
-                case 1: ui->lineEditBase1->setText(strValue);  break;
-                case 2: ui->lineEditBase2->setText(strValue);  break;
-                case 3: ui->lineEditBase3->setText(strValue);  break;
-                case 4: ui->lineEditBase4->setText(strValue);  break;
-                case 5: ui->lineEditBase5->setText(strValue);  break;
-                case 6: ui->lineEditBase6->setText(strValue);  break;
-                case 7: ui->lineEditBase7->setText(strValue);  break;
-                case 8: ui->lineEditBase8->setText(strValue);  break;
-                case 9: ui->lineEditBase9->setText(strValue);  break;
+                switch (col)
+                {
+                case  0: break;
+                case  1: ui->lineEditBase1->setText(strValue); break;
+                case  2: ui->lineEditBase2->setText(strValue); break;
+                case  3: ui->lineEditBase3->setText(strValue); break;
+                case  4: ui->lineEditBase4->setText(strValue); break;
+                case  5: ui->lineEditBase5->setText(strValue); break;
+                case  6: ui->lineEditBase6->setText(strValue); break;
+                case  7: ui->lineEditBase7->setText(strValue); break;
+                case  8: ui->lineEditBase8->setText(strValue); break;
+                case  9: ui->lineEditBase9->setText(strValue); break;
                 case 10:ui->lineEditBase10->setText(strValue); break;
                 case 11:ui->lineEditBase11->setText(strValue); break;
-                default:
-                    break;
+                default: break;
                 }
             }
         }
     });
 
-    QString strExcel=m_setting->value("Excel","./自动化测试导入数据.xlsx").toString();
+    QString strExcel=m_setting->value("Excel","./自动化测试导入数据.xlsx").toString().trimmed();
     ui->lineEditInfoFile->setText(strExcel);
     connect(ui->pushButtonLoadInfo,&QPushButton::clicked,this,[=]{
         QString strFile = QFileDialog::getOpenFileName(
@@ -294,6 +324,15 @@ MainWindow::MainWindow(QWidget *parent)
     m_tmLM = new QTimer(this);
     m_tmTV = new QTimer(this);
 
+    connect(m_tmLM,&QTimer::timeout,this,[=]{
+        m_tmLM->stop();
+        EasyToast::critical("亮度计应答超时！");
+    });
+    connect(m_tmTV,&QTimer::timeout,this,[=]{
+        m_tmTV->stop();
+        EasyToast::critical("电视机应答超时！");
+    });
+
     // COM0
     connect(ui->pushButtonCom0,&QPushButton::clicked,this,[=]{
         DialogSerialportList comList;
@@ -306,28 +345,33 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
     connect(ui->checkBoxOpen0,&QCheckBox::clicked,this,[=](bool checked){
-        if(m_COM0)
+
+        GenComport *pComTmp = m_COM0;
+        if(pComTmp)
         {
-            m_COM0->closePort();
-            m_COM0->deleteLater();
-            m_COM0 = nullptr;
+            pComTmp->closePort();
+            pComTmp->deleteLater();
+            pComTmp = nullptr;
         }
 
         if(checked)
         {
-            m_COM0 = new GenComport(this);
+            pComTmp = new GenComport(this);
             int index = ui->comboBoxBaud0->currentIndex();
             m_setting->setValue("baud0",index);
-            m_COM0->setPortParam(ui->comboBoxBaud0->currentText().toInt());
-            m_COM0->setPortName(ui->pushButtonCom0->text());
+            pComTmp->setPortParam(ui->comboBoxBaud0->currentText().toInt());
+            pComTmp->setPortName(ui->pushButtonCom0->text());
         }
 
-        if(m_COM0 && m_COM0->isOpen())
+        m_COM0 = pComTmp;
+
+        if(pComTmp && pComTmp->isOpen())
         {
             ui->labelStatus0->setText("已连接");
             ui->labelStatus0->setStyleSheet("QLabel{color:blue;}");
+            QTimer::singleShot(300,this,[=]{ ui->pushButtonZeroCall->click(); });
 
-            connect(m_COM0,&GenComport::onReceive,this,[=](const QByteArray &data){
+            connect(pComTmp,&GenComport::onReceive,this,[=](const QByteArray &data){
                 m_tmLM->stop();
                 QString reply(data.data());
 
@@ -349,16 +393,21 @@ MainWindow::MainWindow(QWidget *parent)
                     switch(m_nLMRead)
                     {
                     case 0:
-                        ui->lineEditOut00->setText(QString::asprintf("%f",Y));
-                        ui->lineEditOut01->setText(QString::asprintf("%f",x));
-                        ui->lineEditOut02->setText(QString::asprintf("%f",y));
+                        ui->lineEditOut000->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut002->setText(QString::asprintf("%f",x));
+                        ui->lineEditOut003->setText(QString::asprintf("%f",y));
                         break;
 
                     case 1:
-                        ui->lineEditOut03->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut010->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut012->setText(QString::asprintf("%f",x));
+                        ui->lineEditOut013->setText(QString::asprintf("%f",y));
                         break;
+
                     case 2:
-                        ui->lineEditOut04->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut020->setText(QString::asprintf("%f",Y));
+                        ui->lineEditOut022->setText(QString::asprintf("%f",x));
+                        ui->lineEditOut023->setText(QString::asprintf("%f",y));
                         break;
                     }
                     m_nLMRead++;
@@ -382,17 +431,13 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->pushButtonZeroCall,&QPushButton::clicked,this,[=]{
         m_nLMRead = 0;
-
-        ui->lineEditOut00->setText("--");
-        ui->lineEditOut01->setText("--");
-        ui->lineEditOut02->setText("--");
-        ui->lineEditOut03->setText("--");
-        ui->lineEditOut04->setText("--");
-
+        InitTest();
         QDateTime tm = QDateTime::currentDateTime();
         QString strCmd = QString::asprintf("ZRC,1,%d,%d,%d,%d,%d,%d\r",tm.date().year(),
                 tm.date().month(),tm.date().day(),tm.time().hour(),tm.time().minute(),tm.time().second());
-        if(m_COM0) m_COM0->send(strCmd,true);
+
+        m_LmCmds.append(strCmd);
+        sendLmCmd();
     });
 
     // COM1
@@ -408,32 +453,35 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     connect(ui->checkBoxOpen1,&QCheckBox::clicked,this,[=](bool checked){
-        if(m_COM1)
+        GenComport *pComTmp = m_COM1;
+        if(pComTmp)
         {
-            m_COM1->closePort();
-            m_COM1->deleteLater();
-            m_COM1 = nullptr;
+            pComTmp->closePort();
+            pComTmp->deleteLater();
+            pComTmp = nullptr;
         }
 
         if(checked)
         {
-            m_COM1 = new GenComport(this);
-
+            pComTmp = new GenComport(this);
             int index = ui->comboBoxBaud1->currentIndex();
             m_setting->setValue("baud1",index);
-            m_COM1->setPortParam(ui->comboBoxBaud1->currentText().toInt());
-            m_COM1->setPortName(ui->pushButtonCom1->text());
+            pComTmp->setPortParam(ui->comboBoxBaud1->currentText().toInt());
+            pComTmp->setPortName(ui->pushButtonCom1->text());
         }
+        m_COM1 = pComTmp;
 
-        if(m_COM1 && m_COM1->isOpen())
+        if(pComTmp && pComTmp->isOpen())
         {
             ui->labelStatus1->setText("已连接");
             ui->labelStatus1->setStyleSheet("QLabel{color:blue;}");
 
-            connect(m_COM1,&GenComport::onReceive,this,[=](const QByteArray &data){
+            connect(pComTmp,&GenComport::onReceive,this,[=](const QByteArray &data){
                 m_tmTV->stop();
                 QString reply(data.data());
                 //qDebug() << data.toHex(' ').toUpper();
+
+                QTimer::singleShot(20,this,[=]{ sendTvCmd(); });
             });
         }
         else
@@ -450,8 +498,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->comboBoxTVCmd->addItems(TVCmds);
     connect(ui->pushButtonTVSend,&QPushButton::clicked,this,[=]{
-        if(m_COM1)
-            m_COM1->send(ui->comboBoxTVCmd->currentText(),false);
+        m_TvCmds.append(ui->comboBoxTVCmd->currentText());
+        sendTvCmd();
     });
 
     {
@@ -532,7 +580,7 @@ MainWindow::MainWindow(QWidget *parent)
 
                                 if(m_strRCmd == "export-data")
                                 {
-                                    m_tmRd1->start(100);
+                                    m_tmRd1->start(300);
                                 }
                             }
                         });
@@ -683,7 +731,6 @@ MainWindow::MainWindow(QWidget *parent)
                 else
                 {
                     QMessageBox::critical(this, "提示", "数据导出失败！\n" + strFile);
-
                 }
             }
             else
@@ -699,6 +746,15 @@ MainWindow::MainWindow(QWidget *parent)
         });
         connect(ui->pushButtonShowImage,&QPushButton::clicked,this,[=](){
             ShowImage();
+        });
+    }
+
+    {
+        connect(ui->radioButtonWhite,&QRadioButton::clicked,this,[=]{
+            DoSetMode(0);
+        });
+        connect(ui->radioButtonRGB,&QRadioButton::clicked,this,[=]{
+            DoSetMode(1);
         });
     }
 
@@ -822,8 +878,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::DoSendTV(const QString&cmd)
 {
-    if(!m_COM1) return;
-    m_COM1->send(cmd);
+    m_TvCmds.append(cmd);
+    sendTvCmd();
 }
 
 void MainWindow::ShowImage()
@@ -888,11 +944,18 @@ void MainWindow::ReloadInfo()
 void MainWindow::InitTest()
 {
     m_nLMRead = 0;
-    ui->lineEditOut00->setText("--");
-    ui->lineEditOut01->setText("--");
-    ui->lineEditOut02->setText("--");
-    ui->lineEditOut03->setText("--");
-    ui->lineEditOut04->setText("--");
+    m_nExport = 1;
+    ui->lineEditOut000->setText("--");
+    ui->lineEditOut002->setText("");
+    ui->lineEditOut003->setText("");
+
+    ui->lineEditOut010->setText("--");
+    ui->lineEditOut012->setText("");
+    ui->lineEditOut013->setText("");
+
+    ui->lineEditOut020->setText("--");
+    ui->lineEditOut022->setText("");
+    ui->lineEditOut023->setText("");
 
     ui->lineEditOut10->setText("--");
     ui->lineEditOut11->setText("--");
@@ -911,6 +974,7 @@ void MainWindow::InitTest()
 
 void MainWindow::sendLmCmd()
 {
+    m_tmLM->stop();
     int count = m_LmCmds.count();
     if(count <= 0)
         return;
@@ -918,11 +982,20 @@ void MainWindow::sendLmCmd()
     QString strCmd = m_LmCmds[0];
     m_LmCmds.pop_front();
 
-    if(m_COM0) m_COM0->send(strCmd,true);
+    if(m_COM0 && m_COM0->isOpen())
+    {
+        m_tmLM->start(1000);
+        m_COM0->send(strCmd,true);
+    }
+    else
+    {
+        EasyToast::warning("亮度计串口未连接！");
+    }
 }
 
 void MainWindow::sendTvCmd()
 {
+    m_tmTV->stop();
     int count = m_TvCmds.count();
     if(count <= 0)
         return;
@@ -930,7 +1003,15 @@ void MainWindow::sendTvCmd()
     QString strCmd = m_TvCmds[0];
     m_TvCmds.pop_front();
 
-    if(m_COM1) m_COM1->send(strCmd,true);
+    if(m_COM1 && m_COM1->isOpen())
+    {
+        m_tmTV->start(1000);
+        m_COM1->send(strCmd,false);
+    }
+    else
+    {
+        EasyToast::warning("电视机串口未连接！");
+    }
 }
 
 void MainWindow::DoTEST(int step)
@@ -956,12 +1037,15 @@ void MainWindow::DoTEST(int step)
     switch(step)
     {
     case 0:
+        m_setting->value("lumi0",ui->lineEditOut001->text().trimmed());
+        m_setting->value("lumi1",ui->lineEditOut011->text().trimmed());
+        m_setting->value("lumi2",ui->lineEditOut021->text().trimmed());
         QFile::remove(strPath + QString("/kisdata.csv"));
         QFile::remove(strPath + QString("/save1.csv"));
         QFile::remove(strPath + QString("/save2.csv"));
         QFile::remove(strPath + QString("/save3.csv"));
         m_nLMRead = 0;
-        m_nRemote = 0;
+        m_nExport = 1;
         InitTest();
         DoSendTV("AA 06 10 01 A7 EF");
         DoSendTV("AA 06 27 01 3B ED");
@@ -974,11 +1058,8 @@ void MainWindow::DoTEST(int step)
 
     case 1:
         ui->pushButtonMeasure->click();
-        m_nExport=1;
+        m_nExport = 1;
         DoRemote();
-        QTimer::singleShot(500,this,[=]{
-            //DoSaveFile(strPath  + "/save1.csv");
-        });
         break;
 
     case 2:
@@ -992,11 +1073,8 @@ void MainWindow::DoTEST(int step)
 
     case 3:
         ui->pushButtonMeasure->click();
-        m_nExport=2;
+        m_nExport = 2;
         DoRemote();
-        QTimer::singleShot(500,this,[=]{
-            //DoSaveFile(strPath  + "/save2.csv");
-        });
         break;
 
     case 4:
@@ -1014,20 +1092,27 @@ void MainWindow::DoTEST(int step)
 
     case 6:
         ui->pushButtonMeasure->click();
-        m_nExport=4;
+        m_nExport = 3;
         DoRemote();
-        QTimer::singleShot(500,this,[=]{
-            DoSaveFile(strPath  + "/save3.csv");
-        });
         break;
 
     case 7:
         m_nLMRead = 0;
+        //m_nExport = 1;
         DoSendTV("AA 08 28 FF FF FF 0B F6");
         // DoSendTV("AA 06 10 01 A7 EF");
         // DoSendTV("AA 06 11 03 B4 9C");
         // DoSendTV("AA 06 11 02 A4 BD");
-        DoDealData();
+        {
+            QFile S3(strPath + QString("/save3.csv"));
+            if(!S3.exists())
+            {
+                ui->pushButtonDotest2->click();
+            }
+        }
+        QTimer::singleShot(300,this,[=]{
+            DoDealData();
+        });
         break;
     }
 }
@@ -1045,6 +1130,7 @@ void MainWindow::DoSaveFile(const QString&file)
     QString strCmd = QString("export-decoded \"%1\"").arg(file);
     if(s_sock && s_sock->state() == QAbstractSocket::ConnectedState)
         s_sock->write(strCmd.toStdString().c_str());
+
     return;
 
     SetCursorPos(768,302);
@@ -1081,13 +1167,9 @@ void MainWindow::DoSaveFile(const QString&file)
         keybd_event(VK_CONTROL,0,2,0);
 
         QThread::msleep(100);
-        //keybd_event(VK_RETURN,0,0,0);
-        //keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
+        keybd_event(VK_RETURN,0,0,0);
+        keybd_event(VK_RETURN,0,KEYEVENTF_KEYUP,0);
     });
-
-
-    //SetCursorPos(950,362);
-    //SetCursorPos(960,390);
 }
 
 void MainWindow::DoDealData()
@@ -1122,11 +1204,11 @@ void MainWindow::DoDealData()
 
             //T1：有效帧开始后，通道2第3个1对应的时间轴减去第二个1对应的时间轴，就是T1；从理论上看，也就是通道3的1到0，实测数据是对的(导出有效时间轴的第3个数据减去第2个数据:T1=0.00175-0.001742)；
             //T2：有效帧开始后，通道2第1个0对应的时间轴减去通道3第2个0对应的时间轴，就是T2；导出有效时间轴的第4个数据减去第3个数据（T2=0.001953-0.00175）；
-            //T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）                                                                                                                                                        0.0019549,1,0,0,0,T3,1.520 ,T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）
+            //T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T3；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）                                                                                                                                                        0.0019549,1,0,0,0,T3,1.520 ,T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）
 
             int count = Time.size();
             int pos = -1 ;
-            for(int i=30000; i<count-3; i++)
+            for(int i=200; i<count-3; i++)
             {
                 if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
                 {
@@ -1134,7 +1216,6 @@ void MainWindow::DoDealData()
                     break;
                 }
             }
-
             qDebug() << "有效帧开始:" << pos;
             double T1 = (Time[pos+2] - Time[pos+1]) * 1000000;
             qDebug() << "T1 = " << Time[pos+2] << "-" << Time[pos+1] << "=" << T1;
@@ -1158,7 +1239,6 @@ void MainWindow::DoDealData()
                     break;
                 }
             }
-
             double T2 = (Time[zero2] - Time[zero3]) * 1000000;
             qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
 
@@ -1171,7 +1251,6 @@ void MainWindow::DoDealData()
                     break;
                 }
             }
-
             double T3 = (Time[zero0] - Time[zero2]) * 1000000;
             qDebug() << "T3 = " << Time[zero0] << "-" << Time[zero2] << "=" << T3;
 
@@ -1197,7 +1276,6 @@ void MainWindow::DoDealData()
             double T4 = (Time[zero5] - Time[zero4]) * 1000000;
             qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
 
-
             for(int i=pos+5; i<count-3; i++)
             {
                 if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
@@ -1206,6 +1284,7 @@ void MainWindow::DoDealData()
                     break;
                 }
             }
+
 
             double T5 = (Time[zero4] - Time[pos+4]) * 1000000;
             qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
@@ -1226,9 +1305,11 @@ void MainWindow::DoDealData()
     }
 
     {
-        DoCurrent(1,"6+10");
-        DoCurrent(2,"6+10");
-        DoCurrent(3,"6+10");
+        m_nData = 0;
+        QString format=ui->lineEditBase7->text().trimmed();
+        DoCurrent(1,format);
+        DoCurrent(2,format);
+        DoCurrent(3,format);
     }
 }
 
@@ -1269,9 +1350,13 @@ void MainWindow::DoCurrent(int index,const QString&format)
         int count = col0.size();
         if(count < 10)
             return;
-
-        ui->lineEditOut11->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
-        ui->lineEditOut21->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
+        if(m_nData == 0)
+        {
+            m_nData = (count) * 16;
+            ui->lineEditOut10->setText(QString::asprintf("%d",m_nData));
+            ui->lineEditOut11->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
+            ui->lineEditOut21->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
+        }
 
         int H = ui->lineEditBase1->text().toInt();
         int V = ui->lineEditBase2->text().toInt();
@@ -1284,29 +1369,27 @@ void MainWindow::DoCurrent(int index,const QString&format)
         double curBase = ui->lineEditBase5->text().toDouble();
         double curStep = ui->lineEditBase6->text().toDouble();
 
+        //QList<double> CurTable={1.25,2.50,3.75,5.00,6.25,7.50,8.75,10.00,11.25,12.50,13.25};
+        //C0 = CurTable[bit0];
         double C0 = 1;
         double C1 = 1;
-
+        quint16 bit0 = 1;
+        quint16 bit1 = 1;
         if(format == "6+10")
         {
-            //QList<double> CurTable={1.25,2.50,3.75,5.00,6.25,7.50,8.75,10.00,11.25,12.50,13.25};
-            quint16 bit0 = (current >> 10);
-            //C0 = CurTable[bit0];
+            bit0 = (current >> 10);
             C0 = curBase + curStep * bit0;
 
-            quint16 bit1 = (current&0x3FF);
+            bit1 = (current&0x3FF);
             C1 = C0 * bit1 / 0x3FF;
-
-            qDebug() << "中心点:" << pos << QString::asprintf("0x%04X",current) << bit0;
-            qDebug() << "C0 =" << C0  << "C1 =" <<  C1;
         }
 
         if(format == "4+12")
         {
-            quint16 bit0 = (current >> 12);
+            bit0 = (current >> 12);
             C0 = curBase + curStep * bit0;
 
-            quint16 bit1 = (current&0xFFF);
+            bit1 = (current&0xFFF);
             C1 = C0 * bit1 / 0xFFF;
         }
 
@@ -1315,6 +1398,8 @@ void MainWindow::DoCurrent(int index,const QString&format)
 
         }
 
+        qDebug() << "中心点:" << pos << QString::asprintf("0x%04X",current) << bit0;
+        qDebug() << "C0 =" << C0  << "C1 =" <<  C1;
         switch(index)
         {
         case 1:
@@ -1336,6 +1421,26 @@ void MainWindow::DoCurrent(int index,const QString&format)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::DoSetMode(int mode)
+{
+    static QList<QLabel*> Labels={ui->label_3,ui->label_4,ui->label_9,ui->label_10, ui->label_47,ui->label_44,ui->label_53, ui->label_51};
+    static QStringList NewTexts={"RGB全白电流(mA)","RGB峰值电流(mA)","RGB拐点电流(mA)","RGB过驱电流(mA)","RGB全白电流(mA)","RGB峰值电流(mA)","RGB拐点电流(mA)","RGB过驱电流(mA)"};
+    static QStringList OldTexts;
+    if(OldTexts.size() == 0)
+        for (QLabel *label: Labels)
+            OldTexts.push_back(label->text().trimmed());
+
+    for (int i=0; i<8; i++) {
+        QLabel *label = Labels[i];
+        QString strText = label->text().trimmed();
+        // strText.replace("\n(RGB)","");
+        // if(mode == 1)
+        //     strText += "\n(RGB)";
+        strText = mode == 1 ? NewTexts[i] + QString(":"):OldTexts[i];
+        label->setText(strText);
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)

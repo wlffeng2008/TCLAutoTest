@@ -22,7 +22,6 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
     pHeader->resizeSection(1,32);
     pHeader->resizeSection(2,100);
     ui->tableView->setVerticalHeader(new ZeroBasedHeader(ui->tableView));
-    //ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     QTimer::singleShot(500,this,[=]{
         QStringList Times = m_pSet->value("WaitTimes").toStringList();
@@ -122,8 +121,6 @@ void DialogTestFlow::toCancel()
     m_nTestIndex = -1;
     m_bInTest=false;
     ui->pushButtonAction->setText("开始测试");
-
-    qDebug() << "toCancel()-----------------"  ;
 }
 
 void DialogTestFlow::toTheEnd()
@@ -134,9 +131,9 @@ void DialogTestFlow::toTheEnd()
 
 void DialogTestFlow::startTest()
 {
-    if(m_nTestIndex != -1)
+    if(m_bInTest)
         return;
-    m_bInTest=true;
+    m_bInTest = true;
     m_nTestIndex = -1;
     for(int i=0; i<m_model->rowCount(); i++)
         m_model->item(i,3)->setText("");

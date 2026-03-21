@@ -60,9 +60,9 @@ private:
     void DoTEST(int step);
 
     QString m_strRCmd;
-    int  m_nRemote=0;
-    int  m_nExport=1;
+    int  m_nExport = 1;
     void DoRemote();
+    void DoSetMode(int mode=0);
 
     QString m_Boost;
 
@@ -76,5 +76,7 @@ private:
     DialogTVCmd     *m_pTVCmd = nullptr;
     DialogTestFlow  *m_pTest = nullptr;
     DialogSPISetting*m_pSPI = nullptr;
+
+    int m_nData = 0;
 };
 #endif // MAINWINDOW_H
