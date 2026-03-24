@@ -36,83 +36,7 @@
     <property name="title">
      <string>基本信息</string>
     </property>
-    <widget class="QFrame" name="FrameExtras">
-     <property name="geometry">
-      <rect>
-       <x>768</x>
-       <y>77</y>
-       <width>83</width>
-       <height>117</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#FrameExtras{background-color: rgb(85, 170, 255); border-radius:8px;}</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>5</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QLabel" name="label_18">
-        <property name="text">
-         <string>Boost窗口:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBoxWindows">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_16">
-        <property name="text">
-         <string>U盘名称:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEditUDisk">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>0004-6C3D</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonShowImage">
-        <property name="text">
-         <string>刷新窗口</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>12</x>
@@ -127,6 +51,9 @@
       </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_11">
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
         <item>
          <widget class="QLabel" name="label_15">
           <property name="font">
@@ -151,6 +78,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButtonLoadInfo">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
            <string>...</string>
           </property>
@@ -158,6 +88,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButtonReload">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="text">
            <string>更新</string>
           </property>
@@ -175,9 +108,12 @@
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::Fixed</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
+            <width>50</width>
             <height>20</height>
            </size>
           </property>
@@ -228,69 +164,60 @@
           </property>
          </widget>
         </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_16">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>U盘名称:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEditUDisk">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>0004-6C3D</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout_5" columnstretch="4,4,5,4,5,4">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+       <layout class="QGridLayout" name="gridLayout_5" columnstretch="4,6,5,6,5,6">
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>机型名称:</string>
+           <string>电流步幅(mA):</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="comboModel">
-          <property name="maxVisibleItems">
-           <number>30</number>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <widget class="QLineEdit" name="lineEditBase1"/>
-        </item>
-        <item row="0" column="4">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>全白电流(mA):</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="5">
-         <widget class="QLineEdit" name="lineEditBase8"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>驱动IC型号及
-支持最大电流(mA):</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditBase4"/>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>垂直分区数(V):</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLineEdit" name="lineEditBase2"/>
         </item>
         <item row="1" column="4">
          <widget class="QLabel" name="label_4">
@@ -302,22 +229,61 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="5">
-         <widget class="QLineEdit" name="lineEditBase9"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_6">
+        <item row="2" column="4">
+         <widget class="QLabel" name="label_9">
           <property name="text">
-           <string>驱动IC 0对应的
-电流值(mA):</string>
+           <string>L32电流(mA):</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEditBase5"/>
+        <item row="0" column="3">
+         <widget class="QLineEdit" name="lineEditBase1"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboModel">
+          <property name="maxVisibleItems">
+           <number>30</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>垂直分区数(V):</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QLineEdit" name="lineEditBase11"/>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>全白电流(mA):</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QLineEdit" name="lineEditBase9"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>机型名称:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
         </item>
         <item row="2" column="2">
          <widget class="QLabel" name="label_12">
@@ -329,47 +295,24 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
-         <widget class="QLineEdit" name="lineEditBase3"/>
-        </item>
-        <item row="2" column="4">
-         <widget class="QLabel" name="label_9">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>L32电流(mA):</string>
+           <string>最大电流(mA):</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="5">
-         <widget class="QLineEdit" name="lineEditBase10"/>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="lineEditBase5"/>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>驱动IC步幅:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="lineEditBase2"/>
         </item>
         <item row="3" column="1">
          <widget class="QLineEdit" name="lineEditBase6"/>
-        </item>
-        <item row="3" column="2">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>数据格式:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3">
-         <widget class="QLineEdit" name="lineEditBase7"/>
         </item>
         <item row="3" column="4">
          <widget class="QLabel" name="label_10">
@@ -381,8 +324,25 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="5">
-         <widget class="QLineEdit" name="lineEditBase11"/>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>初始电流(mA):</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLabel" name="label_11">
+          <property name="text">
+           <string>数据格式:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
         </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_5">
@@ -393,6 +353,74 @@
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QLineEdit" name="lineEditBase8"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEditBase4"/>
+        </item>
+        <item row="2" column="5">
+         <widget class="QLineEdit" name="lineEditBase10"/>
+        </item>
+        <item row="2" column="3">
+         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,0,1">
+          <property name="spacing">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="lineEditBase3"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>刷新</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxWindows">
+            <property name="maxVisibleItems">
+             <number>30</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="3">
+         <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,1">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="lineEditBase7"/>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxFormat">
+            <item>
+             <property name="text">
+              <string>6+10</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>4+12</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>8+12</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </item>
@@ -420,68 +448,63 @@
        <height>24</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>一键默认</string>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QSpinBox" name="spinBox">
      <property name="geometry">
       <rect>
-       <x>12</x>
-       <y>20</y>
-       <width>751</width>
-       <height>80</height>
+       <x>770</x>
+       <y>32</y>
+       <width>80</width>
+       <height>22</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4" columnstretch="4,4,5,4,5,4">
+     <property name="styleSheet">
+      <string notr="true">QSpinBox {
+    padding-left: 10px;
+    padding-right: 10px;
+	background-color:#a1a1a1;
+    text-align:center;
+}
+QSpinBox::up-button {
+    subcontrol-position: right;
+    right: 5px; /* 向左偏移（实验性，效果有限）*/
+
+    width: 18px;
+    height: 18px; 
+    subcontrol-origin: border;        /* ✅ 必须设，否则尺寸无效 */
+}
+QSpinBox::down-button {
+    subcontrol-position: left;
+    left: 5px;
+    width: 18px;
+    height: 18px; 
+    subcontrol-origin: border;        /* ✅ 必须设，否则尺寸无效 */
+}</string>
+     </property>
+     <property name="minimum">
+      <number>-1000</number>
+     </property>
+     <property name="maximum">
+      <number>9999</number>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>23</y>
+       <width>753</width>
+       <height>77</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4" columnstretch="4,6,5,6,5,6">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_31">
-        <property name="text">
-         <string>信源:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxTV0">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>HDMI1</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>HDMI2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>HDMI3</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>HDMI4</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>USB</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>其他</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="2">
        <widget class="QLabel" name="label_30">
         <property name="text">
          <string>图效:</string>
@@ -491,7 +514,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
+      <item row="0" column="1">
        <widget class="QComboBox" name="comboBoxTV1">
         <property name="currentIndex">
          <number>2</number>
@@ -546,7 +569,7 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="4">
+      <item row="0" column="2">
        <widget class="QLabel" name="label_28">
         <property name="text">
          <string>色温:</string>
@@ -556,7 +579,7 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
+      <item row="0" column="3">
        <widget class="QComboBox" name="comboBoxTV2">
         <property name="maxVisibleItems">
          <number>30</number>
@@ -574,6 +597,59 @@
         <item>
          <property name="text">
           <string>暖色温</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="label_31">
+        <property name="text">
+         <string>信源:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QComboBox" name="comboBoxTV0">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>HDMI1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>HDMI2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>HDMI3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>HDMI4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>USB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>其他</string>
          </property>
         </item>
        </widget>
@@ -653,6 +729,39 @@
        </widget>
       </item>
       <item row="1" column="4">
+       <widget class="QLabel" name="label_29">
+        <property name="text">
+         <string>智能区域控光:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QComboBox" name="comboBoxTV6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>关</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>开</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
        <widget class="QLabel" name="label_27">
         <property name="text">
          <string>自然光:</string>
@@ -662,7 +771,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="5">
+      <item row="2" column="1">
        <widget class="QComboBox" name="comboBoxTV5">
         <property name="maxVisibleItems">
          <number>30</number>
@@ -675,33 +784,6 @@
         <item>
          <property name="text">
           <string>节能</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_29">
-        <property name="text">
-         <string>智能区域控光:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="comboBoxTV6">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>关</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>开</string>
          </property>
         </item>
        </widget>
@@ -745,6 +827,12 @@
       </item>
       <item row="2" column="5">
        <widget class="QComboBox" name="comboBoxTV8">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
         <property name="maxVisibleItems">
          <number>30</number>
         </property>
@@ -772,45 +860,6 @@
       </item>
      </layout>
     </widget>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="geometry">
-      <rect>
-       <x>770</x>
-       <y>32</y>
-       <width>80</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QSpinBox {
-    padding-left: 10px;
-    padding-right: 10px;
-	background-color:#a1a1a1;
-    text-align:center;
-}
-QSpinBox::up-button {
-    subcontrol-position: right;
-    right: 5px; /* 向左偏移（实验性，效果有限）*/
-
-    width: 18px;
-    height: 18px; 
-    subcontrol-origin: border;        /* ✅ 必须设，否则尺寸无效 */
-}
-QSpinBox::down-button {
-    subcontrol-position: left;
-    left: 5px;
-    width: 18px;
-    height: 18px; 
-    subcontrol-origin: border;        /* ✅ 必须设，否则尺寸无效 */
-}</string>
-     </property>
-     <property name="minimum">
-      <number>-1000</number>
-     </property>
-     <property name="maximum">
-      <number>9999</number>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox3">
     <property name="geometry">
@@ -833,6 +882,9 @@ QSpinBox::down-button {
        <height>26</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>测试 ...</string>
      </property>
@@ -846,440 +898,24 @@ QSpinBox::down-button {
        <height>26</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>导出...</string>
      </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonFindExcel">
-     <property name="geometry">
-      <rect>
-       <x>684</x>
-       <y>258</y>
-       <width>80</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>...</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_56">
-     <property name="geometry">
-      <rect>
-       <x>6</x>
-       <y>262</y>
-       <width>117</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>模板文件(Excel):</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditExcelTemp">
-     <property name="geometry">
-      <rect>
-       <x>126</x>
-       <y>260</y>
-       <width>549</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>./LDM调试和自检表模板.xlsx</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>76</x>
-       <y>48</y>
-       <width>687</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QLabel" name="label_37">
-        <property name="font">
-         <font>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>参数设置:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_58">
-        <property name="text">
-         <string> 设备型号:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBoxModel">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="currentIndex">
-         <number>2</number>
-        </property>
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>LA1010</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>LA2016</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>LA5016</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>LA5032</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_35">
-        <property name="text">
-         <string> 采样深度:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBoxDepth">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>20 KSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>200 KSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>2 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>5 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>10 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>50 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>100 MSa</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>200 MSa*</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>500 MSa&quot;</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1 GSa&quot;</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>2 GSa&quot;</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>5 GSa&quot;</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>10 GSa&quot;</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_36">
-        <property name="text">
-         <string>采样率:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBoxFreq">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>500 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>200 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>100 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>50 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>10 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>5 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>2 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1 MHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>500 KHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>200 KHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>100 KHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>50 KHz</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>20 KHz</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Policy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonLoadConfig">
-        <property name="text">
-         <string>导入配置 ...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonSPISet">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>高级设置 ...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>38</x>
-       <y>19</y>
-       <width>725</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_55">
-        <property name="font">
-         <font>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>逻辑分析仪程序:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="lineEditKingstKIS">
-        <property name="text">
-         <string>./KingstVIS/KingstVIS.exe</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_57">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(255, 255, 127);
-background-color: rgb(85, 170, 255);</string>
-        </property>
-        <property name="text">
-         <string>注意：设置参数时须关闭</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxStartVIS">
-        <property name="text">
-         <string>开启</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonFindKIS">
-        <property name="minimumSize">
-         <size>
-          <width>80</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
     <widget class="QPushButton" name="pushButtonDotest1">
      <property name="geometry">
       <rect>
        <x>770</x>
-       <y>18</y>
+       <y>20</y>
        <width>80</width>
        <height>24</height>
       </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
       <string>保存时序</string>
@@ -1289,27 +925,30 @@ background-color: rgb(85, 170, 255);</string>
      <property name="geometry">
       <rect>
        <x>770</x>
-       <y>48</y>
+       <y>50</y>
        <width>80</width>
        <height>24</height>
       </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
       <string>保存电流</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>51</x>
+       <x>18</x>
        <y>81</y>
-       <width>713</width>
+       <width>745</width>
        <height>170</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="5,0,4,4">
+     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="6,0,4,5">
       <item>
-       <layout class="QGridLayout" name="gridLayout" columnstretch="2,5">
+       <layout class="QGridLayout" name="gridLayout" columnstretch="5,13">
         <property name="spacing">
          <number>2</number>
         </property>
@@ -1480,38 +1119,6 @@ background-color: rgb(85, 170, 255);</string>
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_2" columnstretch="4,4">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_46">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255, 0, 0);</string>
-          </property>
-          <property name="text">
-           <string>头码:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEditOut11"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_50">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255, 0, 0);</string>
-          </property>
-          <property name="text">
-           <string>尾码:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditOut21"/>
-        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_45">
           <property name="styleSheet">
@@ -1526,7 +1133,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEditOut14"/>
+         <widget class="QLineEdit" name="lineEditOutT1"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_54">
@@ -1542,7 +1149,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEditOut24"/>
+         <widget class="QLineEdit" name="lineEditOutT2"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_48">
@@ -1558,7 +1165,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="lineEditOut15"/>
+         <widget class="QLineEdit" name="lineEditOutT3"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_49">
@@ -1574,12 +1181,11 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QLineEdit" name="lineEditOut25"/>
+         <widget class="QLineEdit" name="lineEditOutT4"/>
         </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_3" columnstretch="5,4">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditOutCount"/>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_43">
           <property name="styleSheet">
@@ -1592,9 +1198,6 @@ background-color: rgb(85, 170, 255);</string>
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEditOut10"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_52">
@@ -1610,8 +1213,12 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditOut20"/>
+         <widget class="QLineEdit" name="lineEditOutTrans"/>
         </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_3" columnstretch="5,4">
         <item row="2" column="0">
          <widget class="QLabel" name="label_47">
           <property name="styleSheet">
@@ -1626,7 +1233,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEditOut12"/>
+         <widget class="QLineEdit" name="lineEditOutCur1"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_53">
@@ -1647,7 +1254,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEditOut22"/>
+         <widget class="QLineEdit" name="lineEditOutCur2"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_44">
@@ -1663,7 +1270,7 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="lineEditOut13"/>
+         <widget class="QLineEdit" name="lineEditOutCur3"/>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_51">
@@ -1679,9 +1286,467 @@ background-color: rgb(85, 170, 255);</string>
          </widget>
         </item>
         <item row="5" column="1">
-         <widget class="QLineEdit" name="lineEditOut23"/>
+         <widget class="QLineEdit" name="lineEditOutCur4"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditOutHead"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_46">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>头码:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_50">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>尾码:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="lineEditOutTail"/>
         </item>
        </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>18</x>
+       <y>19</y>
+       <width>745</width>
+       <height>58</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_7">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_55">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>逻辑分析仪程序:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLineEdit" name="lineEditKingstKIS">
+          <property name="text">
+           <string>./KingstVIS/KingstVIS.exe</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_57">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 127);
+background-color: rgb(85, 170, 255);
+padding-left:4px;
+padding-right:4px;</string>
+          </property>
+          <property name="text">
+           <string>注意：设置参数时须关闭</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxStartVIS">
+          <property name="text">
+           <string>开启</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonFindKIS">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_37">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>参数设置:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_58">
+          <property name="text">
+           <string> 设备型号:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxModel">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="currentIndex">
+           <number>2</number>
+          </property>
+          <property name="maxVisibleItems">
+           <number>30</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>LA1010</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>LA2016</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>LA5016</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>LA5032</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_35">
+          <property name="text">
+           <string> 采样深度:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxDepth">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="maxVisibleItems">
+           <number>30</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>20 KSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>200 KSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>10 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>20 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>50 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>100 MSa</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>200 MSa*</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>500 MSa&quot;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1 GSa&quot;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2 GSa&quot;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 GSa&quot;</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>10 GSa&quot;</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_36">
+          <property name="text">
+           <string>采样率:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboBoxFreq">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="maxVisibleItems">
+           <number>30</number>
+          </property>
+          <item>
+           <property name="text">
+            <string>500 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>200 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>100 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>50 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>20 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>10 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>1 MHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>500 KHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>200 KHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>100 KHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>50 KHz</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>20 KHz</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Policy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonLoadConfig">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>导入配置 ...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonSPISet">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="text">
+           <string>高级设置 ...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>24</x>
+       <y>256</y>
+       <width>739</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_14">
+      <item>
+       <widget class="QLabel" name="label_56">
+        <property name="text">
+         <string>模板文件(Excel):</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEditExcelTemp">
+        <property name="text">
+         <string>./LDM调试和自检表模板.xlsx</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonFindExcel">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -1725,6 +1790,9 @@ background-color: rgb(85, 170, 255);</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Measure</string>
      </property>
@@ -1751,6 +1819,9 @@ background-color: rgb(85, 170, 255);</string>
        <height>24</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Send</string>
      </property>
@@ -1769,6 +1840,9 @@ background-color: rgb(85, 170, 255);</string>
        <bold>true</bold>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>0-Cal</string>
      </property>
@@ -1781,6 +1855,9 @@ background-color: rgb(85, 170, 255);</string>
        <width>80</width>
        <height>24</height>
       </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="text">
       <string>高级 ...</string>
@@ -1796,6 +1873,9 @@ background-color: rgb(85, 170, 255);</string>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_6">
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="label_13">
         <property name="font">
@@ -1813,6 +1893,9 @@ background-color: rgb(85, 170, 255);</string>
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButtonCom0">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -1903,6 +1986,9 @@ background-color: rgb(85, 170, 255);</string>
       </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="pushButtonCom1">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>COM0</string>
         </property>

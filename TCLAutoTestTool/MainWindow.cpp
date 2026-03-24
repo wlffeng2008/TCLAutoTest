@@ -171,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent)
     strBuild = "非 MSVC 编译(如 MinGW, GCC 等)";
 #endif
 
-    QString strTitle = QString("LDM自动化调试(V1.00) -- [Build: %1] [By Qt%2] -- [%3]").arg(__TIMESTAMP__,QT_VERSION_STR,strBuild);
+    QString strTitle = QString("TCL泛智屏BU - LDM自动化调试(V1.00) -- [Build: %1] [By Qt%2] -- [%3]").arg(__TIMESTAMP__,QT_VERSION_STR,strBuild);
     setWindowTitle(strTitle);
 
     EnumWindows(EnumWindowsProc,9527);
@@ -189,6 +189,16 @@ MainWindow::MainWindow(QWidget *parent)
     m_pTest->m_pSet = m_setting;
     QTimer::singleShot(200,this,[=]{
         m_pSPI = new DialogSPISetting(this);
+        connect(m_pSPI,&DialogSPISetting::onLoadConfig,this,[=](int index0,int index1){
+
+            ui->comboBoxDepth->blockSignals(true);
+            ui->comboBoxDepth->setCurrentIndex(index0);
+            ui->comboBoxDepth->blockSignals(false);
+
+            ui->comboBoxFreq->blockSignals(true);
+            ui->comboBoxFreq->setCurrentIndex(index1);
+            ui->comboBoxFreq->blockSignals(false);
+        });
     });
 
     connect(ui->pushButtonTVSendX,&QPushButton::clicked,this,[=]{
@@ -335,7 +345,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // COM0
     connect(ui->pushButtonCom0,&QPushButton::clicked,this,[=]{
-        DialogSerialportList comList;
+        DialogSerialportList comList(this);
         if(QDialog::Accepted == comList.exec())
         {
             ui->pushButtonCom0->setText(comList.selectedCOM());
@@ -442,7 +452,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // COM1
     connect(ui->pushButtonCom1,&QPushButton::clicked,this,[=]{
-        DialogSerialportList comList;
+        DialogSerialportList comList(this);
         if(QDialog::Accepted == comList.exec())
         {
             ui->pushButtonCom1->setText(comList.selectedCOM());
@@ -618,17 +628,6 @@ MainWindow::MainWindow(QWidget *parent)
             DoSaveFile(strFile);
         });
 
-        connect(m_pSPI,&DialogSPISetting::onLoadConfig,this,[=](int index0,int index1){
-
-            ui->comboBoxDepth->blockSignals(true);
-            ui->comboBoxDepth->setCurrentIndex(index0);
-            ui->comboBoxDepth->blockSignals(false);
-
-            ui->comboBoxFreq->blockSignals(true);
-            ui->comboBoxFreq->setCurrentIndex(index1);
-            ui->comboBoxFreq->blockSignals(false);
-        });
-
         ui->comboBoxModel->blockSignals(true);
         ui->comboBoxModel->setCurrentIndex(m_setting->value("deviceModel",2).toInt());
         ui->comboBoxModel->blockSignals(false);
@@ -744,7 +743,7 @@ MainWindow::MainWindow(QWidget *parent)
         connect(ui->lineEditBase3,&QLineEdit::textChanged,this,[=](const QString&text){
             ShowImage();
         });
-        connect(ui->pushButtonShowImage,&QPushButton::clicked,this,[=](){
+        connect(ui->pushButton,&QPushButton::clicked,this,[=](){
             ShowImage();
         });
     }
@@ -870,6 +869,17 @@ MainWindow::MainWindow(QWidget *parent)
         DoTEST(item);
     });
 
+    connect(ui->radioButtonWhite,&QRadioButton::clicked,this,[=]{
+        DoDealData();
+    });
+    connect(ui->radioButtonRGB,&QRadioButton::clicked,this,[=]{
+        DoDealData();
+    });
+    connect(ui->comboBoxFormat,&QComboBox::textActivated,this,[=](const QString &text){
+        ui->lineEditBase7->setText(text);
+        DoDealData();
+    });
+
     QTimer::singleShot(100,this,[=]{
         InitTest();
         m_bLoading=false;
@@ -957,19 +967,19 @@ void MainWindow::InitTest()
     ui->lineEditOut022->setText("");
     ui->lineEditOut023->setText("");
 
-    ui->lineEditOut10->setText("--");
-    ui->lineEditOut11->setText("--");
-    ui->lineEditOut12->setText("--");
-    ui->lineEditOut13->setText("--");
-    ui->lineEditOut14->setText("--");
-    ui->lineEditOut15->setText("--");
+    ui->lineEditOutHead->setText("--");
+    ui->lineEditOutTail->setText("--");
+    ui->lineEditOutT1->setText("--");
+    ui->lineEditOutT2->setText("--");
+    ui->lineEditOutT3->setText("--");
+    ui->lineEditOutT4->setText("--");
 
-    ui->lineEditOut20->setText("--");
-    ui->lineEditOut21->setText("--");
-    ui->lineEditOut22->setText("--");
-    ui->lineEditOut23->setText("--");
-    ui->lineEditOut24->setText("--");
-    ui->lineEditOut25->setText("--");
+    ui->lineEditOutCount->setText("--");
+    ui->lineEditOutTrans->setText("--");
+    ui->lineEditOutCur1->setText("--");
+    ui->lineEditOutCur2->setText("--");
+    ui->lineEditOutCur3->setText("--");
+    ui->lineEditOutCur4->setText("--");
 }
 
 void MainWindow::sendLmCmd()
@@ -1065,7 +1075,7 @@ void MainWindow::DoTEST(int step)
     case 2:
         m_Boost = ui->lineEditBase3->text();
         ui->lineEditBase3->setText("L32");
-        ui->pushButtonShowImage->click();
+        ui->pushButton->click();
         QTimer::singleShot(200,this,[=]{
             ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         });
@@ -1084,7 +1094,7 @@ void MainWindow::DoTEST(int step)
 
     case 5:
         ui->lineEditBase3->setText(m_Boost);
-        ui->pushButtonShowImage->click();
+        ui->pushButton->click();
         QTimer::singleShot(200,this,[=]{
             ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         });
@@ -1294,13 +1304,13 @@ void MainWindow::DoDealData()
                 if(col0[i] == 1) nData++;
             qDebug() << "数据量 = " << nData;
 
-            ui->lineEditOut10->setText(QString::asprintf("%d",nData));
-            ui->lineEditOut20->setText(QString::asprintf("%f",T5));
+            ui->lineEditOutCount->setText(QString::asprintf("%d",nData));
+            ui->lineEditOutTrans->setText(QString::asprintf("%f",T5));
 
-            ui->lineEditOut14->setText(QString::asprintf("%f",T1));
-            ui->lineEditOut24->setText(QString::asprintf("%f",T2));
-            ui->lineEditOut15->setText(QString::asprintf("%f",T3));
-            ui->lineEditOut25->setText(QString::asprintf("%f",T4));
+            ui->lineEditOutT1->setText(QString::asprintf("%f",T1));
+            ui->lineEditOutT2->setText(QString::asprintf("%f",T2));
+            ui->lineEditOutT3->setText(QString::asprintf("%f",T3));
+            ui->lineEditOutT4->setText(QString::asprintf("%f",T4));
         }
     }
 
@@ -1353,9 +1363,9 @@ void MainWindow::DoCurrent(int index,const QString&format)
         if(m_nData == 0)
         {
             m_nData = (count) * 16;
-            ui->lineEditOut10->setText(QString::asprintf("%d",m_nData));
-            ui->lineEditOut11->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
-            ui->lineEditOut21->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
+            ui->lineEditOutCount->setText(QString::asprintf("%d",m_nData));
+            ui->lineEditOutHead->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
+            ui->lineEditOutTail->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
         }
 
         int H = ui->lineEditBase1->text().toInt();
@@ -1375,45 +1385,104 @@ void MainWindow::DoCurrent(int index,const QString&format)
         double C1 = 1;
         quint16 bit0 = 1;
         quint16 bit1 = 1;
-        if(format == "6+10")
+        if(ui->radioButtonWhite->isChecked())
         {
+            if(format == "6+10")
+            {
+                bit0 = (current >> 10);
+                C0 = curBase + curStep * bit0;
+
+                bit1 = (current&0x3FF);
+                C1 = C0 * bit1 / 0x3FF;
+            }
+
+            if(format == "4+12")
+            {
+                bit0 = (current >> 12);
+                C0 = curBase + curStep * bit0;
+
+                bit1 = (current&0xFFF);
+                C1 = C0 * bit1 / 0xFFF;
+            }
+
+            if(format == "8+12")
+            {
+                //读取尾码中的第2个byte，然后算出实际电流数据，以下面图示为例，
+                //此时的读取的电流数据为0x62=98，因为0xff=255对应驱动IC支持的最大电流(假如是90mA)，
+                //则此时计算后的电流值为98/255*90=34.59mA，
+                //然后再乘以占空比，得到最终的电流=34.59*0xFF7/0xFFF=34.5mA；
+                quint8  cur = (col0[count-3] & 0xFF);
+                double  max = ui->lineEditBase4->text().toDouble();
+
+                C0 = max * cur / 255;
+                C1 = C0  * 0xFF7 / 0xFFF;
+            }
+
+            //qDebug() << "中心点:" << pos << QString::asprintf("0x%04X",current) << bit0;
+            //qDebug() << "C0 =" << C0  << "C1 =" <<  C1;
+            switch(index)
+            {
+            case 1:
+                ui->lineEditOutCur1->setText(QString::asprintf("%.2f",C1));
+                ui->lineEditOutCur2->setText(QString::asprintf("%.2f",C0));
+                break;
+
+            case 2:
+                ui->lineEditOutCur3->setText(QString::asprintf("%.2f",C1));
+                break;
+
+            case 3:
+                ui->lineEditOutCur4->setText(QString::asprintf("%.2f",C1));
+                break;
+            }
+        }
+        else
+        {
+            //RGB方案，数据都是6+10格式的，
+            //从头码(头码也是6byte：55AA 2DE4 01FF)开始，
+            //接下来就是分区数据，差别是每个分区对应3个6+10，
+            //也就是每个分区对应48个数据，同样找到中间的数据进行解析即可
+
+            //这48个数据中，第一个6+10是R的数据，第二个6+10是G的数据，第三个6+10是B的数据
+
+            double R0=0,G0=0,B0=0,R1=0,G1=0,B1=0;
+
             bit0 = (current >> 10);
-            C0 = curBase + curStep * bit0;
+            R0 = curBase + curStep * bit0;
 
             bit1 = (current&0x3FF);
-            C1 = C0 * bit1 / 0x3FF;
-        }
+            R1 = R0 * bit1 / 0x3FF;
 
-        if(format == "4+12")
-        {
-            bit0 = (current >> 12);
-            C0 = curBase + curStep * bit0;
 
-            bit1 = (current&0xFFF);
-            C1 = C0 * bit1 / 0xFFF;
-        }
+            bit0 = (current >> 10);
+            G0 = curBase + curStep * bit0;
 
-        if(format == "8+12")
-        {
+            bit1 = (current&0x3FF);
+            G1 = G0 * bit1 / 0x3FF;
 
-        }
 
-        qDebug() << "中心点:" << pos << QString::asprintf("0x%04X",current) << bit0;
-        qDebug() << "C0 =" << C0  << "C1 =" <<  C1;
-        switch(index)
-        {
-        case 1:
-            ui->lineEditOut12->setText(QString::asprintf("%.2f",C1));
-            ui->lineEditOut22->setText(QString::asprintf("%.2f",C0));
-            break;
 
-        case 2:
-            ui->lineEditOut13->setText(QString::asprintf("%.2f",C1));
-            break;
+            bit0 = (current >> 10);
+            B0 = curBase + curStep * bit0;
 
-        case 3:
-            ui->lineEditOut23->setText(QString::asprintf("%.2f",C1));
-            break;
+            bit1 = (current&0x3FF);
+            B1 = B0 * bit1 / 0x3FF;
+
+            switch(index)
+            {
+            case 1:
+                ui->lineEditOutCur1->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R0,G0,B0));
+                ui->lineEditOutCur2->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                break;
+
+            case 2:
+                ui->lineEditOutCur3->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                break;
+
+            case 3:
+                ui->lineEditOutCur4->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                break;
+            }
         }
     }
 }
