@@ -54,6 +54,11 @@ private:
     QStringList m_TvCmds;
     void sendTvCmd();
 
+    QString m_strOut0;
+    QString m_strOut1;
+    QString m_strOut2;
+
+
     void InitTest();
     void ShowImage();
 

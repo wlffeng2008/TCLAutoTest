@@ -209,6 +209,9 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_5" columnstretch="4,6,5,6,5,6">
+        <property name="verticalSpacing">
+         <number>10</number>
+        </property>
         <item row="3" column="0">
          <widget class="QLabel" name="label_7">
           <property name="text">
@@ -240,7 +243,7 @@
          </widget>
         </item>
         <item row="0" column="3">
-         <widget class="QLineEdit" name="lineEditBase1"/>
+         <widget class="QLineEdit" name="lineEditBase4"/>
         </item>
         <item row="0" column="1">
          <widget class="QComboBox" name="comboModel">
@@ -306,13 +309,13 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEditBase5"/>
-        </item>
-        <item row="1" column="3">
          <widget class="QLineEdit" name="lineEditBase2"/>
         </item>
+        <item row="1" column="3">
+         <widget class="QLineEdit" name="lineEditBase5"/>
+        </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEditBase6"/>
+         <widget class="QLineEdit" name="lineEditBase3"/>
         </item>
         <item row="3" column="4">
          <widget class="QLabel" name="label_10">
@@ -358,7 +361,7 @@
          <widget class="QLineEdit" name="lineEditBase8"/>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEditBase4"/>
+         <widget class="QLineEdit" name="lineEditBase1"/>
         </item>
         <item row="2" column="5">
          <widget class="QLineEdit" name="lineEditBase10"/>
@@ -369,7 +372,7 @@
            <number>2</number>
           </property>
           <item>
-           <widget class="QLineEdit" name="lineEditBase3"/>
+           <widget class="QLineEdit" name="lineEditBase6"/>
           </item>
           <item>
            <widget class="QPushButton" name="pushButton">
@@ -494,7 +497,7 @@ QSpinBox::down-button {
       <number>9999</number>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -1183,9 +1186,6 @@ QSpinBox::down-button {
         <item row="5" column="1">
          <widget class="QLineEdit" name="lineEditOutT4"/>
         </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEditOutCount"/>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_43">
           <property name="styleSheet">
@@ -1205,7 +1205,7 @@ QSpinBox::down-button {
            <string notr="true">color: rgb(255, 0, 0);</string>
           </property>
           <property name="text">
-           <string>数据传输时间(us):</string>
+           <string>传输时间(us):</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -1215,10 +1215,20 @@ QSpinBox::down-button {
         <item row="1" column="1">
          <widget class="QLineEdit" name="lineEditOutTrans"/>
         </item>
+        <item row="0" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_15">
+          <item>
+           <widget class="QLineEdit" name="lineEditOutCount"/>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditOutCountPre"/>
+          </item>
+         </layout>
+        </item>
        </layout>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout_3" columnstretch="5,4">
+       <layout class="QGridLayout" name="gridLayout_3" columnstretch="4,5">
         <item row="2" column="0">
          <widget class="QLabel" name="label_47">
           <property name="styleSheet">
@@ -1714,9 +1724,9 @@ padding-right:4px;</string>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>24</x>
+       <x>14</x>
        <y>256</y>
-       <width>739</width>
+       <width>749</width>
        <height>25</height>
       </rect>
      </property>
@@ -1724,7 +1734,7 @@ padding-right:4px;</string>
       <item>
        <widget class="QLabel" name="label_56">
         <property name="text">
-         <string>模板文件(Excel):</string>
+         <string>模板文件(Xlsx):</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>

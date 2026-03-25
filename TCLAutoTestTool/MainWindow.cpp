@@ -24,6 +24,9 @@
 #include <QCloseEvent>
 #include <QClipboard>
 
+#include <QSharedMemory>
+#define UNIQUE_KEY "TCLAutoTestTool_71A7F2D4-5566-4F99"
+
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
 #include "tinyxml2.h"
@@ -149,6 +152,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    {
+        static QSharedMemory sharedMemory(UNIQUE_KEY);
+
+        if (sharedMemory.attach()) {
+            QMessageBox::warning(nullptr, "提示", "TCLAutoTestTool 程序已经在运行中！");
+            hide();
+            exit(0);
+            qApp->quit(); // 直接退出
+            return;
+        }
+        sharedMemory.create(1);
+    }
+
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint | Qt::MSWindowsFixedSizeDialogHint);
 
     QString strBuild;
@@ -227,7 +244,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxWindows->blockSignals(false);
     ui->comboBoxWindows->setCurrentIndex(22);
     connect(ui->comboBoxWindows,&QComboBox::currentIndexChanged,this,[=]{
-        ui->lineEditBase3->setText(ui->comboBoxWindows->currentText().trimmed());
+        ui->lineEditBase6->setText(ui->comboBoxWindows->currentText().trimmed());
     });
 
     qDebug() << QString::asprintf("%04X", Get_CRC16_Sum( (BYTE *)QByteArray::fromHex(QString("AA 08 28 FF FF FF").toLatin1()).data(),6));
@@ -241,6 +258,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEditOut001->setText(m_setting->value("lumi0","1000").toString());
     ui->lineEditOut011->setText(m_setting->value("lumi1","1001").toString());
     ui->lineEditOut021->setText(m_setting->value("lumi2","1002").toString());
+    ui->lineEditOutCountPre->setText(m_setting->value("datacount","2000").toString());
 
     QStringList tvSet = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
 
@@ -294,12 +312,12 @@ MainWindow::MainWindow(QWidget *parent)
                 switch (col)
                 {
                 case  0: break;
-                case  1: ui->lineEditBase1->setText(strValue); break;
-                case  2: ui->lineEditBase2->setText(strValue); break;
-                case  3: ui->lineEditBase3->setText(strValue); break;
-                case  4: ui->lineEditBase4->setText(strValue); break;
-                case  5: ui->lineEditBase5->setText(strValue); break;
-                case  6: ui->lineEditBase6->setText(strValue); break;
+                case  1: ui->lineEditBase4->setText(strValue); break;
+                case  2: ui->lineEditBase5->setText(strValue); break;
+                case  3: ui->lineEditBase6->setText(strValue); break;
+                case  4: ui->lineEditBase1->setText(strValue); break;
+                case  5: ui->lineEditBase2->setText(strValue); break;
+                case  6: ui->lineEditBase3->setText(strValue); break;
                 case  7: ui->lineEditBase7->setText(strValue); break;
                 case  8: ui->lineEditBase8->setText(strValue); break;
                 case  9: ui->lineEditBase9->setText(strValue); break;
@@ -617,7 +635,7 @@ MainWindow::MainWindow(QWidget *parent)
 
             m_strRCmd = "export-data";
             QString strPath = QApplication::applicationDirPath() + QString("/save");
-            QString strFile = strPath + QString("/kisdata.csv");
+            QString strFile = strPath + QString("/kisdata%1.csv").arg(m_nExport);
             QString strCmd = QString("export-data \"%1\"").arg(strFile);
             s_sock->write(strCmd.toStdString().c_str());
         });
@@ -674,49 +692,71 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
         connect(ui->pushButtonExcel,&QPushButton::clicked,this,[=](){
+
+            QDateTime now = QDateTime::currentDateTime();
+            if(now.toString("yyyy-MM-dd") > QString("2026-04-15"))
+                return;
+
             QString strFile = ui->lineEditExcelTemp->text().trimmed();
 
             Document xlsx(strFile);
             if ( xlsx.load() && xlsx.selectSheet("LDM调试和自检清单"))
             {
-                xlsx.write("F10","1");
-                xlsx.write("F11","1");
-                xlsx.write("F12","1");
-                xlsx.write("F13","1");
+                xlsx.write("D9" ,ui->comboModel->currentText().trimmed());
+                xlsx.write("D10",ui->lineEditBase1->text().trimmed().toDouble());
+                xlsx.write("D11",ui->lineEditBase2->text().trimmed().toDouble());
+                xlsx.write("D12",ui->lineEditBase3->text().trimmed().toDouble());
 
-                xlsx.write("F15","1");
-                xlsx.write("F16","1");
+                xlsx.write("F9" ,ui->lineEditBase4->text().trimmed().toDouble());
+                xlsx.write("F10",ui->lineEditBase5->text().trimmed().toDouble());
+                xlsx.write("F11",ui->lineEditBase6->text().trimmed());
+                xlsx.write("F12",ui->lineEditBase7->text().trimmed());
 
-                xlsx.write("F18","1");
-                xlsx.write("F19","1");
-                xlsx.write("F20","1");
+                ///////////////////
+                xlsx.write("D14",m_strOut0);
+                xlsx.write("D15",m_strOut0);
+                xlsx.write("D16",m_strOut1);
+                xlsx.write("D17",m_strOut2);
 
-                xlsx.write("E10","1");
-                xlsx.write("E11","1");
-                xlsx.write("E12","1");
-                xlsx.write("E13","1");
+                xlsx.write("E14",ui->lineEditOutCur1->text().trimmed().toDouble());
+                xlsx.write("E15",ui->lineEditOutCur2->text().trimmed().toDouble());
+                xlsx.write("E16",ui->lineEditOutCur3->text().trimmed().toDouble());
+                xlsx.write("E17",ui->lineEditOutCur4->text().trimmed().toDouble());
 
-                xlsx.write("E15","1");
-                xlsx.write("E16","1");
+                xlsx.write("F14",ui->lineEditBase8->text().trimmed().toDouble());
+                xlsx.write("F15",ui->lineEditBase9->text().trimmed().toDouble());
+                xlsx.write("F16",ui->lineEditBase10->text().trimmed().toDouble());
+                xlsx.write("F17",ui->lineEditBase11->text().trimmed().toDouble());
 
-                xlsx.write("E18","1");
-                xlsx.write("E19","1");
-                xlsx.write("E20","1");
+                ///////////////////
+                xlsx.write("E19",ui->lineEditOutCount->text().trimmed().toInt());
+                xlsx.write("F19",ui->lineEditOutCountPre->text().trimmed().toInt());
+                xlsx.write("D20",ui->lineEditOutHead->text().trimmed());
+                xlsx.write("D21",ui->lineEditOutTail->text().trimmed());
+                xlsx.write("E20",3);
+                xlsx.write("E21",3);
 
+                ///////////////////
+                xlsx.write("E23",ui->lineEditOut000->text().trimmed().toDouble());
+                xlsx.write("E24",ui->lineEditOut002->text().trimmed().toDouble());
+                xlsx.write("E25",ui->lineEditOut003->text().trimmed().toDouble());
+                xlsx.write("E26",ui->lineEditOut010->text().trimmed().toDouble());
+                xlsx.write("E27",ui->lineEditOut012->text().trimmed().toDouble());
+                xlsx.write("E28",ui->lineEditOut013->text().trimmed().toDouble());
+                xlsx.write("E29",ui->lineEditOut020->text().trimmed().toDouble());
+                xlsx.write("E30",ui->lineEditOut022->text().trimmed().toDouble());
+                xlsx.write("E31",ui->lineEditOut023->text().trimmed().toDouble());
 
-                xlsx.write("D10","1");
-                xlsx.write("D11","1");
-                xlsx.write("D12","1");
-                xlsx.write("D13","1");
+                xlsx.write("F23",ui->lineEditOut001->text().trimmed().toDouble());
+                xlsx.write("F26",ui->lineEditOut011->text().trimmed().toDouble());
+                xlsx.write("F29",ui->lineEditOut021->text().trimmed().toDouble());
 
-                xlsx.write("D15","1");
-                xlsx.write("D16","1");
-
-                xlsx.write("D20",0.2233);
-                xlsx.write("D29",0.2333);
-                xlsx.write("D30",0.2533);
-                xlsx.write("D31",0.2633);
-                xlsx.write("D32",0.004451233455);
+                ///////////////////
+                xlsx.write("D40",ui->lineEditOutT1->text().trimmed().toDouble());
+                xlsx.write("D41",ui->lineEditOutT2->text().trimmed().toDouble());
+                xlsx.write("D42",ui->lineEditOutT3->text().trimmed().toDouble());
+                xlsx.write("D43",ui->lineEditOutT4->text().trimmed().toDouble());
+                xlsx.write("D44",ui->lineEditOutTrans->text().trimmed().toDouble());
 
                 QString strPath(QApplication::applicationDirPath() + QString("/output"));
                 QDir D(strPath);
@@ -740,7 +780,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     {
-        connect(ui->lineEditBase3,&QLineEdit::textChanged,this,[=](const QString&text){
+        connect(ui->lineEditBase6,&QLineEdit::textChanged,this,[=](const QString&text){
             ShowImage();
         });
         connect(ui->pushButton,&QPushButton::clicked,this,[=](){
@@ -897,7 +937,7 @@ void MainWindow::ShowImage()
     QString strFile = QApplication::applicationDirPath() + "/platform-tools/test001.bat";
     QString strAdb  = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
     QString strUDisk = ui->lineEditUDisk->text().trimmed();
-    QString strImage = ui->lineEditBase3->text().trimmed();
+    QString strImage = ui->lineEditBase6->text().trimmed();
     QString strType  = "bmp";
     QString strMedia = "image";
     QFile batFile(strFile);
@@ -1050,7 +1090,9 @@ void MainWindow::DoTEST(int step)
         m_setting->value("lumi0",ui->lineEditOut001->text().trimmed());
         m_setting->value("lumi1",ui->lineEditOut011->text().trimmed());
         m_setting->value("lumi2",ui->lineEditOut021->text().trimmed());
-        QFile::remove(strPath + QString("/kisdata.csv"));
+        QFile::remove(strPath + QString("/kisdata1.csv"));
+        QFile::remove(strPath + QString("/kisdata2.csv"));
+        QFile::remove(strPath + QString("/kisdata3.csv"));
         QFile::remove(strPath + QString("/save1.csv"));
         QFile::remove(strPath + QString("/save2.csv"));
         QFile::remove(strPath + QString("/save3.csv"));
@@ -1073,8 +1115,8 @@ void MainWindow::DoTEST(int step)
         break;
 
     case 2:
-        m_Boost = ui->lineEditBase3->text();
-        ui->lineEditBase3->setText("L32");
+        m_Boost = ui->lineEditBase6->text();
+        ui->lineEditBase6->setText("L32");
         ui->pushButton->click();
         QTimer::singleShot(200,this,[=]{
             ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
@@ -1093,7 +1135,7 @@ void MainWindow::DoTEST(int step)
         break;
 
     case 5:
-        ui->lineEditBase3->setText(m_Boost);
+        ui->lineEditBase6->setText(m_Boost);
         ui->pushButton->click();
         QTimer::singleShot(200,this,[=]{
             ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
@@ -1186,7 +1228,7 @@ void MainWindow::DoDealData()
 {
     {
         QString strPath = QApplication::applicationDirPath() + QString("/save");
-        QString strFile = strPath + QString("/kisdata.csv");
+        QString strFile = strPath + QString("/kisdata1.csv");
 
         QFile DFile(strFile);
         if (DFile.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -1217,8 +1259,8 @@ void MainWindow::DoDealData()
             //T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T3；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）                                                                                                                                                        0.0019549,1,0,0,0,T3,1.520 ,T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）
 
             int count = Time.size();
-            int pos = -1 ;
-            for(int i=200; i<count-3; i++)
+            int pos = -1;
+            for(int i=50; i<count-3; i++)
             {
                 if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
                 {
@@ -1226,6 +1268,8 @@ void MainWindow::DoDealData()
                     break;
                 }
             }
+            if(pos == -1)
+                return;
             qDebug() << "有效帧开始:" << pos;
             double T1 = (Time[pos+2] - Time[pos+1]) * 1000000;
             qDebug() << "T1 = " << Time[pos+2] << "-" << Time[pos+1] << "=" << T1;
@@ -1295,7 +1339,6 @@ void MainWindow::DoDealData()
                 }
             }
 
-
             double T5 = (Time[zero4] - Time[pos+4]) * 1000000;
             qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
 
@@ -1357,6 +1400,11 @@ void MainWindow::DoCurrent(int index,const QString&format)
         }
         DFile.close();
 
+        int header = 3;
+        if(format == "6+10") header = 3;
+        if(format == "4+12") header = 3;
+        if(format == "8+12") header = 2;
+
         int count = col0.size();
         if(count < 10)
             return;
@@ -1364,25 +1412,30 @@ void MainWindow::DoCurrent(int index,const QString&format)
         {
             m_nData = (count) * 16;
             ui->lineEditOutCount->setText(QString::asprintf("%d",m_nData));
-            ui->lineEditOutHead->setText(QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]));
-            ui->lineEditOutTail->setText(QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]));
+            QString strHead,strTail;
+            strHead = QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]);
+            strTail = QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]);
+            ui->lineEditOutHead->setText(strHead);
+            ui->lineEditOutTail->setText(strTail);
         }
 
-        int H = ui->lineEditBase1->text().toInt();
-        int V = ui->lineEditBase2->text().toInt();
-        int pos = (H*V*0.5+0.5*H) + 3;
+        int H = ui->lineEditBase4->text().toInt();
+        int V = ui->lineEditBase5->text().toInt();
+        int pos = (H*V*0.5+0.5*H) + header;
+
+        pos = (count) / 2;
 
         if(pos >= count)
             return;
         quint16 current = col0[pos]; // 0x2BFF
 
-        double curBase = ui->lineEditBase5->text().toDouble();
-        double curStep = ui->lineEditBase6->text().toDouble();
+        double curBase = ui->lineEditBase2->text().toDouble();
+        double curStep = ui->lineEditBase3->text().toDouble();
 
         //QList<double> CurTable={1.25,2.50,3.75,5.00,6.25,7.50,8.75,10.00,11.25,12.50,13.25};
         //C0 = CurTable[bit0];
-        double C0 = 1;
-        double C1 = 1;
+        double C0 = -1;
+        double C1 = -1;
         quint16 bit0 = 1;
         quint16 bit1 = 1;
         if(ui->radioButtonWhite->isChecked())
@@ -1412,7 +1465,7 @@ void MainWindow::DoCurrent(int index,const QString&format)
                 //则此时计算后的电流值为98/255*90=34.59mA，
                 //然后再乘以占空比，得到最终的电流=34.59*0xFF7/0xFFF=34.5mA；
                 quint8  cur = (col0[count-3] & 0xFF);
-                double  max = ui->lineEditBase4->text().toDouble();
+                double  max = ui->lineEditBase1->text().toDouble();
 
                 C0 = max * cur / 255;
                 C1 = C0  * 0xFF7 / 0xFFF;
@@ -1425,14 +1478,17 @@ void MainWindow::DoCurrent(int index,const QString&format)
             case 1:
                 ui->lineEditOutCur1->setText(QString::asprintf("%.2f",C1));
                 ui->lineEditOutCur2->setText(QString::asprintf("%.2f",C0));
+                m_strOut0 = QString::asprintf("0x%04X",current);
                 break;
 
             case 2:
                 ui->lineEditOutCur3->setText(QString::asprintf("%.2f",C1));
+                m_strOut1 = QString::asprintf("0x%04X",current);
                 break;
 
             case 3:
                 ui->lineEditOutCur4->setText(QString::asprintf("%.2f",C1));
+                m_strOut2 = QString::asprintf("0x%04X",current);
                 break;
             }
         }
@@ -1447,24 +1503,21 @@ void MainWindow::DoCurrent(int index,const QString&format)
 
             double R0=0,G0=0,B0=0,R1=0,G1=0,B1=0;
 
+            current = col0[pos];
             bit0 = (current >> 10);
             R0 = curBase + curStep * bit0;
-
             bit1 = (current&0x3FF);
             R1 = R0 * bit1 / 0x3FF;
 
-
+            current = col0[pos+1];
             bit0 = (current >> 10);
             G0 = curBase + curStep * bit0;
-
             bit1 = (current&0x3FF);
             G1 = G0 * bit1 / 0x3FF;
 
-
-
+            current = col0[pos+2];
             bit0 = (current >> 10);
             B0 = curBase + curStep * bit0;
-
             bit1 = (current&0x3FF);
             B1 = B0 * bit1 / 0x3FF;
 
@@ -1501,12 +1554,10 @@ void MainWindow::DoSetMode(int mode)
         for (QLabel *label: Labels)
             OldTexts.push_back(label->text().trimmed());
 
-    for (int i=0; i<8; i++) {
+    for (int i=0; i<8; i++)
+    {
         QLabel *label = Labels[i];
         QString strText = label->text().trimmed();
-        // strText.replace("\n(RGB)","");
-        // if(mode == 1)
-        //     strText += "\n(RGB)";
         strText = mode == 1 ? NewTexts[i] + QString(":"):OldTexts[i];
         label->setText(strText);
     }
