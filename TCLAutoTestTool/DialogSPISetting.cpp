@@ -50,6 +50,10 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
         ui->comboBox_4->setCurrentIndex(6);
     });
 
+    connect(ui->comboBoxModel,&QComboBox::textActivated,this,[=](const QString & text){
+        m_strModel = text;
+    });
+
     QTimer::singleShot(1000, this, [=]{ loadConfig(); });
 }
 
