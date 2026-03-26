@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>320</height>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>16</x>
-     <y>14</y>
+     <y>48</y>
      <width>135</width>
-     <height>95</height>
+     <height>104</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout" columnstretch="0,1" columnminimumwidth="0,0">
@@ -416,8 +416,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>196</x>
-     <y>14</y>
+     <x>172</x>
+     <y>48</y>
      <width>135</width>
      <height>80</height>
     </rect>
@@ -462,7 +462,7 @@
    <property name="geometry">
     <rect>
      <x>54</x>
-     <y>280</y>
+     <y>322</y>
      <width>90</width>
      <height>30</height>
     </rect>
@@ -475,7 +475,7 @@
    <property name="geometry">
     <rect>
      <x>152</x>
-     <y>280</y>
+     <y>322</y>
      <width>90</width>
      <height>30</height>
     </rect>
@@ -488,9 +488,9 @@
    <property name="geometry">
     <rect>
      <x>56</x>
-     <y>118</y>
+     <y>160</y>
      <width>285</width>
-     <height>148</height>
+     <height>156</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -568,6 +568,80 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label_58">
+   <property name="geometry">
+    <rect>
+     <x>17</x>
+     <y>13</y>
+     <width>55</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string> 设备型号:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonLoadConfig">
+   <property name="geometry">
+    <rect>
+     <x>171</x>
+     <y>13</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="text">
+    <string>导入配置 ...</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxModel">
+   <property name="geometry">
+    <rect>
+     <x>78</x>
+     <y>14</y>
+     <width>80</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>80</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <property name="maxVisibleItems">
+    <number>30</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>LA1010</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LA2016</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LA5016</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LA5032</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

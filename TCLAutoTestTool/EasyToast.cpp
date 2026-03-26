@@ -30,7 +30,7 @@ EasyToast::EasyToast(QWidget *parent)
     pmQuestion=QApplication::style()->standardIcon(QStyle::SP_MessageBoxQuestion).pixmap(40,40);
     pmWarning=QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(40,40);
     pmCritical=QApplication::style()->standardIcon(QStyle::SP_MessageBoxCritical).pixmap(40,40);
-    ui->labelIcon->setPixmap(pmInformation) ;
+    ui->labelIcon->setPixmap(pmInformation);
 
     connect(&m_TMShow,&QTimer::timeout,this,[=]{
         m_TMHide.stop() ;
@@ -77,17 +77,21 @@ void EasyToast::active(const QString&text, int type, int durtion)
 
     switch(type)
     {
-    case 0: ui->labelIcon->setPixmap(pmInformation) ; break;
-    case 1: ui->labelIcon->setPixmap(pmWarning) ; break;
-    case 2: ui->labelIcon->setPixmap(pmQuestion) ; break;
-    case 3: ui->labelIcon->setPixmap(pmCritical) ; break;
+    case 0: ui->labelIcon->setPixmap(pmInformation); break;
+    case 1: ui->labelIcon->setPixmap(pmWarning); break;
+    case 2: ui->labelIcon->setPixmap(pmQuestion); break;
+    case 3: ui->labelIcon->setPixmap(pmCritical); break;
     }
-    ui->label->setText(text) ;
-    setWindowOpacity(1.0) ;
-    m_opacity = 1.0 ;
+    ui->label->setText(text);
+    ui->label->adjustSize();
+    ui->frame->adjustSize();
+    this->adjustSize();
+    // ui->label->setAlignment(Qt::AlignCenter);
+    setWindowOpacity(1.0);
+    m_opacity = 1.0;
 
-    m_TMShow.start(durtion) ;
-    raise() ;
+    m_TMShow.start(durtion);
+    raise();
 
-    exec() ;
+    exec();
 }
