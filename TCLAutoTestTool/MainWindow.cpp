@@ -1576,7 +1576,7 @@ void MainWindow::CalcCountPre()
         nCount = (H*V*2+12)*8;
     }
 
-    if(ui->radioButtonRGB)
+    if(ui->radioButtonRGB->isChecked())
     {
         nCount = (H*V*2*3+12)*8;
     }
