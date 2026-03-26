@@ -300,7 +300,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M"};
+            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"};
 
             for (int col = 0; col < readCols.count(); col++)
             {
@@ -323,8 +323,17 @@ MainWindow::MainWindow(QWidget *parent)
                 case  9: ui->lineEditBase9->setText(strValue); break;
                 case 10:ui->lineEditBase10->setText(strValue); break;
                 case 11:ui->lineEditBase11->setText(strValue); break;
+                case 12:ui->lineEditOut001->setText(strValue); break;
+                case 13:ui->lineEditOut011->setText(strValue); break;
+                case 14:ui->lineEditOut021->setText(strValue); break;
                 default: break;
                 }
+            }
+            {
+                CalcCountPre();
+                // 16bit：(H*V*2+12）*8
+                // 12bit：(H*V*1.5+10)*8
+                // RGB格式：(H*V*2*3+12)*8
             }
         }
     });
@@ -646,9 +655,9 @@ MainWindow::MainWindow(QWidget *parent)
             DoSaveFile(strFile);
         });
 
-        ui->comboBoxModel->blockSignals(true);
-        ui->comboBoxModel->setCurrentIndex(m_setting->value("deviceModel",2).toInt());
-        ui->comboBoxModel->blockSignals(false);
+        // ui->comboBoxModel->blockSignals(true);
+        // ui->comboBoxModel->setCurrentIndex(m_setting->value("deviceModel",2).toInt());
+        // ui->comboBoxModel->blockSignals(false);
 
         ui->comboBoxDepth->blockSignals(true);
         ui->comboBoxDepth->setCurrentIndex(m_setting->value("deviceDepth",2).toInt());
@@ -658,10 +667,10 @@ MainWindow::MainWindow(QWidget *parent)
         ui->comboBoxFreq->setCurrentIndex(m_setting->value("deviceFreq",2).toInt());
         ui->comboBoxFreq->blockSignals(false);
 
-        connect(ui->comboBoxModel,&QComboBox::activated,this,[=](int index){
-            m_pSPI->setModel(ui->comboBoxModel->currentText());
-            m_setting->setValue("deviceModel",index);
-        });
+        // connect(ui->comboBoxModel,&QComboBox::activated,this,[=](int index){
+        //     m_pSPI->setModel(ui->comboBoxModel->currentText());
+        //     m_setting->setValue("deviceModel",index);
+        // });
         connect(ui->comboBoxDepth,&QComboBox::activated,this,[=](int index){
             m_pSPI->setDeepth(index);
             m_setting->setValue("deviceDepth",index);
@@ -1226,6 +1235,7 @@ void MainWindow::DoSaveFile(const QString&file)
 
 void MainWindow::DoDealData()
 {
+    CalcCountPre();
     {
         QString strPath = QApplication::applicationDirPath() + QString("/save");
         QString strFile = strPath + QString("/kisdata1.csv");
@@ -1260,7 +1270,7 @@ void MainWindow::DoDealData()
 
             int count = Time.size();
             int pos = -1;
-            for(int i=50; i<count-3; i++)
+            for(int i=0; i<count-3; i++)
             {
                 if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
                 {
@@ -1423,7 +1433,11 @@ void MainWindow::DoCurrent(int index,const QString&format)
         int V = ui->lineEditBase5->text().toInt();
         int pos = (H*V*0.5+0.5*H) + header;
 
-        pos = (count) / 2;
+
+        QString format = ui->lineEditBase7->text().trimmed();
+
+        if(format != "6+10")
+            pos = (count) / 2;
 
         if(pos >= count)
             return;
@@ -1524,16 +1538,16 @@ void MainWindow::DoCurrent(int index,const QString&format)
             switch(index)
             {
             case 1:
-                ui->lineEditOutCur1->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R0,G0,B0));
-                ui->lineEditOutCur2->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                ui->lineEditOutCur1->setText(QString::asprintf("R%.2f/G%.2f/B%.2f",R0,G0,B0));
+                ui->lineEditOutCur2->setText(QString::asprintf("R%.2f/G%.2f/B%.2f",R1,G1,B1));
                 break;
 
             case 2:
-                ui->lineEditOutCur3->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                ui->lineEditOutCur3->setText(QString::asprintf("R%.2f/G%.2f/B%.2f",R1,G1,B1));
                 break;
 
             case 3:
-                ui->lineEditOutCur4->setText(QString::asprintf("R%.2f/G.%2f/B%.2f",R1,G1,B1));
+                ui->lineEditOutCur4->setText(QString::asprintf("R%.2f/G%.2f/B%.2f",R1,G1,B1));
                 break;
             }
         }
@@ -1543,6 +1557,31 @@ void MainWindow::DoCurrent(int index,const QString&format)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::CalcCountPre()
+{
+    // 16bit：  (H*V*2+12)*8
+    // 12bit：  (H*V*1.5+10)*8
+    // RGB格式：(H*V*2*3+12)*8
+
+    QString format = ui->lineEditBase7->text().trimmed();
+    int H = ui->lineEditBase4->text().toInt();
+    int V = ui->lineEditBase5->text().toInt();
+    int nCount = (H*V*1.5+10)*8;
+
+    if(format == "6+10")
+    {
+        nCount = (H*V*2+12)*8;
+    }
+
+    if(ui->radioButtonRGB)
+    {
+        nCount = (H*V*2*3+12)*8;
+    }
+
+    ui->lineEditOutCountPre->setText(QString("%1").arg(nCount));
 }
 
 void MainWindow::DoSetMode(int mode)

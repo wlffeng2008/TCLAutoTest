@@ -57,7 +57,7 @@ private:
     QString m_strOut0;
     QString m_strOut1;
     QString m_strOut2;
-
+    void CalcCountPre();
 
     void InitTest();
     void ShowImage();
