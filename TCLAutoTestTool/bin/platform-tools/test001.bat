@@ -1,2 +1,0 @@
-"D:/Air/TCLAutoTest/TCLAutoTestTool/bin/platform-tools/adb.exe" root
-"D:/Air/TCLAutoTest/TCLAutoTestTool/bin/platform-tools/adb.exe" shell am start -a android.intent.action.VIEW -d "file:///storage/0004-6C3D/boost_Pattern/L36.bmp" -t "image/*" 
