@@ -939,6 +939,7 @@ QSpinBox::down-button {
       <property name="spacing">
        <number>8</number>
       </property>
+
       <item>
        <layout class="QGridLayout" name="gridLayout_7">
         <item row="0" column="0">
