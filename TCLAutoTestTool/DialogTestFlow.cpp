@@ -8,12 +8,13 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
     , ui(new Ui::DialogTestFlow)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()|Qt::MSWindowsFixedSizeDialogHint);
 
     m_model = new QStandardItemModel(this);
     m_model->setHorizontalHeaderLabels(QString("测试内容,使能,等待时间(ms),状态").split(','));
     ui->tableView->setModel(m_model);
 
-    QHeaderView *pHeader = ui->tableView->horizontalHeader() ;
+    QHeaderView *pHeader = ui->tableView->horizontalHeader();
     pHeader->setSectionResizeMode(QHeaderView::Stretch);
     pHeader->setSectionResizeMode(0,QHeaderView::Fixed);
     pHeader->setSectionResizeMode(1,QHeaderView::Fixed);
@@ -26,16 +27,16 @@ DialogTestFlow::DialogTestFlow(QWidget *parent)
     QTimer::singleShot(500,this,[=]{
         QStringList Times = m_pSet->value("WaitTimes").toStringList();
         if(Times.isEmpty())
-            Times = QString("3000,2000,3000,2000,15000,4000,2000,2000,2000,1000").split(',');
+            Times = QString("3000,4000,3000,4000,15000,4000,4000,3000,   4000,1000").split(',');
 
-        addTestItem("全白",Times[0],true);
-        addTestItem("读取数据",Times[1],true);
-        addTestItem("L32",Times[2],true);
-        addTestItem("读取数据",Times[3],true);
-        addTestItem("全黑",Times[4],true);
-        addTestItem("Boost",Times[5],true);
-        addTestItem("读取数据",Times[6],true);
-        addTestItem("全白",Times[7],true);
+        addTestItem("全白",Times[0].trimmed(),true);
+        addTestItem("读取数据",Times[1].trimmed(),true);
+        addTestItem("L32",Times[2].trimmed(),true);
+        addTestItem("读取数据",Times[3].trimmed(),true);
+        addTestItem("全黑",Times[4].trimmed(),true);
+        addTestItem("Boost",Times[5].trimmed(),true);
+        addTestItem("读取数据",Times[6].trimmed(),true);
+        addTestItem("全白",Times[7].trimmed(),true);
     });
 
     connect(&m_TMTest,&QTimer::timeout,this,[=]{

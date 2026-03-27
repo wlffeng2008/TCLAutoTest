@@ -7,6 +7,7 @@ DialogTVCmd::DialogTVCmd(QWidget *parent)
     , ui(new Ui::DialogTVCmd)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()|Qt::MSWindowsFixedSizeDialogHint);
 
     m_model = new QStandardItemModel();
     m_model->setHorizontalHeaderLabels({"串口命令", "备注"});

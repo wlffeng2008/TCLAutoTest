@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
-    <height>370</height>
+    <width>380</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,13 +16,13 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>16</x>
-     <y>48</y>
-     <width>135</width>
+     <x>6</x>
+     <y>50</y>
+     <width>165</width>
      <height>104</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1" columnminimumwidth="0,0">
+   <layout class="QGridLayout" name="gridLayout" columnstretch="2,3" columnminimumwidth="0,0">
     <item row="0" column="1">
      <widget class="QComboBox" name="comboBox_1">
       <property name="maxVisibleItems">
@@ -416,10 +416,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>172</x>
-     <y>48</y>
-     <width>135</width>
-     <height>80</height>
+     <x>190</x>
+     <y>50</y>
+     <width>85</width>
+     <height>71</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -446,7 +446,7 @@
       </attribute>
      </widget>
     </item>
-    <item>
+    <item alignment="Qt::AlignmentFlag::AlignTop">
      <widget class="QRadioButton" name="radioButton3">
       <property name="text">
        <string>自定义模式</string>
@@ -461,10 +461,10 @@
   <widget class="QPushButton" name="pushButtonOK">
    <property name="geometry">
     <rect>
-     <x>54</x>
-     <y>322</y>
-     <width>90</width>
-     <height>30</height>
+     <x>190</x>
+     <y>358</y>
+     <width>80</width>
+     <height>24</height>
     </rect>
    </property>
    <property name="text">
@@ -474,10 +474,10 @@
   <widget class="QPushButton" name="pushButtonCancel">
    <property name="geometry">
     <rect>
-     <x>152</x>
-     <y>322</y>
-     <width>90</width>
-     <height>30</height>
+     <x>278</x>
+     <y>358</y>
+     <width>80</width>
+     <height>24</height>
     </rect>
    </property>
    <property name="text">
@@ -487,10 +487,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>56</x>
-     <y>160</y>
+     <x>76</x>
+     <y>170</y>
      <width>285</width>
-     <height>156</height>
+     <height>166</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -572,8 +572,8 @@
   <widget class="QLabel" name="label_58">
    <property name="geometry">
     <rect>
-     <x>17</x>
-     <y>13</y>
+     <x>16</x>
+     <y>15</y>
      <width>55</width>
      <height>23</height>
     </rect>
@@ -585,13 +585,13 @@
     <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButtonLoadConfig">
+  <widget class="QPushButton" name="pushButtonLoad">
    <property name="geometry">
     <rect>
-     <x>171</x>
-     <y>13</y>
-     <width>75</width>
-     <height>23</height>
+     <x>190</x>
+     <y>14</y>
+     <width>80</width>
+     <height>24</height>
     </rect>
    </property>
    <property name="cursor">
@@ -604,9 +604,9 @@
   <widget class="QComboBox" name="comboBoxModel">
    <property name="geometry">
     <rect>
-     <x>78</x>
-     <y>14</y>
-     <width>80</width>
+     <x>76</x>
+     <y>16</y>
+     <width>94</width>
      <height>21</height>
     </rect>
    </property>
@@ -642,6 +642,22 @@
      <string>LA5032</string>
     </property>
    </item>
+  </widget>
+  <widget class="QPushButton" name="pushButtonSaveAs">
+   <property name="geometry">
+    <rect>
+     <x>278</x>
+     <y>14</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="text">
+    <string>导出配置 ...</string>
+   </property>
   </widget>
  </widget>
  <resources/>
