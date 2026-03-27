@@ -69,6 +69,8 @@ private:
     void DoRemote();
     void DoSetMode(int mode=0);
 
+    QString m_strSavePath;
+
     QString m_Boost;
 
     void DoSendTV(const QString&cmd);

@@ -1,8 +1,14 @@
 #include "DialogSPISetting.h"
 #include "ui_DialogSPISetting.h"
+
+#include "EasyToast.h"
+
 #include <QFile>
 #include <QTimer>
+#include <QFileDialog>
 #include <QStandardPaths>
+
+
 #define NO_MSXML_XMLDOCUMENT
 #include <windows.h>
 #include "tinyxml2.h"
@@ -13,16 +19,17 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
     , ui(new Ui::DialogSPISetting)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags()|Qt::MSWindowsFixedSizeDialogHint);
 
     m_strModel = "LA5016";
 
     QString appDataPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    QString strFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
-    m_VisFile = strFile;
+    m_VisFile = appDataPath + QString("/AppData/Local/kingst/vis.config");
+    m_CfgFile = QApplication::applicationDirPath() + "/vis.config" ;
 
     for(int i=1; i<=64; i++)
     {
-        QString strItem=QString::asprintf("%2d 位单次传输字长", i);
+        QString strItem = QString::asprintf("%2d 位单次传输字长", i);
         if(i == 8) strItem += "(标准)";
         ui->comboBox_6->addItem(strItem);
     }
@@ -50,18 +57,68 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
         ui->comboBox_4->setCurrentIndex(6);
     });
 
+    connect(ui->pushButtonLoad,&QRadioButton::clicked,[=]{
+        QString strFile = QFileDialog::getOpenFileName(
+            this, "选择配置文件", nullptr, tr("文配置件(*.config);;所有文件 (*.*)"));
+        if (strFile.isEmpty())
+            return;
+        tinyxml2::XMLDocument doc;
+        XMLError error = doc.LoadFile(strFile.toStdString().c_str());
+
+        if (error == XMLError::XML_SUCCESS)
+        {
+            tinyxml2::XMLElement* settings = doc.RootElement();
+            tinyxml2::XMLElement* global   = settings->FirstChildElement();
+            tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
+            socket->SetText("1");
+            doc.SaveFile(m_CfgFile.toStdString().c_str());
+            doc.SaveFile(m_VisFile.toStdString().c_str());
+            loadConfig();
+            EasyToast::information("分析仪配置导入成功！");
+        }
+        else
+        {
+            EasyToast::warning("分析仪配置导入失败！");
+        }
+    });
+
+    connect(ui->pushButtonSaveAs,&QRadioButton::clicked,[=]{
+        QString strFile = QFileDialog::getSaveFileName(
+            this, "选择配置文件", nullptr, tr("文配置件(*.config);;所有文件 (*.*)"));
+        if (strFile.isEmpty())
+            return;
+        tinyxml2::XMLDocument doc;
+        XMLError error = doc.LoadFile(m_CfgFile.toStdString().c_str());
+        if (error == XMLError::XML_SUCCESS)
+        {
+            tinyxml2::XMLElement* settings = doc.RootElement();
+            tinyxml2::XMLElement* global   = settings->FirstChildElement();
+            tinyxml2::XMLElement* socket = global->FirstChildElement("enaSocket");
+            socket->SetText("1");
+            EasyToast::information("分析仪配置导出成功！");
+        }
+        else
+        {
+            EasyToast::warning("分析仪配置导出失败！");
+        }
+    });
+
     connect(ui->comboBoxModel,&QComboBox::textActivated,this,[=](const QString & text){
         m_strModel = text;
     });
 
-    QTimer::singleShot(1000, this, [=]{ loadConfig(); });
+    QTimer::singleShot(300, this, [=]{
+        loadConfig();
+        m_bInited=true;
+    });
 }
 
 void DialogSPISetting::saveConfig()
 {
-    QString strCfg = QApplication::applicationDirPath() + "/vis.config";
+    if(!m_bInited) return;
+
     tinyxml2::XMLDocument doc;
-    XMLError error = doc.LoadFile(strCfg.toStdString().c_str());
+    XMLError error = doc.LoadFile(m_CfgFile.toStdString().c_str());
 
     if (error == XMLError::XML_SUCCESS)
     {
@@ -117,17 +174,15 @@ void DialogSPISetting::saveConfig()
         tinyxml2::XMLElement* item0 = analyzers->FirstChildElement("item0");
         tinyxml2::XMLElement* parameters = item0->FirstChildElement("parameters");
         parameters->SetText(strValue.toStdString().c_str());
-        doc.SaveFile(strCfg.toStdString().c_str());
+        doc.SaveFile(m_CfgFile.toStdString().c_str());
         doc.SaveFile(m_VisFile.toStdString().c_str());
     }
-
 }
 
 void DialogSPISetting::loadConfig()
 {
-    QString strCfg = QApplication::applicationDirPath() + "/vis.config";
     tinyxml2::XMLDocument doc;
-    XMLError error = doc.LoadFile(strCfg.toStdString().c_str());
+    XMLError error = doc.LoadFile(m_CfgFile.toStdString().c_str());
 
     if (error == XMLError::XML_SUCCESS)
     {
@@ -164,17 +219,11 @@ void DialogSPISetting::loadConfig()
 
         ui->checkBox->setChecked(params[14].toInt() == 1);
 
-        doc.SaveFile(strCfg.toStdString().c_str());
+        doc.SaveFile(m_CfgFile.toStdString().c_str());
         doc.SaveFile(m_VisFile.toStdString().c_str());
 
-        emit onLoadConfig(m_nDepth,m_nFrequ);
+        emit onLoadConfig(m_nDepth, m_nFrequ);
     }
-}
-
-void DialogSPISetting::setModel(const QString&model)
-{
-    m_strModel = model;
-    saveConfig();
 }
 
 void DialogSPISetting::setDeepth(int index)

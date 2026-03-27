@@ -10,7 +10,7 @@ GenComport::GenComport(QObject *parent) : QObject(parent)
 
 GenComport::~GenComport()
 {
-    closePort() ;
+    closePort();
     if(m_serialPort)
         m_serialPort->deleteLater();
 }
@@ -24,8 +24,8 @@ void GenComport::closePort()
             m_serialPort->clear();
             m_serialPort->close();
         }
-        delete m_serialPort ;
-        m_serialPort = nullptr ;
+        delete m_serialPort;
+        m_serialPort = nullptr;
     }
 }
 
@@ -37,7 +37,7 @@ bool GenComport::isOpen()
 void GenComport::setPortName(const QString&strName)
 {
     m_strName = strName.trimmed();
-    openPort(true) ;
+    openPort(true);
 }
 
 bool GenComport::openPort(bool bForce)
@@ -46,7 +46,7 @@ bool GenComport::openPort(bool bForce)
         return false;
 
     if(bForce)
-        closePort() ;
+        closePort();
 
     if(!m_serialPort)
         m_serialPort = new QSerialPort();
@@ -61,7 +61,7 @@ bool GenComport::openPort(bool bForce)
         }
         else
         {
-            updateSetting() ;
+            updateSetting();
             connect(m_serialPort,SIGNAL(readyRead()),this,SLOT(receive()));
             return true;
         }
@@ -97,8 +97,6 @@ void GenComport::updateSetting()
     m_serialPort->setStopBits(StopBtis[m_nStopBit]);
     m_serialPort->setParity(Paritys[m_nParity]);
     m_serialPort->setFlowControl((QSerialPort::FlowControl)m_nFlowControl);
-
-    qDebug() << m_nBaudRate << m_nDataBit << m_nStopBit << m_nParity << m_nFlowControl ;
 }
 
 void GenComport::setPortParam(int nBaudRate,int nDataBit,int nStopBit,int nParity,int nFlowControl)
@@ -108,7 +106,7 @@ void GenComport::setPortParam(int nBaudRate,int nDataBit,int nStopBit,int nParit
     m_nStopBit =nStopBit;
     m_nParity  =nParity;
     m_nFlowControl=nFlowControl;
-    updateSetting() ;
+    updateSetting();
 }
 
 void GenComport::send(const QByteArray &data)
@@ -120,7 +118,7 @@ void GenComport::send(const QByteArray &data)
         if(!m_serialPort->waitForBytesWritten())
         {
         }
-        waitForRelpySignal(500) ;
+        waitForRelpySignal(500);
     }
     else
     {
@@ -144,7 +142,7 @@ void GenComport::receive()
     }
 }
 
-bool GenComport::waitForRelpySignal(const unsigned int millisecond)
+bool GenComport::waitForRelpySignal(quint32 millisecond)
 {
     bool result = true;
 

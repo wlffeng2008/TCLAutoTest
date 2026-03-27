@@ -18,8 +18,8 @@
     <rect>
      <x>14</x>
      <y>16</y>
-     <width>613</width>
-     <height>337</height>
+     <width>610</width>
+     <height>320</height>
     </rect>
    </property>
   </widget>
@@ -27,7 +27,7 @@
    <property name="geometry">
     <rect>
      <x>14</x>
-     <y>358</y>
+     <y>350</y>
      <width>90</width>
      <height>30</height>
     </rect>
@@ -39,14 +39,27 @@
   <widget class="QPushButton" name="pushButtonSave">
    <property name="geometry">
     <rect>
-     <x>538</x>
-     <y>356</y>
+     <x>534</x>
+     <y>350</y>
      <width>90</width>
      <height>30</height>
     </rect>
    </property>
    <property name="text">
     <string>保存参数</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxAskDevice">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>354</y>
+     <width>157</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>检查检测设备连接状态</string>
    </property>
   </widget>
  </widget>

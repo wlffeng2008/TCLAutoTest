@@ -50,6 +50,8 @@ public:
     void toTheEnd() ;
     void toCancel() ;
 
+    bool checkConnect();
+
     QSettings *m_pSet = nullptr;
 signals:
     void onTestIndex(int item);

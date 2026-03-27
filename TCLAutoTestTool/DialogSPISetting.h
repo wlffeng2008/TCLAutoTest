@@ -15,7 +15,6 @@ public:
     explicit DialogSPISetting(QWidget *parent = nullptr);
     ~DialogSPISetting();
 
-    void setModel(const QString&model);
     void setDeepth(int index);
     void setFreq(int index);
 
@@ -26,6 +25,9 @@ private:
     Ui::DialogSPISetting *ui;
     QString m_strModel;
     QString m_VisFile;
+    QString m_CfgFile;
+
+    bool m_bInited=false;
 
     int m_nDepth=0;
     int m_nFrequ=0;
