@@ -4,16 +4,17 @@
 #include <QScreen>
 #include <QApplication>
 
-EasyToast *toast()
+EasyToast *toast(QWidget *parent)
 {
-    static EasyToast *pDlg = new EasyToast() ;
+    static EasyToast *pDlg = new EasyToast();
+    if(parent) pDlg->setParent(parent);
     pDlg->close();
-    return pDlg ;
+    return pDlg;
 }
 
 void easyToast(const QString&text,int type,quint32 durtaion)
 {
-    toast()->active(text,type,durtaion) ;
+    toast()->active(text,type,durtaion);
 }
 
 EasyToast::EasyToast(QWidget *parent)
@@ -24,7 +25,7 @@ EasyToast::EasyToast(QWidget *parent)
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup | Qt::WindowStaysOnTopHint|Qt::Tool | Qt::Dialog);    // 必须设置无边框
     setAttribute(Qt::WA_TranslucentBackground); // 设置背景透明
-    setStyleSheet("QFrame#frame{background-color: rgba(50, 50, 50, 150); border-radius: 10px; color:white;}");
+    setStyleSheet("QFrame#frame{background-color: rgba(120, 120, 120, 150); border-radius: 10px; color:white;} #label{color:white;}");
 
     pmInformation=QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(40,40);
     pmQuestion=QApplication::style()->standardIcon(QStyle::SP_MessageBoxQuestion).pixmap(40,40);
@@ -33,17 +34,17 @@ EasyToast::EasyToast(QWidget *parent)
     ui->labelIcon->setPixmap(pmInformation);
 
     connect(&m_TMShow,&QTimer::timeout,this,[=]{
-        m_TMHide.stop() ;
-        m_TMHide.start(30) ;
+        m_TMHide.stop();
+        m_TMHide.start(30);
     });
 
     connect(&m_TMHide,&QTimer::timeout,this,[=]{
-        m_opacity -= 0.1 ;
-        //setWindowOpacity(m_opacity) ;
+        m_opacity -= 0.1;
+        //setWindowOpacity(m_opacity);
         if(m_opacity <= 0.0)
         {
-            m_TMHide.stop() ;
-            this->hide() ;
+            m_TMHide.stop();
+            this->hide();
         }
     });
 }
@@ -86,12 +87,20 @@ void EasyToast::active(const QString&text, int type, int durtion)
     ui->label->adjustSize();
     ui->frame->adjustSize();
     this->adjustSize();
-    // ui->label->setAlignment(Qt::AlignCenter);
     setWindowOpacity(1.0);
     m_opacity = 1.0;
 
     m_TMShow.start(durtion);
     raise();
+    QWidget *par = parentWidget();
+    if(par)
+    {
+        QRect rcP = par->geometry();
+        QRect rcS = this->geometry();
+
+        QRect rcD(rcP.width()/2-rcS.width()/2,rcP.height()/2-rcS.height()/2,rcS.width(),rcS.height());
+        this->setGeometry(rcD);
+    }
 
     exec();
 }

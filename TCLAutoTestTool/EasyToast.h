@@ -38,7 +38,7 @@ private:
     QTimer m_TMHide ;
 };
 
-EasyToast *toast() ;
+EasyToast *toast(QWidget *parent = nullptr);
 void easyToast(const QString&text,int type=0,quint32 durtaion=1200) ;
 
 #endif // EASYTOAST_H

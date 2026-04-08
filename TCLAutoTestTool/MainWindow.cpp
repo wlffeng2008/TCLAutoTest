@@ -139,6 +139,8 @@ MainWindow::MainWindow(QWidget *parent)
         sharedMemory.create(1);
     }
 
+    toast(this);
+
     {
         QString strPath = QApplication::applicationDirPath() + QString("/save");
         QDir D(strPath);
@@ -1194,9 +1196,9 @@ void MainWindow::DoDealData()
             //T2：有效帧开始后，通道2第1个0对应的时间轴减去通道3第2个0对应的时间轴，就是T2；导出有效时间轴的第4个数据减去第3个数据（T2=0.001953-0.00175）；
             //T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T3；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）                                                                                                                                                        0.0019549,1,0,0,0,T3,1.520 ,T3：有效帧开始后，通道0变为第1个1对应的时间轴减去通道2变为0对应的时间轴，就是T2；也可以说是导出有效时间轴后的第5个数据减去第4个数据（T3=0.001955-0.001953）
 
-            int count = Time.size();
+            int count = Time.size() - 4;
             int pos = -1;
-            for(int i=0; i<count-3; i++)
+            for(int i=200; i<count; i++)
             {
                 if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
                 {
@@ -1227,18 +1229,18 @@ void MainWindow::DoDealData()
                 }
             }
 
-            if(format == "6+10")
+            if(format == "6+10" || format == "4+12")
             {
                 int zero3 = pos+2;
-                for(int i=pos; i<count; i++)
+                for(int i=pos+2; i<count; i++)
                 {
                     if(col1[i] == 0 && col1[i+1] == 0)
                     {
-                        zero3 = i+1;
+                        zero3 = i+3;
                         break;
                     }
                 }
-                T2 = (Time[zero2] - Time[zero3]) * 1000000;
+                T2 = (Time[zero3] - Time[zero2]) * 1000000;
                 qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
 
                 // int zero0 = 0;
@@ -1254,9 +1256,8 @@ void MainWindow::DoDealData()
                 T3=(Time[zero2+1]-Time[zero2])*1000000;
                 qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
 
-
                 int zero4 = pos;
-                for(int i=pos+10; i<count-4; i++)
+                for(int i=pos+10; i<count; i++)
                 {
                     if(col0[i] == 0 && col0[i+1] == 0 && col0[i+2] == 0 && col0[i+3] == 0)
                     {
@@ -1277,7 +1278,7 @@ void MainWindow::DoDealData()
                 T4 = (Time[zero5] - Time[zero4]) * 1000000;
                 qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
 
-                for(int i=pos+5; i<count-3; i++)
+                for(int i=pos+5; i<count; i++)
                 {
                     if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
                     {
@@ -1306,9 +1307,8 @@ void MainWindow::DoDealData()
                 T3=(Time[zero2+1]-Time[zero2])*1000000;
                 qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
 
-
                 int zero4 = pos;
-                for(int i=pos+10; i<count-4; i++)
+                for(int i=pos+10; i<count; i++)
                 {
                     if(col0[i] == 1 && col0[i+1] == 1 && col0[i+2] == 1 && col0[i+3] == 1)
                     {

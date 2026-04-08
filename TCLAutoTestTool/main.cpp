@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     a.setStyleSheet( R"(
 
-        QTableView {font-size: 12px; font-weight: bold; border: 1px solid gray;  background-color: rgb(220, 250, 255); gridline-color: gray;}
+        QTableView {font-size: 12px; font-weight: bold; border: 1px solid gray;  background-color: rgb(220, 250, 255); gridline-color: gray; outline:none;}
         QTableView::Item { padding-left:2px;  border-top: 0px solid gray; border-bottom: 1px solid transparent;border-right: 0px solid gray;}
         QTableView::Item::selected { background-color: #a0bb9e; color:white; }
         QTableView QTableCornerButton::section { background-color: skyblue ; min-width: 32px; border-top: 0px solid gray; border-bottom: 1px solid gray; border-left: 0px solid gray; border-right: 1px solid gray; }

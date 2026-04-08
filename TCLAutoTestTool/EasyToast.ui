@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>52</height>
+    <width>396</width>
+    <height>62</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,17 +38,17 @@
       <enum>QFrame::Shadow::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
+      <property name="spacing">
        <number>10</number>
       </property>
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <item alignment="Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter">
        <widget class="QLabel" name="labelIcon">
@@ -67,7 +67,7 @@
        <widget class="QLabel" name="label">
         <property name="minimumSize">
          <size>
-          <width>320</width>
+          <width>250</width>
           <height>24</height>
          </size>
         </property>
