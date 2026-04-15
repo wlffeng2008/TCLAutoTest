@@ -238,11 +238,22 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxBaud0->setCurrentIndex(m_setting->value("baud0",6).toInt());
     ui->comboBoxBaud1->setCurrentIndex(m_setting->value("baud1",6).toInt());
     ui->lineEditUDisk->setText(m_setting->value("udisk","0004-6C3D").toString());
+    ui->lineEditTVIP->setText(m_setting->value("tvip","192.168.3.103").toString());
 
     ui->lineEditOut001->setText(m_setting->value("lumi0","1000").toString());
     ui->lineEditOut011->setText(m_setting->value("lumi1","1001").toString());
     ui->lineEditOut021->setText(m_setting->value("lumi2","1002").toString());
     ui->lineEditOutCountPre->setText(m_setting->value("datacount","2000").toString());
+
+
+    connect(ui->checkBoxADBCnnt,&QCheckBox::clicked,this,[=](bool checked){
+        if(checked)
+        {
+            m_bAdbCnnt=true;
+            ShowImage();
+            m_bAdbCnnt=false;
+        }
+    });
 
     QStringList tvSets = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
 
@@ -638,10 +649,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         connect(ui->pushButtonExcel,&QPushButton::clicked,this,[=](){
 
-            QDateTime now = QDateTime::currentDateTime();
-            if(now.toString("yyyy-MM-dd") > QString("2026-04-15"))
-                return;
-
             QString strFile = ui->lineEditExcelTemp->text().trimmed();
 
             Document xlsx(strFile);
@@ -872,17 +879,26 @@ void MainWindow::DoSendTV(const QString&cmd)
 void MainWindow::ShowImage()
 {
     if(m_bLoading) return;
+
     QString strFile = QApplication::applicationDirPath() + "/platform-tools/test001.bat";
     QString strAdb  = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
     QString strUDisk = ui->lineEditUDisk->text().trimmed();
+    QString strTVIP = ui->lineEditTVIP->text().trimmed();
     QString strImage = ui->lineEditBase6->text().trimmed();
     QString strType  = "bmp";
     QString strMedia = "image";
+
+    if(m_bAdbCnnt)
+        strFile = QApplication::applicationDirPath() + "/platform-tools/cnntTV.bat";
+
     QFile batFile(strFile);
     if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QString strTex = QString("\"%1\" root\n\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
             strAdb,strAdb,strUDisk,strImage,strType,strMedia);
+
+        if(m_bAdbCnnt)
+            strTex = QString("\"%1\" connect %2").arg( strAdb,strTVIP);
 
         QTextStream out(&batFile);
 
@@ -894,6 +910,7 @@ void MainWindow::ShowImage()
     }
 
     m_setting->setValue("udisk",strUDisk);
+    m_setting->setValue("tvip",strTVIP);
 }
 
 void MainWindow::ReloadInfo()
@@ -998,6 +1015,10 @@ void MainWindow::sendTvCmd()
 
 void MainWindow::DoTEST(int step)
 {
+    QDateTime now = QDateTime::currentDateTime();
+    if(now.toString("yyyy-MM-dd") > QString("2026-06-01"))
+        return;
+
     if(m_pTest->checkConnect())
     {
         if(!(m_COM0 && m_COM0->isOpen() && m_COM1 && m_COM1->isOpen()))
@@ -1396,6 +1417,9 @@ void MainWindow::DoCurrent(int index,const QString&format)
         if(format == "4+12") header = 3;
         if(format == "8+12") header = 2;
 
+        int nHCount = ui->lineEditHCount->text().trimmed().toInt();
+        int nTCount = ui->lineEditTCount->text().trimmed().toInt();
+
         int count = col0.size();
         if(count < 10)
             return;
@@ -1404,10 +1428,21 @@ void MainWindow::DoCurrent(int index,const QString&format)
             m_nData = (count) * 16;
             ui->lineEditOutCount->setText(QString::asprintf("%d",m_nData));
             QString strHead,strTail;
-            strHead = QString::asprintf("%04X %04X %04X",col0[0],col0[1],col0[2]);
-            strTail = QString::asprintf("%04X %04X %04X",col0[count-3],col0[count-2],col0[count-1]);
-            ui->lineEditOutHead->setText(strHead);
-            ui->lineEditOutTail->setText(strTail);
+
+            for(int i=0; i<nHCount; i++)
+            {
+                QString strTmp = QString::asprintf("%04X ",col0[i]);
+                strHead += strTmp;
+            }
+
+            for(int i = count - nTCount; i<count; i++)
+            {
+                QString strTmp = QString::asprintf("%04X ",col0[i]);
+                strTail += strTmp;
+            }
+
+            ui->lineEditOutHead->setText(strHead.trimmed());
+            ui->lineEditOutTail->setText(strTail.trimmed());
         }
 
         int H = ui->lineEditBase4->text().toInt();
@@ -1418,6 +1453,8 @@ void MainWindow::DoCurrent(int index,const QString&format)
 
         if(format != "6+10")
             pos = (count) / 2;
+
+        pos = nHCount +  (count - nHCount - nTCount) / 2;
 
         if(pos >= count)
             return;
@@ -1545,16 +1582,16 @@ void MainWindow::CalcCountPre()
     QString format = ui->lineEditBase7->text().trimmed();
     int H = ui->lineEditBase4->text().toInt();
     int V = ui->lineEditBase5->text().toInt();
-    int nCount = (H*V*1.5+10)*8;
+    int nCount = (H * V* 1.5 + 10) * 8;
 
     if(format == "6+10")
     {
-        nCount = (H*V*2+12)*8;
+        nCount = (H * V * 2 + 12) * 8;
     }
 
     if(ui->radioButtonRGB->isChecked())
     {
-        nCount = (H*V*2*3+12)*8;
+        nCount = (H * V * 2 * 3 + 12) * 8;
     }
 
     ui->lineEditOutCountPre->setText(QString("%1").arg(nCount));

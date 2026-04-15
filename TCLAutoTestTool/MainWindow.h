@@ -73,6 +73,8 @@ private:
 
     QString m_Boost;
 
+    bool m_bAdbCnnt = false;
+
     void DoSendTV(const QString&cmd);
 
     void DoSaveFile(const QString&file);
