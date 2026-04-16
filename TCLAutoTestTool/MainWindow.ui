@@ -264,7 +264,7 @@
         <item row="0" column="1">
          <widget class="QComboBox" name="comboModel">
           <property name="maxVisibleItems">
-           <number>30</number>
+           <number>50</number>
           </property>
          </widget>
         </item>
@@ -416,7 +416,7 @@
           <item>
            <widget class="QComboBox" name="comboBoxWindows">
             <property name="maxVisibleItems">
-             <number>30</number>
+             <number>50</number>
             </property>
            </widget>
           </item>
@@ -436,6 +436,9 @@
           </item>
           <item>
            <widget class="QComboBox" name="comboBoxFormat">
+            <property name="maxVisibleItems">
+             <number>20</number>
+            </property>
             <item>
              <property name="text">
               <string>6+10</string>
@@ -1078,6 +1081,11 @@ padding-right:4px;</string>
           </item>
           <item>
            <widget class="QComboBox" name="comboBoxDepth">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -1173,6 +1181,11 @@ padding-right:4px;</string>
           </item>
           <item>
            <widget class="QComboBox" name="comboBoxFreq">
+            <property name="font">
+             <font>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
@@ -1837,7 +1850,7 @@ padding-right:4px;</string>
     <widget class="QCheckBox" name="checkBoxOntop">
      <property name="geometry">
       <rect>
-       <x>628</x>
+       <x>595</x>
        <y>22</y>
        <width>87</width>
        <height>19</height>
@@ -1850,7 +1863,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonMeasure">
      <property name="geometry">
       <rect>
-       <x>536</x>
+       <x>503</x>
        <y>21</y>
        <width>80</width>
        <height>24</height>
@@ -1871,7 +1884,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonZeroCall">
      <property name="geometry">
       <rect>
-       <x>445</x>
+       <x>412</x>
        <y>21</y>
        <width>80</width>
        <height>24</height>
@@ -1892,7 +1905,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonTVSendX">
      <property name="geometry">
       <rect>
-       <x>445</x>
+       <x>412</x>
        <y>52</y>
        <width>80</width>
        <height>24</height>
@@ -1910,7 +1923,7 @@ padding-right:4px;</string>
       <rect>
        <x>2</x>
        <y>22</y>
-       <width>433</width>
+       <width>393</width>
        <height>54</height>
       </rect>
      </property>
@@ -1948,6 +1961,12 @@ padding-right:4px;</string>
       </item>
       <item row="0" column="2">
        <widget class="QComboBox" name="comboBoxBaud0">
+        <property name="minimumSize">
+         <size>
+          <width>76</width>
+          <height>21</height>
+         </size>
+        </property>
         <property name="currentIndex">
          <number>6</number>
         </property>
@@ -2038,6 +2057,12 @@ padding-right:4px;</string>
       </item>
       <item row="1" column="2">
        <widget class="QComboBox" name="comboBoxBaud1">
+        <property name="minimumSize">
+         <size>
+          <width>76</width>
+          <height>21</height>
+         </size>
+        </property>
         <property name="currentIndex">
          <number>6</number>
         </property>
@@ -2106,13 +2131,16 @@ padding-right:4px;</string>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>536</x>
+       <x>504</x>
        <y>52</y>
-       <width>316</width>
+       <width>350</width>
        <height>25</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_16">
+      <property name="spacing">
+       <number>10</number>
+      </property>
       <item>
        <widget class="QCheckBox" name="checkBoxWireless">
         <property name="text">
