@@ -184,6 +184,8 @@ MainWindow::MainWindow(QWidget *parent)
     setStyleSheet("QGroupBox { font: bold 12px 'Microsoft YaHei'; }");
 
     ui->spinBox->hide();
+    //ui->comboBoxTVCmd->hide();
+    //ui->pushButtonTVSend->hide();
 
     m_bLoading = true;
     m_setting = new QSettings(QCoreApplication::applicationDirPath() + "/setting.ini", QSettings::IniFormat);
@@ -245,7 +247,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->lineEditOut021->setText(m_setting->value("lumi2","1002").toString());
     ui->lineEditOutCountPre->setText(m_setting->value("datacount","2000").toString());
 
-
     connect(ui->checkBoxADBCnnt,&QCheckBox::clicked,this,[=](bool checked){
         if(checked)
         {
@@ -253,6 +254,17 @@ MainWindow::MainWindow(QWidget *parent)
             ShowImage();
             m_bAdbCnnt=false;
         }
+    });
+
+    ui->labelTVIP->setVisible(false);
+    ui->lineEditTVIP->setVisible(false);
+    ui->checkBoxADBCnnt->setVisible(false);
+    connect(ui->checkBoxWireless,&QCheckBox::clicked,this,[=](bool checked){
+        ui->labelTVIP->setVisible(checked);
+        ui->lineEditTVIP->setVisible(checked);
+        ui->checkBoxADBCnnt->setVisible(checked);
+        ui->comboBoxTVCmd->setVisible(!checked);
+        ui->pushButtonTVSend->setVisible(!checked);
     });
 
     QStringList tvSets = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
@@ -295,7 +307,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"};
+            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","R","S"};
             m_bLoading=true;
             for (int col = 0; col < readCols.count(); col++)
             {
@@ -685,8 +697,8 @@ MainWindow::MainWindow(QWidget *parent)
                 xlsx.write("F19",ui->lineEditOutCountPre->text().trimmed().toInt());
                 xlsx.write("D20",ui->lineEditOutHead->text().trimmed());
                 xlsx.write("D21",ui->lineEditOutTail->text().trimmed());
-                xlsx.write("E20",3);
-                xlsx.write("E21",3);
+                xlsx.write("E20",ui->lineEditHCount->text().trimmed());
+                xlsx.write("E21",ui->lineEditTCount->text().trimmed());
 
                 ///////////////////
                 xlsx.write("E23",ui->lineEditOut000->text().trimmed().toDouble());
@@ -1363,11 +1375,11 @@ void MainWindow::DoDealData()
                 qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
             }
 
-            ui->lineEditOutT1->setText(QString::asprintf("%f",T1));
-            ui->lineEditOutT2->setText(QString::asprintf("%f",T2));
-            ui->lineEditOutT3->setText(QString::asprintf("%f",T3));
-            ui->lineEditOutT4->setText(QString::asprintf("%f",T4));
-            ui->lineEditOutTrans->setText(QString::asprintf("%f",T5));
+            ui->lineEditOutT1->setText(QString::asprintf("%.2f",T1));
+            ui->lineEditOutT2->setText(QString::asprintf("%.2f",T2));
+            ui->lineEditOutT3->setText(QString::asprintf("%.2f",T3));
+            ui->lineEditOutT4->setText(QString::asprintf("%.2f",T4));
+            ui->lineEditOutTrans->setText(QString::asprintf("%.2f",T5));
         }
     }
 
@@ -1417,8 +1429,10 @@ void MainWindow::DoCurrent(int index,const QString&format)
         if(format == "4+12") header = 3;
         if(format == "8+12") header = 2;
 
-        int nHCount = ui->lineEditHCount->text().trimmed().toInt();
-        int nTCount = ui->lineEditTCount->text().trimmed().toInt();
+        int nHCount = ui->lineEditHCount->text().trimmed().toInt() / 2;
+        int nTCount = ui->lineEditTCount->text().trimmed().toInt() / 2;
+
+        header = nHCount;
 
         int count = col0.size();
         if(count < 10)
@@ -1449,12 +1463,7 @@ void MainWindow::DoCurrent(int index,const QString&format)
         int V = ui->lineEditBase5->text().toInt();
         int pos = (H*V*0.5+0.5*H) + header;
 
-        QString format = ui->lineEditBase7->text().trimmed();
-
-        if(format != "6+10")
-            pos = (count) / 2;
-
-        pos = nHCount +  (count - nHCount - nTCount) / 2;
+        if(format != "6+10") pos = (count) / 2;
 
         if(pos >= count)
             return;
@@ -1499,6 +1508,8 @@ void MainWindow::DoCurrent(int index,const QString&format)
                 C0 = max * cur / 255;
                 C1 = C0  * 0xFF7 / 0xFFF;
             }
+
+            qDebug() << index <<  "Pos:" << pos << "current:" << Qt::hex << current << "C0:" <<  C0 << "C1:"<< C1;
 
             switch(index)
             {
@@ -1571,7 +1582,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 void MainWindow::CalcCountPre()
 {
