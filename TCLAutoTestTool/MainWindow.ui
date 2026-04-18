@@ -39,9 +39,9 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>15</x>
+       <x>13</x>
        <y>16</y>
-       <width>749</width>
+       <width>751</width>
        <height>182</height>
       </rect>
      </property>
@@ -59,6 +59,12 @@
         </property>
         <item>
          <widget class="QLabel" name="label_15">
+          <property name="minimumSize">
+           <size>
+            <width>92</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <bold>true</bold>
@@ -107,23 +113,13 @@
          <number>10</number>
         </property>
         <item>
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Policy::Fixed</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+         <widget class="QLabel" name="label_17">
+          <property name="minimumSize">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>92</width>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_17">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -383,14 +379,14 @@
          <widget class="QLineEdit" name="lineEditBase10"/>
         </item>
         <item row="2" column="3">
-         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,0,1">
+         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,0,0">
           <property name="spacing">
            <number>2</number>
           </property>
           <item>
-           <widget class="QLineEdit" name="lineEditBase6">
-            <property name="readOnly">
-             <bool>true</bool>
+           <widget class="QComboBox" name="comboBoxWindows">
+            <property name="maxVisibleItems">
+             <number>50</number>
             </property>
            </widget>
           </item>
@@ -414,9 +410,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBoxWindows">
-            <property name="maxVisibleItems">
-             <number>50</number>
+           <widget class="QLineEdit" name="lineEditBase6">
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -478,7 +474,7 @@
      </font>
     </property>
     <property name="title">
-     <string>电视设置</string>
+     <string>电视机设置</string>
     </property>
     <widget class="QPushButton" name="pushButtonSetDefault">
      <property name="geometry">
@@ -698,178 +694,7 @@ QSpinBox::down-button {
         </item>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_33">
-        <property name="text">
-         <string>LMD档位:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="comboBoxTV3">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>高</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>中</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>低</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>关</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="label_26">
-        <property name="text">
-         <string>峰值亮度档位:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QComboBox" name="comboBoxTV4">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>Boost(高动态)</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>高亮</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>标准</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>关</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QLabel" name="label_29">
-        <property name="text">
-         <string>智能区域控光:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="5">
-       <widget class="QComboBox" name="comboBoxTV6">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="editable">
-         <bool>false</bool>
-        </property>
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>关</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>开</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_27">
-        <property name="text">
-         <string>自然光:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="comboBoxTV5">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>关闭</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>节能</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="label_32">
-        <property name="text">
-         <string>光感:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QComboBox" name="comboBoxTV7">
-        <property name="maxVisibleItems">
-         <number>30</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>关</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>开</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLabel" name="label_25">
-        <property name="text">
-         <string>动态对比度:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="5">
        <widget class="QComboBox" name="comboBoxTV8">
         <property name="enabled">
          <bool>false</bool>
@@ -900,6 +725,177 @@ QSpinBox::down-button {
           <string>智能(自适应)</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QLabel" name="label_25">
+        <property name="text">
+         <string>动态对比度:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QLabel" name="label_29">
+        <property name="text">
+         <string>智能区域控光:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QComboBox" name="comboBoxTV6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>关</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>开</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="label_32">
+        <property name="text">
+         <string>光感:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QComboBox" name="comboBoxTV7">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>关</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>开</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QComboBox" name="comboBoxTV4">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Boost(高动态)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>高亮</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>标准</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>关</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_26">
+        <property name="text">
+         <string>峰值亮度档位:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>自然光:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBoxTV5">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>关闭</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>节能</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="comboBoxTV3">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>高</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>中</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>低</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>关</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_33">
+        <property name="text">
+         <string>LMD档位:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
        </widget>
       </item>
      </layout>
@@ -1795,6 +1791,12 @@ padding-right:4px;</string>
        <layout class="QHBoxLayout" name="horizontalLayout_14">
         <item>
          <widget class="QLabel" name="label_56">
+          <property name="minimumSize">
+           <size>
+            <width>92</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <bold>true</bold>
@@ -2133,7 +2135,7 @@ padding-right:4px;</string>
       <rect>
        <x>504</x>
        <y>52</y>
-       <width>350</width>
+       <width>348</width>
        <height>25</height>
       </rect>
      </property>

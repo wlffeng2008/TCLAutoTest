@@ -316,6 +316,9 @@ MainWindow::MainWindow(QWidget *parent)
                 if (strValue.isEmpty() && col == 0)
                     continue;
 
+                ui->lineEditBase6->setHidden(true);
+                ui->lineEditBase7->setHidden(true);
+
                 switch (col)
                 {
                 case  0: break;
@@ -326,14 +329,22 @@ MainWindow::MainWindow(QWidget *parent)
                 case  5: ui->lineEditBase2->setText(strValue); break;
                 case  6: ui->lineEditBase3->setText(strValue); break;
                 case  7: ui->lineEditBase7->setText(strValue); break;
-                case  8: ui->lineEditBase8->setText(strValue); break;
-                case  9: ui->lineEditBase9->setText(strValue); break;
-                case 10:ui->lineEditBase10->setText(strValue); break;
-                case 11:ui->lineEditBase11->setText(strValue); break;
-                case 12:ui->lineEditOut001->setText(strValue); break;
-                case 13:ui->lineEditOut011->setText(strValue); break;
-                case 14:ui->lineEditOut021->setText(strValue); break;
+                case  8: ui->lineEditHCount->setText(strValue);break;
+                case  9: ui->lineEditTCount->setText(strValue);break;
+                case 10: ui->lineEditBase8->setText(strValue); break;
+                case 11: ui->lineEditBase9->setText(strValue); break;
+                case 12:ui->lineEditBase10->setText(strValue); break;
+                case 13:ui->lineEditBase11->setText(strValue); break;
+                case 14:ui->lineEditOut001->setText(strValue); break;
+                case 15:ui->lineEditOut011->setText(strValue); break;
+                case 16:ui->lineEditOut021->setText(strValue); break;
                 default: break;
+                }
+
+                switch (col)
+                {
+                case 3: ui->comboBoxWindows->setCurrentText(strValue); break;
+                case 7: ui->comboBoxFormat->setCurrentText(strValue); break;
                 }
             }
             CalcCountPre();
