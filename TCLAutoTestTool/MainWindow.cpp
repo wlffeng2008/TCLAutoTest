@@ -254,6 +254,30 @@ MainWindow::MainWindow(QWidget *parent)
             ShowImage();
             m_bAdbCnnt=false;
         }
+        else
+        {
+            QString strFile = QApplication::applicationDirPath() + "/platform-tools/test002.bat";
+            QString strAdb  = QApplication::applicationDirPath() + "/platform-tools/adb.exe";
+            QString strTVIP = ui->lineEditTVIP->text().trimmed();
+            strAdb.replace("/","\\");
+            QString strTex = QString("\"%1\" disconnect %2").arg(strAdb,strTVIP);
+
+            WinExec(strTex.toStdString().c_str(),SW_HIDE);
+            return;
+
+            QFile batFile(strFile);
+            if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
+            {
+
+                QTextStream out(&batFile);
+
+                out<< strTex;
+
+                batFile.close();
+
+                QProcess::execute(strFile,QStringList{});
+            }
+        }
     });
 
     ui->labelTVIP->setVisible(false);
@@ -917,19 +941,34 @@ void MainWindow::ShowImage()
     QFile batFile(strFile);
     if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
+        QTextStream out(&batFile);
+        strAdb.replace("/","\\");
+
         QString strTex = QString("\"%1\" root\n\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
             strAdb,strAdb,strUDisk,strImage,strType,strMedia);
 
+        QString strTexLine1 = QString("\"%1\" root\r\n").arg(strAdb);
+        QString strTexLine2 = QString("\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\"").arg(strAdb,strUDisk,strImage,strType,strMedia);
+
         if(m_bAdbCnnt)
-            strTex = QString("\"%1\" connect %2").arg( strAdb,strTVIP);
+        {
+            strTex = QString("\"%1\" connect %2").arg(strAdb,strTVIP);
+            WinExec(strTex.toStdString().c_str(),SW_HIDE);
+        }
+        else
+        {
+            out<< strTexLine1;
+            out<< strTexLine2;
 
-        QTextStream out(&batFile);
-
-        out<< strTex;
+            WinExec(strTexLine1.toStdString().c_str(),SW_HIDE);
+            QThread::msleep(200);
+            WinExec(strTexLine2.toStdString().c_str(),SW_HIDE);
+        }
 
         batFile.close();
 
-        QProcess::execute(strFile,QStringList{});
+
+        //QProcess::execute(strFile,QStringList{});
     }
 
     m_setting->setValue("udisk",strUDisk);
@@ -1006,7 +1045,7 @@ void MainWindow::sendLmCmd()
 
     if(m_COM0 && m_COM0->isOpen())
     {
-        m_tmLM->start(1000);
+        m_tmLM->start(5000);
         m_COM0->send(strCmd,true);
     }
     else
@@ -1027,7 +1066,7 @@ void MainWindow::sendTvCmd()
 
     if(m_COM1 && m_COM1->isOpen())
     {
-        m_tmTV->start(1000);
+        m_tmTV->start(2000);
         m_COM1->send(strCmd,false);
     }
     else
