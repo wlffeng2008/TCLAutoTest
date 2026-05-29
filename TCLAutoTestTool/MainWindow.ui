@@ -1007,7 +1007,8 @@ QSpinBox::down-button {
              <string notr="true">color: rgb(255, 255, 127);
 background-color: rgb(85, 170, 255);
 padding-left:4px;
-padding-right:4px;</string>
+padding-right:4px;
+border-radius:8px;</string>
             </property>
             <property name="text">
              <string>注意：设置参数时须关闭</string>
@@ -1852,7 +1853,7 @@ padding-right:4px;</string>
     <widget class="QCheckBox" name="checkBoxOntop">
      <property name="geometry">
       <rect>
-       <x>595</x>
+       <x>590</x>
        <y>22</y>
        <width>87</width>
        <height>19</height>
@@ -1865,7 +1866,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonMeasure">
      <property name="geometry">
       <rect>
-       <x>503</x>
+       <x>498</x>
        <y>21</y>
        <width>80</width>
        <height>24</height>
@@ -1886,7 +1887,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonZeroCall">
      <property name="geometry">
       <rect>
-       <x>412</x>
+       <x>407</x>
        <y>21</y>
        <width>80</width>
        <height>24</height>
@@ -1907,7 +1908,7 @@ padding-right:4px;</string>
     <widget class="QPushButton" name="pushButtonTVSendX">
      <property name="geometry">
       <rect>
-       <x>412</x>
+       <x>407</x>
        <y>52</y>
        <width>80</width>
        <height>24</height>
@@ -2130,18 +2131,42 @@ padding-right:4px;</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QFrame" name="frameCnnt">
      <property name="geometry">
       <rect>
-       <x>504</x>
+       <x>499</x>
        <y>52</y>
-       <width>348</width>
+       <width>350</width>
        <height>25</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>350</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>350</width>
+       <height>25</height>
+      </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_16">
       <property name="spacing">
        <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
       <item>
        <widget class="QCheckBox" name="checkBoxWireless">

@@ -268,18 +268,16 @@ MainWindow::MainWindow(QWidget *parent)
             QFile batFile(strFile);
             if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
             {
-
                 QTextStream out(&batFile);
-
                 out<< strTex;
-
                 batFile.close();
-
                 QProcess::execute(strFile,QStringList{});
             }
         }
     });
 
+    ui->pushButtonDotest1->setVisible(false);
+    ui->pushButtonDotest2->setVisible(false);
     ui->labelTVIP->setVisible(false);
     ui->lineEditTVIP->setVisible(false);
     ui->checkBoxADBCnnt->setVisible(false);
@@ -554,7 +552,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(pComTmp,&GenComport::onReceive,this,[=](const QByteArray &data){
                 m_tmTV->stop();
                 QString reply(data.data());
-                QTimer::singleShot(20,this,[=]{ sendTvCmd(); });
+                QTimer::singleShot(200,this,[=]{ sendTvCmd(); });
             });
         }
         else
@@ -610,20 +608,32 @@ MainWindow::MainWindow(QWidget *parent)
                         });
 
                         connect(s_sock,&QAbstractSocket::readyRead,this,[=]{
-
                             QString strAck = s_sock->readAll();
                             qDebug() << m_strRCmd << strAck;
                             if(strAck == "ACK")
                             {
                                 if(m_strRCmd == "start")
                                 {
-                                    m_tmRd0->start(400);
+                                    m_tmRd0->start(600);
                                 }
 
                                 if(m_strRCmd == "export-data")
                                 {
-                                    m_tmRd1->start(1500);
+                                    m_tmRd1->start(1800);
                                 }
+                            }
+                            else
+                            {
+                                QTimer::singleShot(1000,this,[=]{
+                                    if(m_strRCmd == "start")
+                                        DoRemote();
+
+                                    if(m_strRCmd == "export-data")
+                                        ui->pushButtonDotest1->click();
+
+                                    if(m_strRCmd == "export-decoded")
+                                        ui->pushButtonDotest2->click();
+                                });
                             }
                         });
 
@@ -645,7 +655,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->pushButtonDotest2->click();
         });
 
-
         connect(ui->pushButtonDotest1,&QPushButton::clicked,this,[=]{
             m_strRCmd = "export-data";
             QString strFile = m_strSavePath + QString("/kisdata%1.csv").arg(m_nExport);
@@ -653,8 +662,8 @@ MainWindow::MainWindow(QWidget *parent)
             s_sock->write(strCmd.toStdString().c_str());
         });
         connect(ui->pushButtonDotest2,&QPushButton::clicked,this,[=]{
-            QString strFile = m_strSavePath + QString("/save%1.csv").arg(m_nExport);
-            DoSaveFile(strFile);
+            m_strSaveFile = m_strSavePath + QString("/save%1.csv").arg(m_nExport);
+            DoSaveFile();
         });
 
         ui->comboBoxDepth->blockSignals(true);
@@ -935,44 +944,64 @@ void MainWindow::ShowImage()
     QString strType  = "bmp";
     QString strMedia = "image";
 
-    if(m_bAdbCnnt)
-        strFile = QApplication::applicationDirPath() + "/platform-tools/cnntTV.bat";
+    m_setting->setValue("udisk",strUDisk);
+    m_setting->setValue("tvip",strTVIP);
+
+    if(m_bAdbCnnt) strFile = QApplication::applicationDirPath() + "/platform-tools/cnntTV.bat";
 
     QFile batFile(strFile);
     if(batFile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        QTextStream out(&batFile);
         strAdb.replace("/","\\");
 
-        QString strTex = QString("\"%1\" root\n\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" ").arg(
-            strAdb,strAdb,strUDisk,strImage,strType,strMedia);
-
-        QString strTexLine1 = QString("\"%1\" root\r\n").arg(strAdb);
-        QString strTexLine2 = QString("\"%2\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\"").arg(strAdb,strUDisk,strImage,strType,strMedia);
-
+        QTextStream out(&batFile);
         if(m_bAdbCnnt)
         {
-            strTex = QString("\"%1\" connect %2").arg(strAdb,strTVIP);
-            WinExec(strTex.toStdString().c_str(),SW_HIDE);
+            QString strTFile = QApplication::applicationDirPath() + "/temp008.txt";
+            QFile::remove(strTFile);
+            QString strConnect = QString("\"%1\" connect %2 >temp008.txt").arg(strAdb,strTVIP);
+            out<< strConnect;
+
+            QTimer::singleShot(1000,this,[=]{
+                QFile TFile(strTFile);
+                if(TFile.open(QIODevice::ReadOnly | QIODevice::Text)){
+                    QString strLine = TFile.readAll();
+                    TFile.close();
+                    if(strLine.startsWith("failed"))
+                    {
+                        EasyToast::warning("无线ADB连接失败，请稍后重试！");
+                    }
+                    else
+                    {
+
+                    }
+                }
+            });
+            //WinExec(strTex.toStdString().c_str(),SW_HIDE);
         }
         else
         {
-            out<< strTexLine1;
-            out<< strTexLine2;
+            QString strRoot = QString("\"%1\" root\n").arg(strAdb);
 
-            WinExec(strTexLine1.toStdString().c_str(),SW_HIDE);
-            QThread::msleep(200);
-            WinExec(strTexLine2.toStdString().c_str(),SW_HIDE);
+            QString strImgCmd = QString("\"%1\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%2/boost_Pattern/%3.%4\" -t \"%5/*\"").arg(strAdb,strUDisk,strImage,strType,strMedia);
+
+            if(ui->checkBoxADBCnnt->isChecked() && ui->checkBoxADBCnnt->isChecked())
+            {
+                strImgCmd = QString("\"%1\" -s %2:5555 shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" -f 0x14000000 --activity-clear-task").arg(strAdb,strTVIP,strUDisk,strImage,strType,strMedia);
+            }
+
+            out<< strRoot;
+            out<< "timeout /t 1 /nobreak >nul\n";
+            out<< strImgCmd;
+
+            //WinExec(strTexLine1.toStdString().c_str(),SW_HIDE);
+            //QThread::msleep(200);
+            //WinExec(strTexLine2.toStdString().c_str(),SW_HIDE);
         }
-
         batFile.close();
 
-
-        //QProcess::execute(strFile,QStringList{});
+        QProcess::execute(strFile,QStringList{});
     }
-
-    m_setting->setValue("udisk",strUDisk);
-    m_setting->setValue("tvip",strTVIP);
 }
 
 void MainWindow::ReloadInfo()
@@ -1121,8 +1150,8 @@ void MainWindow::DoTEST(int step)
         DoSendTV("AA 06 27 01 3B ED");
         DoSendTV("AA 08 28 FF FF FF 0B F6");
         QTimer::singleShot(500,this,[=]{
-            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
-            EnumWindows(EnumWindowsProc,9527);
+            //ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+            //EnumWindows(EnumWindowsProc,9527);
         });
         break;
 
@@ -1137,7 +1166,7 @@ void MainWindow::DoTEST(int step)
         ui->lineEditBase6->setText("L32");
         ui->pushButton->click();
         QTimer::singleShot(500,this,[=]{
-            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+            //ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         });
         break;
 
@@ -1148,7 +1177,7 @@ void MainWindow::DoTEST(int step)
         break;
 
     case 4:
-        DoSendTV("AA 06 27 01 3B ED");
+        //DoSendTV("AA 06 27 01 3B ED");
         DoSendTV("AA 08 28 00 00 00 D9 9A");
         break;
 
@@ -1156,7 +1185,7 @@ void MainWindow::DoTEST(int step)
         ui->lineEditBase6->setText(m_Boost);
         ui->pushButton->click();
         QTimer::singleShot(500,this,[=]{
-            ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
+            //ui->comboBoxTV1->activated(ui->comboBoxTV1->currentIndex());
         });
         break;
 
@@ -1196,10 +1225,10 @@ void MainWindow::DoRemote()
         s_sock->write("start");
 }
 
-void MainWindow::DoSaveFile(const QString&file)
+void MainWindow::DoSaveFile()
 {
     m_strRCmd = "export-decoded";
-    QString strCmd = QString("export-decoded \"%1\"").arg(file);
+    QString strCmd = QString("export-decoded \"%1\"").arg(m_strSaveFile);
     if(s_sock && s_sock->state() == QAbstractSocket::ConnectedState)
         s_sock->write(strCmd.toStdString().c_str());
 
@@ -1217,7 +1246,7 @@ void MainWindow::DoSaveFile(const QString&file)
     mouse_event(MOUSEEVENTF_LEFTUP  ,0,0,0,0);
 
     QThread::msleep(50);
-    QString strTmp = file;
+    QString strTmp = m_strSaveFile;
     strTmp.replace("/","\\");
     QClipboard *pClip = QApplication::clipboard();
     pClip->setText(strTmp);

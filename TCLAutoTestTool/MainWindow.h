@@ -77,7 +77,8 @@ private:
 
     void DoSendTV(const QString&cmd);
 
-    void DoSaveFile(const QString&file);
+    QString m_strSaveFile;
+    void DoSaveFile();
     void DoDealData();
     void DoCurrent(int index,const QString&format);
 
