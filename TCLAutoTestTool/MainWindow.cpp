@@ -333,7 +333,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         else
         {
-            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","R","S"};
+            QStringList readCols = {"B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R"};
             m_bLoading=true;
             for (int col = 0; col < readCols.count(); col++)
             {
@@ -688,7 +688,6 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
         connect(ui->pushButtonFindKIS,&QPushButton::clicked,this,[=](){
-
             QString strFile = getOpenFileName(
                 this, "选择分析仪程序", "KingstVIS", tr("exe文件(*.exe);;所有文件 (*.*)"),"KingstVIS.exe");
             if (strFile.isEmpty())
@@ -698,7 +697,6 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
         connect(ui->pushButtonFindExcel,&QPushButton::clicked,this,[=](){
-
             QString strFile = QFileDialog::getOpenFileName(
                 this, "选择模板文件", nullptr, tr("XLSX文件(*.xlsx);;所有文件 (*.*)"));
             if (strFile.isEmpty())
@@ -708,85 +706,82 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
         connect(ui->pushButtonExcel,&QPushButton::clicked,this,[=](){
-
             QString strFile = ui->lineEditExcelTemp->text().trimmed();
-
             Document xlsx(strFile);
-            if ( xlsx.load() && xlsx.selectSheet("LDM调试和自检清单"))
+            if ( !(xlsx.load() && xlsx.selectSheet("LDM调试和自检清单")))
             {
-                xlsx.write("D9" ,ui->comboModel->currentText().trimmed());
-                xlsx.write("D10",ui->lineEditBase1->text().trimmed().toDouble());
-                xlsx.write("D11",ui->lineEditBase2->text().trimmed().toDouble());
-                xlsx.write("D12",ui->lineEditBase3->text().trimmed().toDouble());
+                QMessageBox::critical(this, "提示", "模板文件无法打开！\n" + strFile);
+                return;
+            }
 
-                xlsx.write("F9" ,ui->lineEditBase4->text().trimmed().toDouble());
-                xlsx.write("F10",ui->lineEditBase5->text().trimmed().toDouble());
-                xlsx.write("F11",ui->lineEditBase6->text().trimmed());
-                xlsx.write("F12",ui->lineEditBase7->text().trimmed());
+            xlsx.write("D9" ,ui->comboModel->currentText().trimmed());
+            xlsx.write("D10",ui->lineEditBase1->text().trimmed().toDouble());
+            xlsx.write("D11",ui->lineEditBase2->text().trimmed().toDouble());
+            xlsx.write("D12",ui->lineEditBase3->text().trimmed().toDouble());
 
-                ///////////////////
-                xlsx.write("D14",m_strOut0);
-                xlsx.write("D15",m_strOut0);
-                xlsx.write("D16",m_strOut1);
-                xlsx.write("D17",m_strOut2);
+            xlsx.write("F9" ,ui->lineEditBase4->text().trimmed().toDouble());
+            xlsx.write("F10",ui->lineEditBase5->text().trimmed().toDouble());
+            xlsx.write("F11",ui->lineEditBase6->text().trimmed());
+            xlsx.write("F12",ui->lineEditBase7->text().trimmed());
 
-                xlsx.write("E14",ui->lineEditOutCur1->text().trimmed().toDouble());
-                xlsx.write("E15",ui->lineEditOutCur2->text().trimmed().toDouble());
-                xlsx.write("E16",ui->lineEditOutCur3->text().trimmed().toDouble());
-                xlsx.write("E17",ui->lineEditOutCur4->text().trimmed().toDouble());
+            ///////////////////
+            xlsx.write("D14",m_strOut0);
+            xlsx.write("D15",m_strOut0);
+            xlsx.write("D16",m_strOut1);
+            xlsx.write("D17",m_strOut2);
 
-                xlsx.write("F14",ui->lineEditBase8->text().trimmed().toDouble());
-                xlsx.write("F15",ui->lineEditBase9->text().trimmed().toDouble());
-                xlsx.write("F16",ui->lineEditBase10->text().trimmed().toDouble());
-                xlsx.write("F17",ui->lineEditBase11->text().trimmed().toDouble());
+            xlsx.write("E14",ui->lineEditOutCur1->text().trimmed().toDouble());
+            xlsx.write("E15",ui->lineEditOutCur2->text().trimmed().toDouble());
+            xlsx.write("E16",ui->lineEditOutCur3->text().trimmed().toDouble());
+            xlsx.write("E17",ui->lineEditOutCur4->text().trimmed().toDouble());
 
-                ///////////////////
-                xlsx.write("E19",ui->lineEditOutCount->text().trimmed().toInt());
-                xlsx.write("F19",ui->lineEditOutCountPre->text().trimmed().toInt());
-                xlsx.write("D20",ui->lineEditOutHead->text().trimmed());
-                xlsx.write("D21",ui->lineEditOutTail->text().trimmed());
-                xlsx.write("E20",ui->lineEditHCount->text().trimmed());
-                xlsx.write("E21",ui->lineEditTCount->text().trimmed());
+            xlsx.write("F14",ui->lineEditBase8->text().trimmed().toDouble());
+            xlsx.write("F15",ui->lineEditBase9->text().trimmed().toDouble());
+            xlsx.write("F16",ui->lineEditBase10->text().trimmed().toDouble());
+            xlsx.write("F17",ui->lineEditBase11->text().trimmed().toDouble());
 
-                ///////////////////
-                xlsx.write("E23",ui->lineEditOut000->text().trimmed().toDouble());
-                xlsx.write("E24",ui->lineEditOut002->text().trimmed().toDouble());
-                xlsx.write("E25",ui->lineEditOut003->text().trimmed().toDouble());
-                xlsx.write("E26",ui->lineEditOut010->text().trimmed().toDouble());
-                xlsx.write("E27",ui->lineEditOut012->text().trimmed().toDouble());
-                xlsx.write("E28",ui->lineEditOut013->text().trimmed().toDouble());
-                xlsx.write("E29",ui->lineEditOut020->text().trimmed().toDouble());
-                xlsx.write("E30",ui->lineEditOut022->text().trimmed().toDouble());
-                xlsx.write("E31",ui->lineEditOut023->text().trimmed().toDouble());
+            ///////////////////
+            xlsx.write("E19",ui->lineEditOutCount->text().trimmed().toInt());
+            xlsx.write("F19",ui->lineEditOutCountPre->text().trimmed().toInt());
+            xlsx.write("D20",ui->lineEditOutHead->text().trimmed());
+            xlsx.write("D21",ui->lineEditOutTail->text().trimmed());
+            xlsx.write("E20",ui->lineEditHCount->text().trimmed());
+            xlsx.write("E21",ui->lineEditTCount->text().trimmed());
 
-                xlsx.write("F23",ui->lineEditOut001->text().trimmed().toDouble());
-                xlsx.write("F26",ui->lineEditOut011->text().trimmed().toDouble());
-                xlsx.write("F29",ui->lineEditOut021->text().trimmed().toDouble());
+            ///////////////////
+            xlsx.write("E23",ui->lineEditOut000->text().trimmed().toDouble());
+            xlsx.write("E24",ui->lineEditOut002->text().trimmed().toDouble());
+            xlsx.write("E25",ui->lineEditOut003->text().trimmed().toDouble());
+            xlsx.write("E26",ui->lineEditOut010->text().trimmed().toDouble());
+            xlsx.write("E27",ui->lineEditOut012->text().trimmed().toDouble());
+            xlsx.write("E28",ui->lineEditOut013->text().trimmed().toDouble());
+            xlsx.write("E29",ui->lineEditOut020->text().trimmed().toDouble());
+            xlsx.write("E30",ui->lineEditOut022->text().trimmed().toDouble());
+            xlsx.write("E31",ui->lineEditOut023->text().trimmed().toDouble());
 
-                ///////////////////
-                xlsx.write("D40",ui->lineEditOutT1->text().trimmed().toDouble());
-                xlsx.write("D41",ui->lineEditOutT2->text().trimmed().toDouble());
-                xlsx.write("D42",ui->lineEditOutT3->text().trimmed().toDouble());
-                xlsx.write("D43",ui->lineEditOutT4->text().trimmed().toDouble());
-                xlsx.write("D44",ui->lineEditOutTrans->text().trimmed().toDouble());
+            xlsx.write("F23",ui->lineEditOut001->text().trimmed().toDouble());
+            xlsx.write("F26",ui->lineEditOut011->text().trimmed().toDouble());
+            xlsx.write("F29",ui->lineEditOut021->text().trimmed().toDouble());
 
-                QString strPath(QApplication::applicationDirPath() + QString("/output"));
-                QDir D(strPath);
-                if(!D.exists()) D.mkdir(strPath);
-                QDateTime now = QDateTime::currentDateTime();
-                strFile = strPath+QString("/LDM调试和自检表(%1).xlsx").arg(now.toString("yyyy-MM-dd_HH-mm"));
-                if(xlsx.saveAs(strFile))
-                {
-                    QMessageBox::information(this, "提示", "数据导出成功！\n" + strFile);
-                }
-                else
-                {
-                    QMessageBox::critical(this, "提示", "数据导出失败！\n" + strFile);
-                }
+            ///////////////////
+            xlsx.write("D40",ui->lineEditOutT1->text().trimmed().toDouble());
+            xlsx.write("D41",ui->lineEditOutT2->text().trimmed().toDouble());
+            xlsx.write("D42",ui->lineEditOutT3->text().trimmed().toDouble());
+            xlsx.write("D43",ui->lineEditOutT4->text().trimmed().toDouble());
+            xlsx.write("D44",ui->lineEditOutTrans->text().trimmed().toDouble());
+
+            QString strPath(QApplication::applicationDirPath() + QString("/output"));
+            QDir D(strPath);
+            if(!D.exists()) D.mkdir(strPath);
+            QDateTime now = QDateTime::currentDateTime();
+            strFile = strPath+QString("/LDM调试和自检表(%1).xlsx").arg(now.toString("yyyy-MM-dd_HH-mm"));
+            if(xlsx.saveAs(strFile))
+            {
+                QMessageBox::information(this, "提示", "数据导出成功！\n" + strFile);
             }
             else
             {
-                QMessageBox::critical(this, "提示", "模板文件无法打开！\n" + strFile);
+                QMessageBox::critical(this, "提示", "数据导出失败！\n" + strFile);
             }
         });
     }
@@ -981,11 +976,9 @@ void MainWindow::ShowImage()
                     }
                 }
             });
-            //WinExec(strTex.toStdString().c_str(),SW_HIDE);
         }
         else
         {
-
             QString strImgCmd = QString("\"%1\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%2/boost_Pattern/%3.%4\" -t \"%5/*\"").arg(strAdb,strUDisk,strImage,strType,strMedia);
 
             // if(ui->checkBoxWireless->isChecked() && ui->checkBoxADBCnnt->isChecked())
@@ -1002,10 +995,6 @@ void MainWindow::ShowImage()
             }
 
             out<< strImgCmd;
-
-            //WinExec(strTexLine1.toStdString().c_str(),SW_HIDE);
-            //QThread::msleep(200);
-            //WinExec(strTexLine2.toStdString().c_str(),SW_HIDE);
         }
         batFile.close();
 

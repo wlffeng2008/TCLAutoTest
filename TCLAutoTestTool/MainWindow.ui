@@ -2222,6 +2222,12 @@ border-radius:8px;</string>
       </item>
       <item>
        <widget class="QCheckBox" name="checkBoxADBCnnt">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="text">
          <string>连接</string>
         </property>
