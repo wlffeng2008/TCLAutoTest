@@ -1832,6 +1832,22 @@ border-radius:8px;</string>
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="pushButtonRecalc">
+     <property name="geometry">
+      <rect>
+       <x>774</x>
+       <y>90</y>
+       <width>80</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="text">
+      <string>重新计算</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox0">
     <property name="geometry">

@@ -210,6 +210,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonTVSendX,&QPushButton::clicked,this,[=]{
         m_pTVCmd->show();
     });
+    connect(ui->pushButtonRecalc,&QPushButton::clicked,this,[=]{
+        DoDealData();
+    });
     connect(ui->pushButtonDotest,&QPushButton::clicked,this,[=]{
         m_pTest->show();
     });
@@ -287,6 +290,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->checkBoxADBCnnt->setVisible(checked);
         ui->comboBoxTVCmd->setVisible(!checked);
         ui->pushButtonTVSend->setVisible(!checked);
+        m_bAdbRoot=false;
     });
 
     QStringList tvSets = m_setting->value("TVSet","1,2,0,0,0,0,0,0,0,0,0,0,0").toStringList();
@@ -981,17 +985,22 @@ void MainWindow::ShowImage()
         }
         else
         {
-            QString strRoot = QString("\"%1\" root\n").arg(strAdb);
 
             QString strImgCmd = QString("\"%1\" shell am start -a android.intent.action.VIEW -d \"file:///storage/%2/boost_Pattern/%3.%4\" -t \"%5/*\"").arg(strAdb,strUDisk,strImage,strType,strMedia);
 
-            if(ui->checkBoxADBCnnt->isChecked() && ui->checkBoxADBCnnt->isChecked())
+            // if(ui->checkBoxWireless->isChecked() && ui->checkBoxADBCnnt->isChecked())
+            // {
+            //     strImgCmd = QString("\"%1\" -s %2:5555 shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" -f 0x14000000 --activity-clear-task").arg(strAdb,strTVIP,strUDisk,strImage,strType,strMedia);
+            // }
+
+            if(!m_bAdbRoot)
             {
-                strImgCmd = QString("\"%1\" -s %2:5555 shell am start -a android.intent.action.VIEW -d \"file:///storage/%3/boost_Pattern/%4.%5\" -t \"%6/*\" -f 0x14000000 --activity-clear-task").arg(strAdb,strTVIP,strUDisk,strImage,strType,strMedia);
+                QString strRoot = QString("\"%1\" root\n").arg(strAdb);
+                out<< strRoot;
+                out<< "timeout /t 1 /nobreak >nul\n";
+                m_bAdbRoot=true;
             }
 
-            out<< strRoot;
-            out<< "timeout /t 1 /nobreak >nul\n";
             out<< strImgCmd;
 
             //WinExec(strTexLine1.toStdString().c_str(),SW_HIDE);
@@ -1197,21 +1206,24 @@ void MainWindow::DoTEST(int step)
 
     case 7:
         m_nLMRead = 0;
-        //m_nExport = 1;
         DoSendTV("AA 08 28 FF FF FF 0B F6");
         // DoSendTV("AA 06 10 01 A7 EF");
         // DoSendTV("AA 06 11 03 B4 9C");
         // DoSendTV("AA 06 11 02 A4 BD");
         {
-            int wait = 100;
-            QFile S3(strPath + QString("/save3.csv"));
-            if(!S3.exists())
-            {
-                ui->pushButtonDotest2->click();
-                wait = 1000;
-            }
-            QTimer::singleShot(wait,this,[=]{
-                DoDealData();
+            static QTimer *pTMCalc = new QTimer(this);
+            pTMCalc->stop();
+            pTMCalc->start(1000);
+            connect(pTMCalc,&QTimer::timeout,this,[=]{
+
+                QFile S3(strPath + QString("/save3.csv"));
+                if(S3.exists())
+                {
+                    pTMCalc->stop();
+                    QTimer::singleShot(1000,this,[=]{
+                        DoDealData();
+                    });
+                }
             });
         }
         break;

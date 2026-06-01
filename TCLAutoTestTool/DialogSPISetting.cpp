@@ -105,6 +105,7 @@ DialogSPISetting::DialogSPISetting(QWidget *parent)
 
     connect(ui->comboBoxModel,&QComboBox::textActivated,this,[=](const QString & text){
         m_strModel = text;
+        loadConfig();
     });
 
     QTimer::singleShot(300, this, [=]{
@@ -130,6 +131,30 @@ void DialogSPISetting::saveConfig()
         socket->SetText("1");
 
         tinyxml2::XMLElement* pModel = devices->FirstChildElement(m_strModel.toStdString().c_str());
+        if(!pModel)
+        {
+            pModel = devices->InsertNewChildElement(m_strModel.toStdString().c_str());
+            tinyxml2::XMLElement* newItem = pModel->InsertNewChildElement("trgPosition");
+            newItem = pModel->InsertNewChildElement("chnTrig");
+            newItem->SetText("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
+
+            newItem = pModel->InsertNewChildElement("chnEnable");
+            newItem->SetText("1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0");
+
+            newItem = pModel->InsertNewChildElement("smpMode");
+
+            newItem = pModel->InsertNewChildElement("smpDepth");
+            newItem = pModel->InsertNewChildElement("smpDepthIndex");
+            newItem = pModel->InsertNewChildElement("smpFrequ");
+            newItem = pModel->InsertNewChildElement("smpFrequIndex");
+
+            newItem = pModel->InsertNewChildElement("chnLevel");
+            newItem->SetText("3.3V CMOS");
+
+            newItem = pModel->InsertNewChildElement("chnVth");
+            newItem->SetText("1.65");
+        }
+
         tinyxml2::XMLElement* L2 = pModel->FirstChildElement("chnEnable");
         QList<int> enables={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         enables[ui->comboBox_1->currentIndex()]=1;
@@ -149,6 +174,7 @@ void DialogSPISetting::saveConfig()
 
             int Depths[]={20,200,1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000,10000000};
             int Frequs[]={500000,200000,100000,50000,20000,10000,5000,2000,1000,500,200,100,50,20};
+            qDebug() << m_nDepth  << m_nFrequ;
 
             V0->SetText(Depths[m_nDepth]);
             V1->SetText(m_nDepth);
@@ -194,6 +220,29 @@ void DialogSPISetting::loadConfig()
         socket->SetText("1");
 
         tinyxml2::XMLElement* pModel = devices->FirstChildElement(m_strModel.toStdString().c_str());
+        if(!pModel)
+        {
+            pModel = devices->InsertNewChildElement(m_strModel.toStdString().c_str());
+            tinyxml2::XMLElement* newItem = pModel->InsertNewChildElement("trgPosition");
+            newItem = pModel->InsertNewChildElement("chnTrig");
+            newItem->SetText("0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
+
+            newItem = pModel->InsertNewChildElement("chnEnable");
+            newItem->SetText("1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0");
+
+            newItem = pModel->InsertNewChildElement("smpMode");
+
+            newItem = pModel->InsertNewChildElement("smpDepth");
+            newItem = pModel->InsertNewChildElement("smpDepthIndex");
+            newItem = pModel->InsertNewChildElement("smpFrequ");
+            newItem = pModel->InsertNewChildElement("smpFrequIndex");
+
+            newItem = pModel->InsertNewChildElement("chnLevel");
+            newItem->SetText("3.3V CMOS");
+
+            newItem = pModel->InsertNewChildElement("chnVth");
+            newItem->SetText("1.65");
+        }
         tinyxml2::XMLElement* V1 = pModel->FirstChildElement("smpDepthIndex");
         tinyxml2::XMLElement* V3 = pModel->FirstChildElement("smpFrequIndex");
         m_nDepth = QString(V1->GetText()).toInt();

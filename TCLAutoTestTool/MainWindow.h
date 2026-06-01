@@ -73,6 +73,7 @@ private:
 
     QString m_Boost;
 
+    bool m_bAdbRoot = false;
     bool m_bAdbCnnt = false;
 
     void DoSendTV(const QString&cmd);
