@@ -1279,13 +1279,14 @@ void MainWindow::DoDealData()
     CalcCountPre();
     QString format=ui->lineEditBase7->text().trimmed();
     {
-        QString strFile = m_strSavePath + QString("/kisdata1.csv");
+        QString strFile = m_strSavePath + QString("/kisdata3.csv");
 
         QFile DFile(strFile);
         if (DFile.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             QTextStream in(&DFile);
             in.readLine();
+            qDebug() << strFile;
 
             QList<double> Time;
             QList<quint8> col0;
@@ -1302,6 +1303,9 @@ void MainWindow::DoDealData()
                 col1.push_back(strVals[2].toInt());
                 col2.push_back(strVals[3].toInt());
                 col3.push_back(strVals[4].toInt());
+
+                if(Time.count()>50000)
+                    break;
             }
             DFile.close();
 
@@ -1320,146 +1324,150 @@ void MainWindow::DoDealData()
                 }
             }
             if(pos == -1)
-                return;
-
-            double T1=0;
-            double T2=0;
-            double T3=0;
-            double T4=0;
-            double T5=0;
-
-            qDebug() << "有效帧开始:" << pos;
-            T1 = (Time[pos+2] - Time[pos+1]) * 1000000;
-            qDebug() << "T1 = " << Time[pos+2] << "-" << Time[pos+1] << "=" << T1;
-
-            int zero2 = pos+2;
-            for(int i=pos+3; i < count; i++)
             {
-                if(col2[i] == 0)
-                {
-                    zero2 = i;
-                    break;
-                }
-            }
-
-            if(format == "6+10" || format == "4+12")
-            {
-                int zero3 = pos+2;
-                for(int i=pos+2; i<count; i++)
-                {
-                    if(col1[i] == 0 && col1[i+1] == 0)
-                    {
-                        zero3 = i+3;
-                        break;
-                    }
-                }
-                T2 = (Time[zero3] - Time[zero2]) * 1000000;
-                qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
-
-                // int zero0 = 0;
-                // for(int i=pos+2; i<count; i++)
-                // {
-                //     if(col0[i] == 1)
-                //     {
-                //         zero0 = i;
-                //         break;
-                //     }
-                // }
-                // T3 = (Time[zero0] - Time[zero2]) * 1000000;
-                T3=(Time[zero2+1]-Time[zero2])*1000000;
-                qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
-
-                int zero4 = pos;
-                for(int i=pos+10; i<count; i++)
-                {
-                    if(col0[i] == 0 && col0[i+1] == 0 && col0[i+2] == 0 && col0[i+3] == 0)
-                    {
-                        zero4 = i;
-                        break;
-                    }
-                }
-
-                int zero5 = pos;
-                for(int i=zero4; i<count; i++)
-                {
-                    if(col2[i] == 1)
-                    {
-                        zero5 = i;
-                        break;
-                    }
-                }
-                T4 = (Time[zero5] - Time[zero4]) * 1000000;
-                qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
-
-                for(int i=pos+5; i<count; i++)
-                {
-                    if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
-                    {
-                        zero4 = i;
-                        break;
-                    }
-                }
-
-                T5 = (Time[zero4] - Time[pos+4]) * 1000000;
-                qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
+                qDebug() << "没有找到有效帧:" << pos;
             }
             else
             {
-                int zero3 = pos+2;
-                for(int i=pos; i<count; i++)
-                {
-                    if(col1[i] == 0 && col1[i+1] == 0)
-                    {
-                        zero3 = i+2;
-                        break;
-                    }
-                }
-                T2 = (Time[zero2] - Time[zero3]) * 1000000;
-                qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
+                double T1=0;
+                double T2=0;
+                double T3=0;
+                double T4=0;
+                double T5=0;
 
-                T3=(Time[zero2+1]-Time[zero2])*1000000;
-                qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
+                qDebug() << "有效帧开始:" << pos;
+                T1 = (Time[pos+2] - Time[pos+1]) * 1000000;
+                qDebug() << "T1 = " << Time[pos+2] << "-" << Time[pos+1] << "=" << T1;
 
-                int zero4 = pos;
-                for(int i=pos+10; i<count; i++)
+                int zero2 = pos+2;
+                for(int i=pos+3; i < count; i++)
                 {
-                    if(col0[i] == 1 && col0[i+1] == 1 && col0[i+2] == 1 && col0[i+3] == 1)
+                    if(col2[i] == 0)
                     {
-                        zero4 = i;
+                        zero2 = i;
                         break;
                     }
                 }
 
-                int zero5 = pos;
-                for(int i=zero4; i<count; i++)
+                if(format == "6+10" || format == "4+12")
                 {
-                    if(col2[i] == 1)
+                    int zero3 = pos+2;
+                    for(int i=pos+2; i<count; i++)
                     {
-                        zero5 = i;
-                        break;
+                        if(col1[i] == 0 && col1[i+1] == 0)
+                        {
+                            zero3 = i+3;
+                            break;
+                        }
                     }
-                }
-                T4 = (Time[zero5] - Time[zero4]) * 1000000;
-                qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
+                    T2 = (Time[zero3] - Time[zero2]) * 1000000;
+                    qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
 
-                for(int i=pos+5; i<count-3; i++)
+                    // int zero0 = 0;
+                    // for(int i=pos+2; i<count; i++)
+                    // {
+                    //     if(col0[i] == 1)
+                    //     {
+                    //         zero0 = i;
+                    //         break;
+                    //     }
+                    // }
+                    // T3 = (Time[zero0] - Time[zero2]) * 1000000;
+                    T3=(Time[zero2+1]-Time[zero2])*1000000;
+                    qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
+
+                    int zero4 = pos;
+                    for(int i=pos+10; i<count; i++)
+                    {
+                        if(col0[i] == 0 && col0[i+1] == 0 && col0[i+2] == 0 && col0[i+3] == 0)
+                        {
+                            zero4 = i;
+                            break;
+                        }
+                    }
+
+                    int zero5 = pos;
+                    for(int i=zero4; i<count; i++)
+                    {
+                        if(col2[i] == 1)
+                        {
+                            zero5 = i;
+                            break;
+                        }
+                    }
+                    T4 = (Time[zero5] - Time[zero4]) * 1000000;
+                    qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
+
+                    for(int i=pos+5; i<count; i++)
+                    {
+                        if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
+                        {
+                            zero4 = i;
+                            break;
+                        }
+                    }
+
+                    T5 = (Time[zero4] - Time[pos+4]) * 1000000;
+                    qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
+                }
+                else
                 {
-                    if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
+                    int zero3 = pos+2;
+                    for(int i=pos; i<count; i++)
                     {
-                        zero4 = i;
-                        break;
+                        if(col1[i] == 0 && col1[i+1] == 0)
+                        {
+                            zero3 = i+2;
+                            break;
+                        }
                     }
+                    T2 = (Time[zero2] - Time[zero3]) * 1000000;
+                    qDebug() << "T2 = " << Time[zero2] << "-" << Time[zero3] << "=" << T2;
+
+                    T3=(Time[zero2+1]-Time[zero2])*1000000;
+                    qDebug() << "T3 = " << Time[zero2+1] << "-" << Time[zero2] << "=" << T3;
+
+                    int zero4 = pos;
+                    for(int i=pos+10; i<count; i++)
+                    {
+                        if(col0[i] == 1 && col0[i+1] == 1 && col0[i+2] == 1 && col0[i+3] == 1)
+                        {
+                            zero4 = i;
+                            break;
+                        }
+                    }
+
+                    int zero5 = pos;
+                    for(int i=zero4; i<count; i++)
+                    {
+                        if(col2[i] == 1)
+                        {
+                            zero5 = i;
+                            break;
+                        }
+                    }
+                    T4 = (Time[zero5] - Time[zero4]) * 1000000;
+                    qDebug() << "T4 = " << Time[zero5] << "-" << Time[zero4] << "=" << T4;
+
+                    for(int i=pos+5; i<count-3; i++)
+                    {
+                        if(col2[i] == 1 && col2[i+1] == 1 && col2[i+2] == 1)
+                        {
+                            zero4 = i;
+                            break;
+                        }
+                    }
+
+                    T5 = (Time[zero4] - Time[pos+4]) * 1000000;
+                    qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
                 }
 
-                T5 = (Time[zero4] - Time[pos+4]) * 1000000;
-                qDebug() << "T5 = " << Time[zero4] << "-" << Time[pos+4] << "=" << T5;
+                ui->lineEditOutT1->setText(QString::asprintf("%.2f",T1));
+                ui->lineEditOutT2->setText(QString::asprintf("%.2f",T2));
+                ui->lineEditOutT3->setText(QString::asprintf("%.2f",T3));
+                ui->lineEditOutT4->setText(QString::asprintf("%.2f",T4));
+                ui->lineEditOutTrans->setText(QString::asprintf("%.2f",T5));
             }
-
-            ui->lineEditOutT1->setText(QString::asprintf("%.2f",T1));
-            ui->lineEditOutT2->setText(QString::asprintf("%.2f",T2));
-            ui->lineEditOutT3->setText(QString::asprintf("%.2f",T3));
-            ui->lineEditOutT4->setText(QString::asprintf("%.2f",T4));
-            ui->lineEditOutTrans->setText(QString::asprintf("%.2f",T5));
         }
     }
 
